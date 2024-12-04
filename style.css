@@ -1,0 +1,49 @@
+/* Định dạng cho menu chính */
+ul.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #333;
+}
+
+ul.menu li {
+    position: relative;
+    padding: 10px 20px;
+}
+
+ul.menu li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Ẩn các mục con (submenu) */
+ul.menu .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style-type: none;
+    background-color: #444;
+    padding: 0;
+    margin: 0;
+    min-width: 200px;
+}
+
+/* Hiển thị submenu khi di chuột vào mục cha */
+ul.menu li:hover .submenu {
+    display: block;
+}
+
+ul.menu .submenu li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+/* Thay đổi màu sắc khi di chuột vào các mục */
+ul.menu li a:hover,
+ul.menu .submenu li a:hover {
+    background-color: #555;
+}
