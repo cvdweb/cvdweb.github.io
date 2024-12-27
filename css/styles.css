@@ -11323,3 +11323,6 @@ section#contact form#contactForm :-ms-input-placeholder {
 .navbar-dark {
   background-color: #212121!important;
 }
+.portfolio-item{
+  position: relative;
+}
