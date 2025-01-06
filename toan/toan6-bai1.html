@@ -15,6 +15,9 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/styles.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Itim&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Nanum+Gothic&family=Oxanium:wght@200..800&family=Playwrite+VN+Guides&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rubik+Vinyl&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -27,10 +30,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#services">Tin học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">Anh văn</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Nhóm</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
                     </ul>
                 </div>
             </div>
@@ -40,13 +42,53 @@
         
         <!-- Portfolio Grid-->
         <section class="page-section bg-light" id="portfolio">
-            <div class="container">
+            <div class="container pt-5" style="width: 1000px;">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Toán 6</h2>
-                    <h3 class="section-subheading text-muted">Tin học 8-Chân trời sáng tạo.</h3>
+                    <h2 class="section-heading text-uppercase py-5" style="border-radius: 15px;height: 145px;background-color: rgba(0, 0, 0, 0.075);">
+                        <span style="text-shadow: #0000006d 0px 0px 4px;color: #ffc800;">Bài 1:</span> 
+                        Tập hợp, Phần tử của tập hợp
+                    </h2>
                 </div>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam voluptatibus suscipit perferendis, quo inventore fugit ab tenetur consequuntur provident soluta repellendus delectus aut, dolores amet dicta esse quas quaerat! Amet?</p>
-                <a href="../tracnghiem/toan6.html" class="btn btn-primary">Làm bài trắc nghiệm</a>
+                <style>
+                    span{
+                        font-family: "Raleway", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                    }
+                    strong{
+                        font-size: 30px;
+                    }
+                    p{
+                        font-family: "Raleway", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                        line-height: 1.3;
+                        font-size: 20px;
+                        padding-top: 15px;
+                        padding-left: 15px;
+                    }
+                    a span{
+                        font-size: 20px;
+                    }
+                </style>
+                <div class="pt-4" style="background-color: rgba(0, 0, 0, 0.050);border-radius: 15px;padding:20px;">
+                    <h3> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt dạng toán của Bài 1:</h3>
+
+                    <p><strong>1</strong>. Xác định phần tử của tập hợp: Học sinh cần xác định các phần tử thuộc hoặc không thuộc một tập hợp cho trước. Ví dụ: Xác định 3 có thuộc tập hợp A hay không với A gồm 1, 2, 3, 4, 5.
+                    </p>
+                    <p><strong>2</strong>. Lập tập hợp: Tạo tập hợp từ một quy tắc hoặc điều kiện cho trước. Ví dụ: Lập tập hợp các số tự nhiên nhỏ hơn 10.
+                    </p>
+                    <p><strong>3</strong>. Biểu diễn tập hợp: Biểu diễn tập hợp bằng cách liệt kê các phần tử hoặc bằng cách sử dụng tính chất đặc trưng. Ví dụ: Tập hợp B gồm các số tự nhiên nhỏ hơn 5.
+                    </p>
+                    <p><strong>4</strong>. Giao và hợp của tập hợp: Tìm giao và hợp của các tập hợp. Ví dụ: Tìm giao của hai tập hợp A và B.
+                    </p>
+                    <p> <strong>5</strong>. Sử dụng ký hiệu tập hợp: Sử dụng ký hiệu thuộc và không thuộc để biểu diễn mối quan hệ giữa phần tử và tập hợp.
+                    </p>
+                </div>
+                <div class="text-center pt-5">
+                    <a href="../tracnghiem/TN-b1t6.html" class="btn btn-primary" style="box-shadow: #ffc800 0px 0px 50px 10px;"><span>Làm bài trắc nghiệm!</span></a>
+                    <a href="toan6.html" class="btn btn-primary" style="background-color: rgba(0, 0, 0, 0.4);border: none;box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 50px 10px;"><span>Bài khác</span></a>
+                </div>
             </div>
         </section>
        
