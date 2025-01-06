@@ -11,56 +11,56 @@ function CQuiz(que, o1, o2, o3, o4, ans, d) {
 
 // Question 1
 var q1 = new CQuiz(
-	'Thông tin được xử lý như thế nào trước khi đưa vào máy tính?',
-	'Dãy bit',
-	'Hình ảnh',
-	'Âm thanh',
-	'Tùy ý',
-	1,
+	'1.His favourite leisure ___ is playing football',
+	'time',
+	'activity',
+	'activity',
+	'hang out',
+	2,
 	0
 );
 
 // Question 2
 var q2 = new CQuiz(
-	'Câu hỏi số 2?',
-	'Đáp án 1',
-	'Đáp án 2',
-	'Đáp án 3',
-	'Đáp án 4',
+	'2.She plays pickleball  to  stay_____',
+	'A.In shape',
+	' B.of',
+	'in it',
+	'in fat',
 	1,
 	0	
 );
 
 // Question 3
 var q3 = new CQuiz(
-	'Câu hỏi số 3',
-	'False',
-	'True',
-	'1',
-	'0',
-	2,
+	'3.Bao ____ on playing game',
+	'Keen',
+	'crazy   ',
+	'is keen',
+	'is crazy',
+	3,
 	0
 );
 
 // Question 4
 var q4 = new CQuiz(
-	'Câu hỏi 4?',
-	'a',
-	'b',
-	'c',
-	'd',
+	'4.Tien likes_____ to school every day',
+	'Walked    ',
+	'to walking      ',
+	'walking',
+	'fly',
 	3,
 	0
 );
 
 // Question 5
 var q5 = new CQuiz(
-	'Câu hỏi số 5?',
-	'a',
-	'b',
-	'c',
-	'd',
-	2,
+	'Bao Chau likes_____with Thương ',
+	'Reading book ',
+	'to play chess  ',
+	'to Hanging out with friend',
+	'a and b',
+	4,
 	0
 );
 
