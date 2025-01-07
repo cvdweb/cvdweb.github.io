@@ -11,7 +11,7 @@ function CQuiz(que, o1, o2, o3, o4, ans, d) {
 
 // Question 1
 var q1 = new CQuiz(
-	'Thông tin được xử lý như thế nào trước khi đưa vào máy tính?',
+	'Câu hỏi tin 7?',
 	'Dãy bit',
 	'Hình ảnh',
 	'Âm thanh',

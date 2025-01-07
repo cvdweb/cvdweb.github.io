@@ -11326,3 +11326,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 .portfolio-item{
   position: relative;
 }
+.anhvan .portfolio-item .img-fluid{
+  height: 200px;
+  object-fit: cover;
+}
