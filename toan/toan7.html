@@ -40,6 +40,155 @@
                 </div>
             </div>
         </nav>
+        <style>
+            .chat-bubble {
+                font-size: 50px;
+                position: fixed;
+                z-index: 10;
+                bottom: 20px;
+                right: 20px;
+                background-color: #ffc800;
+                color: white;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 0px 100px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, all 0.3s ease;
+                color: black
+             }
+
+            .chat-bubble:hover {
+                transform: scale(1.1);
+                background-color: black;
+                color: #ffc800;
+                box-shadow: 0 0 5px 5px #ffc800;
+            }
+            .chat-box {
+                position: fixed;
+                z-index: 10;
+                bottom: 120px;
+                right: 120px;
+                width: 600px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                box-shadow: 0px 0px 10px 1px black;
+            }
+    
+            .chat-header {
+                position: relative;
+                z-index: 10;
+                background-color: #ffc800;
+                color: black;
+                padding: 10px;
+                font-size: 30px;
+            }
+    
+            .chat-messages {
+                flex-grow: 1;
+                padding: 30px;
+                overflow-y: auto;
+                max-height: 200px;
+                background-color: rgb(255, 255, 255);
+                font-size: 28px;
+                border: solid #000000 1px;
+                color: #000000;
+                font-weight: 600;
+            }
+    
+            .chat-input {
+                display: flex;
+                padding: 10px;
+                background-color: #ffc800;
+            }
+    
+            .chat-input input {
+                flex-grow: 1;
+                padding: 8px;
+                border: 2px solid #000000;
+                border-radius: 4px;
+                font-size: 20px;
+            }
+    
+            .chat-input button {
+                margin-left: 5px;
+                padding: 8px 12px;
+                background-color: #000000;
+                color: #ffc800;
+                font-weight: 600;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 20px;
+                transition: transform 0.3s ease, all 0.3s ease;
+            }
+    
+            .chat-input button:hover {
+                background-color: #ffffff;
+                color: black;
+                transform: scale(1.1);
+                box-shadow: 0 0 5px 5px #ffffff;
+            }
+            .bubble-chat-font{
+                font-family: "Afacad Flux", serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                font-variation-settings:"slnt" 0;
+            }
+        </style>
+        <div class="bubble-chat-font">
+            <div class="chat-bubble" id="chatToggle"><i style="font-weight: 500;" class="fa-brands fa-rocketchat"></i></div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">Hỏi giáo sư Lộc <i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Nhập câu hỏi...">
+                <button id="chatSend">Gửi</button>
+            </div>
+        </div>
+
+        <script>
+            const chatToggle = document.getElementById('chatToggle');
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Toggle chat box visibility
+            chatToggle.addEventListener('click', () => {
+                if (chatBox.style.display === 'flex') {
+                    chatBox.style.display = 'none';
+                } else {
+                    chatBox.style.display = 'flex';
+                }
+            });
+
+            // Send message
+            chatSend.addEventListener('click', () => {
+                const message = chatInput.value.trim();
+                if (message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+
+            // Allow Enter key to send message
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    chatSend.click();
+                }
+            });
+        </script>
       
         <!-- Services-->
         
@@ -50,6 +199,26 @@
                     <h2 class="section-heading text-uppercase pt-5">Toán 7</h2>
                     <h3 class="section-subheading text-muted">"Toán 7, nền tảng cho tương lai rực rỡ!"</h3>
                 </div>
+                <style>
+                    .chantroisangtao{
+                        display: block;
+                        padding: 18px;
+                        max-width: 290px;
+                        color: rgb(0, 0, 0);
+                        text-shadow: #ffffff 0px 0px 18px;
+                        margin-bottom: 50px;
+                        border-radius: 40px;
+                        background-color: #ffc800;
+                        box-shadow: #ffc80075 0px 0px 16px 3px;
+                        font-family: "Afacad Flux", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                        font-variation-settings:"slnt" 0;
+                    }
+                </style>
+                <h2 class="chantroisangtao">
+                    Chương I: Số hữu tỉ
+                </h2>
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-4">
                         <!-- Portfolio item 1-->
@@ -94,7 +263,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 mb-4">
-                        <!-- Portfolio item 3-->
+                        <!-- Portfolio item 4-->
                         <div class="portfolio-item">
                             <a class="portfolio-link" href="toan7-bai4.html">
                                 <div class="portfolio-hover" style="border-radius: 15px">
@@ -104,6 +273,114 @@
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">Bài 4: Quy tắc dấu ngoặc và quy tắc chuyển vế</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--PART: BAI TAP COMMING SOON-->
+                    <div class="col-lg-3 col-sm-6 mb-4">
+                        <!-- Portfolio item 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="toan-comming soon.html">
+                                <div class="portfolio-hover" style="border-radius: 15px">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img style="border-radius: 15px" class="img-fluid" src="hinh/toan7-thumbnails/7-cuoichuong.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Bài tập cuối chương 1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--BỔ SUNG ROW-->
+                    <style>
+                        .viprow {
+                            margin-right: auto;
+                            margin-left: auto;
+                            padding-top: 30px;
+                            border-radius: 26px;
+                            background-image: linear-gradient(to top right, #ffec9f , #ffc800  70%);
+                            display: flex;
+                            justify-content: center;
+                            gap: 104px;
+                            max-width: 1100px;
+                        }
+                        .viprow .portfolio-caption{
+                            margin-top: -26px;
+                            background-color: gold;
+                        }
+                        .viprow .portfolio-item{
+                            border-radius: 15px;
+                            box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
+
+                        }
+                        .viprow .portfolio-caption-heading{
+                            margin-top: 26px;
+                            color: #000000;
+                            text-shadow: 0px 0px 4px #ffc800;
+                        }
+                        .portfolio-caption {border-radius: 15px;}
+                        p {
+                            margin-bottom: 0px;
+                            border-radius: 40px;
+                            width: 1px;
+                            font-size: 50px;
+                            font-family: "Raleway", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-weight: 800;
+                            color: white;
+                            -webkit-text-stroke-width: 1px;
+                            -webkit-text-stroke-color: #000000;
+                            text-shadow: 0px 0px 10px #ffc800;
+                        }
+                        img {
+                            width: 100%;
+                            height: 185px;
+                            object-fit: cover;
+                        }
+                    </style>
+                    <p class="text-center">BỔ SUNG</p>
+                    <div class="viprow">
+                        <div class="col-lg-3 col-sm-6 mb-4">
+                            <!-- Portfolio item 2-->
+                            <div class="portfolio-item">
+                                <a class="portfolio-link" href="toan-comming soon.html">
+                                    <div class="portfolio-hover" style="border-radius: 15px">
+                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                    </div>
+                                    <img style="border-radius: 15px" class="img-fluid" src="hinh/toan6-thumbnails/baitapcuoichuong.png" alt="..." />
+                                </a>
+                                <div class="portfolio-caption">
+                                    <div class="portfolio-caption-heading">Bài trắc nghiệm cuối chương</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 mb-4">
+                            <!-- Portfolio item 3-->
+                            <div class="portfolio-item">
+                                <a class="portfolio-link" href="toan-comming soon.html">
+                                    <div class="portfolio-hover" style="border-radius: 15px">
+                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                    </div>
+                                    <img style="border-radius: 15px;border-radius: 15px;max-width: 100%;height: 185px;" class="img-fluid" src="hinh/toan6-thumbnails/tonghop.png" alt="..." />
+                                </a>
+                                <div class="portfolio-caption">
+                                    <div class="portfolio-caption-heading">Tổng hợp lý thuyết</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 mb-4">
+                            <!-- Portfolio item 3-->
+                            <div class="portfolio-item">
+                                <a class="portfolio-link" href="toan-comming soon.html">
+                                    <div class="portfolio-hover" style="border-radius: 15px">
+                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                    </div>
+                                    <img style="border-radius: 15px" class="img-fluid" src="hinh/toan6-thumbnails/nangcao.png" alt="..." />
+                                </a>
+                                <div class="portfolio-caption">
+                                    <div class="portfolio-caption-heading">Bài trắc nghiệm nâng cao</div>
+                                </div>
                             </div>
                         </div>
                     </div>  
