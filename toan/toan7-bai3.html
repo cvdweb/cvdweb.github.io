@@ -42,11 +42,11 @@
         
         <!-- Portfolio Grid-->
         <section class="page-section bg-light" id="portfolio">
-            <div class="container pt-5" style="width: 1200px;">
+            <div class="container pt-5" style="width: 1000px;">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase py-5" style="border-radius: 15px;height: 145px;background-color: rgba(0, 0, 0, 0.075);">
                         <span style="text-shadow: #0000006d 0px 0px 4px;color: #ffc800;">Bài 3:</span> 
-                        Các phép tính trong tập hợp số tự nhiên
+                        Lũy thừa của một số hữu tỉ
                     </h2>
                 </div>
                 <style>
@@ -56,7 +56,7 @@
                         font-style: normal;
                     }
                     strong{
-                        font-size: 30px;
+                        font-size: 20px;
                     }
                     p{
                         font-family: "Raleway", serif;
@@ -65,54 +65,67 @@
                         line-height: 1.3;
                         font-size: 20px;
                         padding-top: 15px;
-                        padding-left: 15px;
+                        padding-left: 72px;
                     }
                     a span{
                         font-size: 20px;
                     }
+                    h4 {
+                        padding-left: 36px;
+                    }
+                    ul {
+                        font-family: "Raleway", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                        font-size: 20px;
+                        margin-left: 54px;
+                    }
+                    h5 {
+                        font-size: 26px;
+                        padding-left: 72px;
+                    }
+                    pre {
+                        padding-left: 72px;
+                    }
                 </style>
                 <div class="pt-4" style="background-color: rgba(0, 0, 0, 0.050);border-radius: 15px;padding:20px;">
-                    <style>
-                        .mota h5{
-                            padding-left: 36px;
-                            font-weight: 400;
-                            line-height: 2;
-                        }
-                    </style>
                     <h3> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt dạng toán của Bài 3:</h3>
-                    <div class="mota">
-                        <h5>
-                            Các số: 0;1;2;3;...;9;10;...;100;1000;... là các số tự nhiên.
-                        </h5>
-                        <h5 style="margin-top: -16px;">
-                            Các số tự nhiên sắp xếp theo thứ tự từ bé đến lớn tạo thành các dãy số tự nhiên:0;1;2;3;4;5;6;7;8;9;10;...
-                        </h5>
-                        <h5>
-                            Có thể biểu diễn dãy số tự nhiên trên tia số:012345678910...
-                        </h5>
-                        <h5 style="margin-top: -16px;">
-                            Mỗi số tự nhiên ứng với một điểm trên tia số.
-                        </h5>
-                        <h5 style="margin-top: -16px;">                       
-                            Số 0 ứng với điểm gốc của tia số.
-                        </h5>
-                        <h5 style="margin-top: -16px;">
-                            Hai số cùng được biểu thị bởi một điểm trên tia số là hai số bằng nhau.
-                        </h5>
-                        <h5>
-                            Trên tia số đó:
-                        </h5>
-                        <h5 style="margin-top: -16px;">
-                            Những số đứng bên phải số tự nhiên 𝑎 là các số lớn hơn 𝑎
-                        </h5>
-                        <h5 style="margin-top: -16px;">
-                            Những số đứng bên trái số tự nhiên 𝑎 là các số nhỏ hơn 𝑎
-                        </h5>
-                    </div>
+                    <h4 style="padding-top: 15px;">Lũy thừa của một số hữu tỉ</h4>
+                    <p>Lũy thừa của một số hữu tỉ là một khái niệm trong toán học, đặc biệt là trong lý thuyết số học và đại số. Để hiểu rõ về lũy thừa của một số hữu tỉ, ta cần nắm vững các khái niệm cơ bản sau:</p>
+
+                    <h5>1. Số hữu tỉ</h5>
+                    <p>Số hữu tỉ là các số có thể biểu diễn dưới dạng phân số <code>a/b</code>, trong đó <code>a</code> và <code>b</code> là hai số nguyên, và <code>b ≠ 0</code>. Ví dụ: <code>3/4</code>, <code>-5/2</code>, <code>2</code> đều là các số hữu tỉ.</p>
+
+                    <h5>2. Lũy thừa của số hữu tỉ</h5>
+                    <p>Lũy thừa của một số hữu tỉ <code>a/b</code> có thể được tính như sau:</p>
+                    <pre><code>(a/b)<sup>n</sup> = (a<sup>n</sup>) / (b<sup>n</sup>)</code></pre>
+                    <p>Trong đó <code>n</code> là số mũ, có thể là một số nguyên hoặc một số hữu tỉ.</p>
+
+                    <h5>3. Số mũ nguyên</h5>
+                    <ul>
+                        <li><strong>Khi <code>n</code> là một số nguyên dương:</strong> <code>(a/b)<sup>n</sup> = (a<sup>n</sup>) / (b<sup>n</sup>)</code>.</li>
+                        <li><strong>Khi <code>n = 0</code>:</strong> <code>(a/b)<sup>0</sup> = 1</code> (với điều kiện <code>a ≠ 0</code> và <code>b ≠ 0</code>).</li>
+                        <li><strong>Khi <code>n</code> là một số nguyên âm:</strong> <code>(a/b)<sup>-n</sup> = (b<sup>n</sup>) / (a<sup>n</sup>)</code>.</li>
+                    </ul>
+
+                    <h5>4. Số mũ hữu tỉ</h5>
+                    <p>Lũy thừa của một số hữu tỉ với số mũ là một số hữu tỉ có thể được định nghĩa như sau:</p>
+                    <pre><code>(a/b)<sup>m/n</sup> = ((a<sup>m</sup>) / (b<sup>m</sup>))<sup>1/n</sup>.</code></pre>
+                    <p>Trong đó <code>m/n</code> là một phân số với <code>m</code> và <code>n</code> là các số nguyên.</p>
+
+                    <h5>5. Ví dụ</h5>
+                    <ul>
+                        <li><code>(2/3)<sup>2</sup> = (2<sup>2</sup>) / (3<sup>2</sup>) = 4/9</code></li>
+                        <li><code>(2/3)<sup>-1</sup> = (3<sup>1</sup>) / (2<sup>1</sup>) = 3/2</code></li>
+                        <li><code>(4/9)<sup>1/2</sup> = (4<sup>1/2</sup>) / (9<sup>1/2</sup>) = 2/3</code> (căn bậc hai của 4 là 2 và căn bậc hai của 9 là 3).</li>
+                    </ul>
+
+                    <h5>6. Kết luận</h5>
+                    <p>Lũy thừa của một số hữu tỉ có thể áp dụng các quy tắc tương tự như đối với lũy thừa của số thực hoặc số nguyên. Tuy nhiên, trong trường hợp mũ là số hữu tỉ, ta cần áp dụng định nghĩa lũy thừa với căn bậc.</p>
                 </div>
                 <div class="text-center pt-5">
-                    <a href="../tracnghiem/TN-b3t6.html" class="btn btn-primary" style="box-shadow: #ffc800 0px 0px 50px 10px;"><span>Làm bài trắc nghiệm!</span></a>
-                    <a href="toan6.html" class="btn btn-primary" style="background-color: rgba(0, 0, 0, 0.4);border: none;box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 50px 10px;"><span>Bài khác</span></a>
+                    <a href="../tracnghiem/TN-b3t7.html" class="btn btn-primary" style="box-shadow: #ffc800 0px 0px 50px 10px;"><span>Làm bài trắc nghiệm!</span></a>
+                    <a href="toan7.html" class="btn btn-primary" style="background-color: rgba(0, 0, 0, 0.4);border: none;box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 50px 10px;"><span>Bài khác</span></a>
                 </div>
             </div>
         </section>
