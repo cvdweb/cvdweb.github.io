@@ -196,7 +196,7 @@ $THE NAME SECTION
 #username form i.material-icons {
 	font-size: 5em;
 	margin-bottom: 30px;
-	color: #007bff;
+	color: #ffc800;
 }
 
 #username form input {
@@ -244,7 +244,7 @@ $THE LOGIN FORM
 }
 
 #theForm form i.finger-print {
-	color: #007bff;
+	color: #ffc800;
 }
 
 #theForm form i.warning {
@@ -451,4 +451,10 @@ $RESPONSIVENESS
 	#quizForm #tab label.custom-control-label {
 		border-bottom: 1px solid #ccc;
 	}
+}
+.btn {
+	border-radius: 16px;
+	color: #ffc800;
+	background-color: #282424;
+	border: none;
 }
