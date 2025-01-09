@@ -11,56 +11,56 @@ function CQuiz(que, o1, o2, o3, o4, ans, d) {
 
 // Question 1
 var q1 = new CQuiz(
-	'Tập hợp nào dưới đây là tập hợp các số tự nhiên nhỏ hơn 10?',
-	'\{1, 2, 3, 4, 5, 6, 7, 8, 9\}',
-	'\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}',
-	'\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}',
-	'\{0, 1, 2, 3, 4, 5, 6, 7, 8\}',
+	'Cặp số nào sau đây là nghiệm của phương trình 2x - y = 3? ',
+	'(1; 1) ',
+	'(2; 1) ',
+	'(1; -1) ',
+	'(-1; 1)',
 	2,
 	0
 );
 
 // Question 2
 var q2 = new CQuiz(
-	'Phần tử nào sau đây không thuộc tập hợp \{a, b, c, d\}?',
-	'a',
-	'b',
-	'e',
-	'd',
-	3,
+	'Trong các phương trình sau, phương trình nào là phương trình bậc nhất hai ẩn? ',
+	'x² + y = 2 ',
+	'2x - 3y = 1 ',
+	'x + y² = 0 ',
+	'1/x + y = 5',
+	2,
 	0	
 );
 
 // Question 3
 var q3 = new CQuiz(
-	'Cho tập hợp A = \{2, 4, 6, 8\}. Số nào dưới đây là phần tử của tập hợp A?',
-	'6',
-	'3',
-	'5',
-	'9',
+	'Hệ phương trình nào sau đây là hệ phương trình bậc nhất hai ẩn',
+	'{x+y=2x−y=1{x+y=2x−y=1 ',
+	'{x2+y=3x−y=2{x2+y=3x−y=2 ',
+	'{1x+y=2x−y=1{1x+y=2x−y=1',
+	'{xy=2x−y=1{xy=2x−y=1',
 	1,
 	0
 );
 
 // Question 4
 var q4 = new CQuiz(
-	'Tập hợp các chữ cái trong từ "TOÁN" là tập hợp nào dưới đây?',
-	'\{T, O, A, N\}',
-	'\{T, O, A, N, T\}',
-	'\{T, O, A\}',
-	'\{T, A, N\}',
-	1,
+	'Nếu (a; b) là nghiệm của hệ phương trình {2x−y=1x+y=3{2x−y=1x+y=3 thì a + b bằng:',
+	'1',
+	'2',
+	'3',
+	'4',
+	3,
 	0
 );
 
 // Question 5
 var q5 = new CQuiz(
-	'Cho tập hợp B = \{1, 2, 3, 4, 5\}. Phần tử nào dưới đây thuộc tập hợp B?',
-	'6',
-	'0',
-	'4',
-	'7',
-	3,
+	'Phương trình nào sau đây có vô số nghiệm?',
+	'x + y = 1 ',
+	'2x - 2y = 0 ',
+	'x - y = 3 ',
+	'3x + y = 5',
+	2,
 	0
 );
 

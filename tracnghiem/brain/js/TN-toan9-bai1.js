@@ -11,56 +11,56 @@ function CQuiz(que, o1, o2, o3, o4, ans, d) {
 
 // Question 1
 var q1 = new CQuiz(
-	'Tập hợp nào dưới đây là tập hợp các số tự nhiên nhỏ hơn 10?',
-	'\{1, 2, 3, 4, 5, 6, 7, 8, 9\}',
-	'\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}',
-	'\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}',
-	'\{0, 1, 2, 3, 4, 5, 6, 7, 8\}',
-	2,
+	'Phương trình nào sau đây là phương trình bậc nhất một ẩn? ',
+	'x2−3x+2=0 ',
+	'x2+1=0 ',
+	'3x−5=0 ',
+	'x+2=0',
+	3,
 	0
 );
 
 // Question 2
 var q2 = new CQuiz(
-	'Phần tử nào sau đây không thuộc tập hợp \{a, b, c, d\}?',
-	'a',
-	'b',
-	'e',
-	'd',
+	'Điều kiện xác định của phương trình x−2x=1 là: ',
+	'x=0 ',
+	'x=2 ',
+	'x=−2 ',
+	'x=0 và x=2',
 	3,
 	0	
 );
 
 // Question 3
 var q3 = new CQuiz(
-	'Cho tập hợp A = \{2, 4, 6, 8\}. Số nào dưới đây là phần tử của tập hợp A?',
-	'6',
-	'3',
-	'5',
-	'9',
-	1,
+	'Nghiệm của phương trình (x−2)(x+3)=0 là: ',
+	'x=2 ',
+	'x=−3 ',
+	'x=2 hoặc x=−3 ',
+	'Phương trình vô nghiệm',
+	3,
 	0
 );
 
 // Question 4
 var q4 = new CQuiz(
-	'Tập hợp các chữ cái trong từ "TOÁN" là tập hợp nào dưới đây?',
-	'\{T, O, A, N\}',
-	'\{T, O, A, N, T\}',
-	'\{T, O, A\}',
-	'\{T, A, N\}',
+	'Giải phương trình x−12x+1=3, ta được nghiệm là:',
+	'x=2 ',
+	'x=−2 ',
+	'x=4 ',
+	'Phương trình vô nghiệm',
 	1,
 	0
 );
 
 // Question 5
 var q5 = new CQuiz(
-	'Cho tập hợp B = \{1, 2, 3, 4, 5\}. Phần tử nào dưới đây thuộc tập hợp B?',
-	'6',
-	'0',
-	'4',
-	'7',
-	3,
+	'Phương trình nào sau đây có thể đưa về dạng phương trình tích? ',
+	'x2−4=0 ',
+	'x2+4=0 ',
+	'x2+2x+1=0 ',
+	'Tất cả các phương trình trên',
+	4,
 	0
 );
 
