@@ -19,7 +19,7 @@
 		/>
 		<!-- Custom Style Sheet -->
 		<link rel="stylesheet" href="brain/css/style.css" />
-		<title>Trắc nghiệm các phép tính với số hữu tỉ</title>
+		<title>Trắc nghiệm hằng đẳng thức đáng nhớ</title>
 		<link rel="icon" type="image/png" href="brain/img/fav.png" />
 	</head>
 	<body onload="chkUser()">
@@ -28,19 +28,21 @@
 			<div id="username">
 				<form class="form" onsubmit="return false;">
 					<i class="material-icons" style="color: #ffc800;">face</i>
-					<h2>Tên của bạn là gì?</h2>
+					<h2 style="color: #282424;">Tên của bạn là gì?</h2>
 					<div class="form-group mx-sm-3 mb-3 passBox">
 						<label for="pass" class="sr-only">Tên (Nick Name)</label>
 						<input
 							type="text"
 							class="form-control"
 							id="uname"
-							placeholder="Nick Name"
+							placeholder="Tên của bạn..."
 							onfocus="this.style.borderColor = '#007bff'"
 							onblur="this.style.borderColor = '#ced4da'"
 						/>
 					</div>
 					<button
+						id="xacnhan"
+						style="background-color: #282424;border: none;color:#ffc800;"
 						type="submit"
 						class="btn btn-primary mb-2"
 						onclick="askPass();"
@@ -52,7 +54,7 @@
 			<!-- The Form -->
 			<div id="theForm">
 				<form class="form" onsubmit="return false;">
-					<i class="material-icons finger-print">https</i>
+					<i style="color: #ffc800" class="material-icons finger-print">https</i>
 					<i class="material-icons warning">warning</i>
 					<i class="material-icons success">done_all</i>
 					<h2
@@ -72,8 +74,9 @@
 							onblur="this.style.borderColor = '#ced4da';"
 						/>
 					</div>
-					<div>Mật khẩu: 11223344</div>
+					<div style="color: #282424;">Mật khẩu: 11223344</div>
 					<button
+						style="background-color: #282424;border: none;color:#ffc800;"
 						type="submit"
 						disabled="disabled"
 						class="btn btn-primary mb-2"
@@ -88,7 +91,7 @@
 			<!-- Quiz Starts Here -->
 			<section id="theQuiz">
 				<form id="quizForm" onsubmit="return false;">
-					<h2>Trắc nghiệm các phép tính với số hữu tỉ</h2>
+					<h2>Trắc nghiệm hằng đẳng thức đáng nhớ</h2>
 
 					<div id="steps" style="text-align:center;">
 						<!-- Steps will be shown as per questions length -->
@@ -164,6 +167,7 @@
 					<div style="overflow:auto;">
 						<div style="float:right;">
 							<button
+								style="background-color: #282424;border: none;color:#ffc800;"
 								type="button"
 								disabled="disabled"
 								class="btn btn-info mb-2"
@@ -203,14 +207,14 @@
 			Logout
 		</button>
 		<div class="text-center mt-5">
-			<a href="../toan/toan7-bai2.html" class="btn btn-primary">Về trang bài học</a>
+			<a style="border-radius: 16px;color: #282424;background-color: #ffc800;border: none;" href="../toan/toan8-bai3.html" class="btn btn-primary">Về trang bài học</a>
 		</div>
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-		<script src="brain/js/TN-toan7-bai2.js"></script>
+		<script src="brain/js/TN-toan8-bai3.js"></script>
 		<script src="brain/js/script.js"></script>
 	</body>
 </html>
