@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Agency - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../css/styles.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Itim&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Nanum+Gothic&family=Oxanium:wght@200..800&family=Playwrite+VN+Guides&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rubik+Vinyl&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/">CVĐ Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <style>
+            .chat-bubble {
+                font-size: 50px;
+                position: fixed;
+                z-index: 10;
+                bottom: 20px;
+                right: 20px;
+                background-color: #ffc800;
+                color: white;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 0px 100px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, all 0.3s ease;
+                color: black
+             }
+
+            .chat-bubble:hover {
+                transform: scale(1.1);
+                background-color: black;
+                color: #ffc800;
+                box-shadow: 0 0 5px 5px #ffc800;
+            }
+            .chat-box {
+                position: fixed;
+                z-index: 10;
+                bottom: 120px;
+                right: 120px;
+                width: 600px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                box-shadow: 0px 0px 10px 1px black;
+            }
+    
+            .chat-header {
+                position: relative;
+                z-index: 10;
+                background-color: #ffc800;
+                color: black;
+                padding: 10px;
+                font-size: 30px;
+            }
+    
+            .chat-messages {
+                flex-grow: 1;
+                padding: 30px;
+                overflow-y: auto;
+                max-height: 200px;
+                background-color: rgb(255, 255, 255);
+                font-size: 28px;
+                border: solid #000000 1px;
+                color: #000000;
+                font-weight: 600;
+            }
+    
+            .chat-input {
+                display: flex;
+                padding: 10px;
+                background-color: #ffc800;
+            }
+    
+            .chat-input input {
+                flex-grow: 1;
+                padding: 8px;
+                border: 2px solid #000000;
+                border-radius: 4px;
+                font-size: 20px;
+            }
+    
+            .chat-input button {
+                margin-left: 5px;
+                padding: 8px 12px;
+                background-color: #000000;
+                color: #ffc800;
+                font-weight: 600;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 20px;
+                transition: transform 0.3s ease, all 0.3s ease;
+            }
+    
+            .chat-input button:hover {
+                background-color: #ffffff;
+                color: black;
+                transform: scale(1.1);
+                box-shadow: 0 0 5px 5px #ffffff;
+            }
+            .bubble-chat-font{
+                font-family: "Afacad Flux", serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                font-variation-settings:"slnt" 0;
+            }
+        </style>
+        <div class="bubble-chat-font">
+            <div class="chat-bubble" id="chatToggle"><i style="font-weight: 500;" class="fa-brands fa-rocketchat"></i></div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">Hỏi giáo sư Lộc <i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Nhập câu hỏi...">
+                <button id="chatSend">Gửi</button>
+            </div>
+        </div>
+
+        <script>
+            const chatToggle = document.getElementById('chatToggle');
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Toggle chat box visibility
+            chatToggle.addEventListener('click', () => {
+                if (chatBox.style.display === 'flex') {
+                    chatBox.style.display = 'none';
+                } else {
+                    chatBox.style.display = 'flex';
+                }
+            });
+
+            // Send message
+            chatSend.addEventListener('click', () => {
+                const message = chatInput.value.trim();
+                if (message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+
+            // Allow Enter key to send message
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    chatSend.click();
+                }
+            });
+        </script>
+        <!-- Services-->
+        
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-light" id="portfolio">
+            <div class="container pt-5" style="width: 1200px;">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase py-5" style="border-radius: 15px;height: 195px;background-color: rgba(0, 0, 0, 0.075);">
+                        <span style="text-shadow: #0000006d 0px 0px 4px;color: #ffc800;">Bài 2:</span> 
+                        Phương trình bậc nhất hai ẩn và hệ hai phương trình bậc nhất hai ẩn
+                    </h2>
+                </div>
+                <style>
+                    span{
+                        font-family: "Raleway", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                    }
+                    strong{
+                        font-size: 30px;
+                    }
+                    p{
+                        font-family: "Raleway", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                        line-height: 1;
+                        font-size: 20px;
+                        padding-top: 15px;
+                        padding-left: 64px;
+                    }
+                    a span{
+                        font-size: 20px;
+                    }
+                    h4 {
+                        padding-left: 36px;
+                    }
+                    ul {
+                        font-family: "Raleway", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                        font-size: 20px;
+                        margin-left: 54px;
+                    }
+                </style>
+                <div class="pt-4" style="background-color: rgba(0, 0, 0, 0.050);border-radius: 15px;padding:20px;">
+                    <h3> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt dạng toán của Bài 2:</h3>
+                    <h4 style="padding-top: 15px;">1. Phương trình bậc nhất hai ẩn</h4>
+                    <p>Phương trình bậc nhất hai ẩn <i>x</i> và <i>y</i> có dạng:</p>
+                    <p><i>ax + by = c</i></p>
+                    <p>Trong đó, <i>a</i>, <i>b</i>, <i>c</i> là các số đã biết (gọi là hệ số), và <i>a</i>, <i>b</i> không đồng thời bằng 0.</p>
+                    <p><b>Ví dụ 1:</b></p>
+                    <ul>
+                        <li><i>x + 7y = -1</i> là phương trình bậc nhất hai ẩn với <i>a = 1</i>, <i>b = 7</i>, <i>c = -1</i>.</li>
+                        <li><i>0x - 0y = 6</i> không phải là phương trình bậc nhất hai ẩn vì <i>a = 0</i> và <i>b = 0</i>.</li>
+                    </ul>
+                    <p><b>Ví dụ 2:</b> Trong các cặp số (<i>0; 5</i>), (<i>1; 1</i>), (<i>-2; 1</i>), cặp số nào là nghiệm của phương trình <i>2x + 5y = 7</i>?</p>
+                    <p><b>Hướng dẫn giải:</b></p>
+                    <ul>
+                        <li>Cặp số (<i>0; 5</i>) không phải là nghiệm của phương trình <i>2x + 5y = 7</i>.</li>
+                        <li>Cặp số (<i>1; 1</i>) là nghiệm của phương trình <i>2x + 5y = 7</i>.</li>
+                        <li>Cặp số (<i>-2; 1</i>) không phải là nghiệm của phương trình <i>2x + 5y = 7</i>.</li>
+                    </ul>
+
+                    <h4>2. Hệ hai phương trình bậc nhất hai ẩn</h4>
+                    <p>Hệ hai phương trình bậc nhất hai ẩn <i>x</i>, <i>y</i> có dạng:</p>
+                    <p>
+                        <i>
+                            <sup>a</sup>x + <sup>b</sup>y = c <br>
+                            <sup>a'</sup>x + <sup>b'</sup>y = c'
+                        </i>
+                    </p>
+                    <p>Trong đó, <i>a</i>, <i>b</i>, <i>c</i>, <i>a'</i>, <i>b'</i>, <i>c'</i> là các số đã biết (gọi là hệ số), và <i>a</i>, <i>b</i> không đồng thời bằng 0, <i>a'</i>, <i>b'</i> không đồng thời bằng 0.</p>
+                    <p><b>Ví dụ 3:</b> Hệ phương trình:</p>
+                    <p><i>x + 3y = 0</i><br><i>4x - 3y = -4</i></p>
+                    <p>là hệ phương trình bậc nhất hai ẩn với <i>a = 1</i>, <i>b = 3</i>, <i>c = 0</i>, <i>a' = 4</i>, <i>b' = -3</i>, <i>c' = -4</i>.</p>
+                    <p><b>Ví dụ 4:</b> Cho hệ phương trình:</p>
+                    <p><i>x + 3y = 3</i><br><i>2x + y = -4</i></p>
+                    <p>Trong hai cặp số (<i>1; 2</i>) và (<i>-3; 2</i>), cặp số nào là nghiệm của hệ phương trình đã cho?</p>
+                    <p><b>Hướng dẫn giải:</b></p>
+                    <ul>
+                        <li>Cặp số (<i>0; 2</i>) không phải là nghiệm của hệ phương trình.</li>
+                        <li>Cặp số (<i>-3; 2</i>) là nghiệm của hệ phương trình.</li>
+                    </ul>                    
+
+                </div>
+                <div class="text-center pt-5">
+                    <a href="../tracnghiem/TN-b2t9.html" class="btn btn-primary" style="box-shadow: #ffc800 0px 0px 50px 10px;"><span>Làm bài trắc nghiệm!</span></a>
+                    <a href="toan9.html" class="btn btn-primary" style="background-color: rgba(0, 0, 0, 0.4);border: none;box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 50px 10px;"><span>Bài khác</span></a>
+                </div>
+            </div>
+        </section>
+       
+       
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Contact Us</h2>
+                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                </div>
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- * * SB Forms Contact Form * *-->
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- This form is pre-integrated with SB Forms.-->
+                <!-- To make this form functional, sign up at-->
+                <!-- https://startbootstrap.com/solution/contact-forms-->
+                <!-- to get an API token!-->
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                    <div class="row align-items-stretch mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <!-- Name input-->
+                                <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                            </div>
+                            <div class="form-group">
+                                <!-- Email address input-->
+                                <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
+                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                            </div>
+                            <div class="form-group mb-md-0">
+                                <!-- Phone number input-->
+                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-textarea mb-md-0">
+                                <!-- Message input-->
+                                <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
+                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Submit success message-->
+                    <!---->
+                    <!-- This is what your users will see when the form-->
+                    <!-- has successfully submitted-->
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center text-white mb-3">
+                            <div class="fw-bolder">Form submission successful!</div>
+                            To activate this form, sign up at
+                            <br />
+                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                        </div>
+                    </div>
+                    <!-- Submit error message-->
+                    <!---->
+                    <!-- This is what your users will see when there is-->
+                    <!-- an error submitting the form-->
+                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                    <!-- Submit Button-->
+                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
+                </form>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Portfolio Modals-->
+        <!-- Portfolio item 1 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Threads
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Illustration
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 2 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Explore
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Graphic Design
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 3 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/3.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Finish
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Identity
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 4 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/4.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Lines
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Branding
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 5 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/5.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Southwest
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Website Design
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 6 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/6.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Window
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Photography
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
