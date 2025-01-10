@@ -32,9 +32,31 @@
                         <li class="nav-item"><a class="nav-link" href="./anhvan/anhvan.html">Anh văn</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">Nhóm</a></li>
                     </ul>
+                    <!-- Search form -->
+                    <style>
+                        .form-control {
+                            border-radius: 50px;
+                            font-size: 20px;
+                        }
+                        form .btn {
+                            border-radius: 10px;
+                            font-size: 20px;
+                        }
+                        form {
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-variation-settings:"slnt" 0;
+                        }
+                    </style>
+                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
                 </div>
             </div>
         </nav>
+
         <style>
             .chat-bubble {
                 font-size: 50px;
@@ -377,6 +399,7 @@
                         border-radius: 8px;
                         background-color: #282424;
                         padding: 15px;
+                        width: 245px;
                     }
                     .timeline-heading h4{
                         font-size: 40px;
