@@ -458,3 +458,18 @@ $RESPONSIVENESS
 	background-color: #282424;
 	border: none;
 }
+.quiz-start{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 300px;
+	/* width: 300px; */
+}
+.quiz-start .btn-primary{
+	padding: 40px 30px;
+	height: 200px;
+	width: 200px;
+	border-radius: 50%;
+	text-wrap: wrap;
+	font-size: 1.5rem;
+}

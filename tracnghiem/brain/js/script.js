@@ -9,6 +9,7 @@ var err = document.getElementById('err');
 var errH = document.getElementById('errH');
 var i;
 
+
 /*-----------------------------------*\
 $ On Body Load
 \*-----------------------------------*/
@@ -174,12 +175,18 @@ function resetErr() {
 	submitBtn.classList.add('btn-primary');
 }
 
+
 function startQuiz() {
-	theForm.style.display = 'none'; // hide the password form
+	theForm.style.display = 'block'; // hide the password form
 	theQuiz.style.display = 'block'; // show the quiz page
+	
 	randomQ(); // trigger first question
 }
-
+function hideButton(button) {
+	setTimeout(() => {
+			button.style.display = 'none';
+	}, 500); // 2000ms = 2 seconds
+}
 /*-----------------------------------*\
 $ The Quiz Begins...
 \*-----------------------------------*/
@@ -235,7 +242,7 @@ function next() {
 	topping(queDone); // setting up btn and steps counter...
 	if (queDone == totQ.length) {
 		// if reached the end of the questions
-		theQuiz.style.display = 'none';
+		theQuiz.style.display = 'block';
 		document.getElementById('theResult').style.display = 'block';
 		calcResult(); // calculates result
 		// alert('Good Job! Calculating Result');

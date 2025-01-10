@@ -25,7 +25,7 @@
 	<body onload="chkUser()">
 		<div class="container box-shadow">
 			<!-- The Form -->
-			<div id="username">
+			<div id="username" class="d-none">
 				<form class="form" onsubmit="return false;">
 					<i class="material-icons">face</i>
 					<h2>Tên của bạn là gì?</h2>
@@ -50,7 +50,7 @@
 				</form>
 			</div>
 			<!-- The Form -->
-			<div id="theForm">
+			<div id="theForm" class="d-none">
 				<form class="form" onsubmit="return false;">
 					<i class="material-icons finger-print">https</i>
 					<i class="material-icons warning">warning</i>
@@ -84,9 +84,10 @@
 					</button>
 				</form>
 			</div>
+			<div class="text-center quiz-start" id="start-quiz-link" onclick="startQuiz(); hideButton(this);"><button class="btn btn-primary">Bắt đầu làm trắc nghiệm</button></div>
 
 			<!-- Quiz Starts Here -->
-			<section id="theQuiz">
+			<section id="theQuiz" >
 				<form id="quizForm" onsubmit="return false;">
 					<h2>Trắc nghiệm tập hợp, Phần tử của tập hợp</h2>
 
