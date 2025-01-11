@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>CVĐ - KHKT</title>
+        <title>Agency - Start Bootstrap Theme</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -15,27 +15,197 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/styles.css" rel="stylesheet" />
+        <style>
+        </style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="/">CVĐ Web</a>
+                <a class="navbar-brand" href="../index.html">CVĐ Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ms-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#services">Tin học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">Anh văn</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Nhóm</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
                     </ul>
+                    <!-- Search form -->
+                    <style>
+                        .form-control {
+                            border-radius: 50px;
+                            font-size: 20px;
+                        }
+                        form .btn {
+                            border-radius: 10px;
+                            font-size: 20px;
+                        }
+                        form {
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-variation-settings:"slnt" 0;
+                        }
+                    </style>
+                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
                 </div>
             </div>
         </nav>
-      
+        <style>
+            .chat-bubble {
+                font-size: 50px;
+                position: fixed;
+                z-index: 10;
+                bottom: 20px;
+                right: 20px;
+                background-color: #ffc800;
+                color: white;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 0px 100px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, all 0.3s ease;
+                color: black
+             }
+
+            .chat-bubble:hover {
+                transform: scale(1.1);
+                background-color: black;
+                color: #ffc800;
+                box-shadow: 0 0 5px 5px #ffc800;
+            }
+            .chat-box {
+                position: fixed;
+                z-index: 10;
+                bottom: 120px;
+                right: 120px;
+                width: 600px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                box-shadow: 0px 0px 10px 1px black;
+            }
+    
+            .chat-header {
+                position: relative;
+                z-index: 10;
+                background-color: #ffc800;
+                color: black;
+                padding: 10px;
+                font-size: 30px;
+            }
+    
+            .chat-messages {
+                flex-grow: 1;
+                padding: 30px;
+                overflow-y: auto;
+                max-height: 200px;
+                background-color: rgb(255, 255, 255);
+                font-size: 28px;
+                border: solid #000000 1px;
+                color: #000000;
+                font-weight: 600;
+            }
+    
+            .chat-input {
+                display: flex;
+                padding: 10px;
+                background-color: #ffc800;
+            }
+    
+            .chat-input input {
+                flex-grow: 1;
+                padding: 8px;
+                border: 2px solid #000000;
+                border-radius: 4px;
+                font-size: 20px;
+            }
+    
+            .chat-input button {
+                margin-left: 5px;
+                padding: 8px 12px;
+                background-color: #000000;
+                color: #ffc800;
+                font-weight: 600;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 20px;
+                transition: transform 0.3s ease, all 0.3s ease;
+            }
+    
+            .chat-input button:hover {
+                background-color: #ffffff;
+                color: black;
+                transform: scale(1.1);
+                box-shadow: 0 0 5px 5px #ffffff;
+            }
+            .bubble-chat-font{
+                font-family: "Afacad Flux", serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                font-variation-settings:"slnt" 0;
+            }
+        </style>
+        <div class="bubble-chat-font">
+            <div class="chat-bubble" id="chatToggle"><i style="font-weight: 500;" class="fa-brands fa-rocketchat"></i></div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">Hỏi giáo sư Lộc <i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Nhập câu hỏi...">
+                <button id="chatSend">Gửi</button>
+            </div>
+        </div>
+
+        <script>
+            const chatToggle = document.getElementById('chatToggle');
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Toggle chat box visibility
+            chatToggle.addEventListener('click', () => {
+                if (chatBox.style.display === 'flex') {
+                    chatBox.style.display = 'none';
+                } else {
+                    chatBox.style.display = 'flex';
+                }
+            });
+
+            // Send message
+            chatSend.addEventListener('click', () => {
+                const message = chatInput.value.trim();
+                if (message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+
+            // Allow Enter key to send message
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    chatSend.click();
+                }
+            });
+        </script>
         <!-- Services-->
         
         <!-- Portfolio Grid-->
@@ -43,70 +213,168 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Tin học</h2>
-                    <h3 class="section-subheading text-muted">Tin học góp phần vào chuyển đổi số quốc gia.</h3>
+                    <h3 class="section-subheading text-muted">"Góp phần vào chuyển đổi số quốc gia!"</h3>
                 </div>
+                <style>
+                    .chantroisangtao{
+                        padding: 8px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 14vh;
+                        margin-bottom: 50px;
+                        border-radius: 50px;
+                        width: 550px;
+                        background-color: #ffc800;
+                        box-shadow: #ffc80075 0px 0px 16px 3px;
+                        font-family: "Afacad Flux", serif;
+                        font-optical-sizing: auto;
+                        font-style: normal;
+                        font-variation-settings:"slnt" 0;
+                    }
+                    img{
+                        width: 100%;
+                        max-height: 418px;
+                        object-fit: cover;
+                        border-radius: 10px;
+                        box-shadow: #ffc80075 0px 0px 10px 5px;
+                    }
+                    .portfolio-item{
+                        margin-bottom: 30px;
+                    }
+                    .portfolio-caption{
+                        border-radius: 15px;
+                    }
+                </style>
+                <h2 class="chantroisangtao">
+                    <img style="padding-right: 16px;box-shadow: none;display: inline;max-width: 80px;" class="logo" src="hinh/logos/chantroisangtao-logo.png" alt="">BỘ SÁCH CHÂN TRỜI SÁNG TẠO
+                </h2>
                 <div class="row row-cols-2 row-cols-xl-4">
                     <div class="col">
                         <!-- Portfolio item 1-->
-                        <div class="portfolio-item position-relative">
-                            <a class="portfolio-link" data-bs-toggle="modal">
+                         <!--TOÁN 6 TẬP 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="#">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="../assets/img/tin/tin6.jpg" alt="..." />
+                                <img class="img-fluid" src="hinh/tap1-toan6.png" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><a href="tin6.html" class="stretched-link">Tin 6</a></div>
-                                <div class="portfolio-caption-subheading text-muted">Kết nối tri thức</div>
+                                <div class="portfolio-caption-heading"><a href="tin6.html" class="stretched-link">Tin học 6</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <!-- Portfolio item 2-->
+                         <!--TOÁN 7 TẬP 1-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                            <a class="portfolio-link" href="#">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="../assets/img/tin/tin7.png" alt="..." />
+                                <img class="img-fluid" src="hinh/tap1-toan7.png" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><a href="tin7.html" class="stretched-link">Tin 7</a></div>
-                                <div class="portfolio-caption-subheading text-muted">Chân trời sáng tạo</div>
+                                <div class="portfolio-caption-heading"><a href="tin7.html" class="stretched-link">Tin học 7</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <!-- Portfolio item 3-->
+                         <!--TOÁN 8 TẬP 1-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                            <a class="portfolio-link" href="#">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="../assets/img/tin/tin8.png" alt="..." />
+                                <img class="img-fluid" src="hinh/tap1-toan8.png" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><a href="tin8.html" class="stretched-link">Tin 8</a></div>
-                                <div class="portfolio-caption-subheading text-muted">Chân trời sáng tạo</div>
+                                <div class="portfolio-caption-heading"><a href="tin8.html" class="stretched-link">Tin học 8</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <!-- Portfolio item 3-->
+                         <!--TOÁN 9 TẬP 1-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                            <a class="portfolio-link" href="#">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="../assets/img/tin/tin9.png" alt="..." />
+                                <img class="img-fluid" src="hinh/tap1-toan9.png" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><a href="tin9.html" class="stretched-link">Tin 9</a></div>
-                                <div class="portfolio-caption-subheading text-muted">Chân trời sáng tạo</div>
+                                <div class="portfolio-caption-heading"><a href="tin9.html" class="stretched-link">Tin học 9</a></div>
                             </div>
                         </div>
                     </div>
-                    
+                </div>
+                <h2 class="chantroisangtao" style="width: 500px;">
+                    <img style="padding-right: 16px;box-shadow: none;display: inline;max-width: 100px;" class="logo" src="hinh/logos/ketnoitrithuc.png" alt="">BỘ SÁCH KẾT NỐI TRI THỨC
+                </h2>
+                <div class="row row-cols-2 row-cols-xl-4">
+                    <div class="col">
+                        <!-- Portfolio item 2-->
+                         <!--TOÁN 6 TẬP 2-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="#portfolioModal3">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="hinh/KN-tin6.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading"><a href="tin6.html" class="stretched-link">Tin học 6</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Portfolio item 2-->
+                         <!--TOÁN 7 TẬP 2-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="#">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="hinh/tap2-toan7.jpg" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading"><a href="tin7.html" class="stretched-link">Tin học 7</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Portfolio item 2-->
+                         <!--TOÁN 8 TẬP 2-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="#">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="hinh/tap2-toan8.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading"><a href="tin8.html" class="stretched-link">Tin học 8</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Portfolio item 2-->
+                         <!--TOÁN 9 TẬP 2-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="#">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="hinh/tap2-toan9.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading"><a href="tin9.html" class="stretched-link">Tin học 9</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -24,21 +24,190 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="/">CVĐ Web</a>
+                <a class="navbar-brand" href="../index.html">CVĐ Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ms-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../anhvan/anhvan.html">Anh văn</a></li>
                     </ul>
+                    <!-- Search form -->
+                    <style>
+                        .form-control {
+                            border-radius: 50px;
+                            font-size: 20px;
+                        }
+                        form .btn {
+                            border-radius: 10px;
+                            font-size: 20px;
+                        }
+                        form {
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-variation-settings:"slnt" 0;
+                        }
+                    </style>
+                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
                 </div>
             </div>
         </nav>
-      
+        <style>
+            .chat-bubble {
+                font-size: 50px;
+                position: fixed;
+                z-index: 10;
+                bottom: 20px;
+                right: 20px;
+                background-color: #ffc800;
+                color: white;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 0px 100px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, all 0.3s ease;
+                color: black
+             }
+
+            .chat-bubble:hover {
+                transform: scale(1.1);
+                background-color: black;
+                color: #ffc800;
+                box-shadow: 0 0 5px 5px #ffc800;
+            }
+            .chat-box {
+                position: fixed;
+                z-index: 10;
+                bottom: 120px;
+                right: 120px;
+                width: 600px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                box-shadow: 0px 0px 10px 1px black;
+            }
+    
+            .chat-header {
+                position: relative;
+                z-index: 10;
+                background-color: #ffc800;
+                color: black;
+                padding: 10px;
+                font-size: 30px;
+            }
+    
+            .chat-messages {
+                flex-grow: 1;
+                padding: 30px;
+                overflow-y: auto;
+                max-height: 200px;
+                background-color: rgb(255, 255, 255);
+                font-size: 28px;
+                border: solid #000000 1px;
+                color: #000000;
+                font-weight: 600;
+            }
+    
+            .chat-input {
+                display: flex;
+                padding: 10px;
+                background-color: #ffc800;
+            }
+    
+            .chat-input input {
+                flex-grow: 1;
+                padding: 8px;
+                border: 2px solid #000000;
+                border-radius: 4px;
+                font-size: 20px;
+            }
+    
+            .chat-input button {
+                margin-left: 5px;
+                padding: 8px 12px;
+                background-color: #000000;
+                color: #ffc800;
+                font-weight: 600;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 20px;
+                transition: transform 0.3s ease, all 0.3s ease;
+            }
+    
+            .chat-input button:hover {
+                background-color: #ffffff;
+                color: black;
+                transform: scale(1.1);
+                box-shadow: 0 0 5px 5px #ffffff;
+            }
+            .bubble-chat-font{
+                font-family: "Afacad Flux", serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                font-variation-settings:"slnt" 0;
+            }
+        </style>
+        <div class="bubble-chat-font">
+            <div class="chat-bubble" id="chatToggle"><i style="font-weight: 500;" class="fa-brands fa-rocketchat"></i></div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">Hỏi giáo sư Lộc <i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Nhập câu hỏi...">
+                <button id="chatSend">Gửi</button>
+            </div>
+        </div>
+
+        <script>
+            const chatToggle = document.getElementById('chatToggle');
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Toggle chat box visibility
+            chatToggle.addEventListener('click', () => {
+                if (chatBox.style.display === 'flex') {
+                    chatBox.style.display = 'none';
+                } else {
+                    chatBox.style.display = 'flex';
+                }
+            });
+
+            // Send message
+            chatSend.addEventListener('click', () => {
+                const message = chatInput.value.trim();
+                if (message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+
+            // Allow Enter key to send message
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    chatSend.click();
+                }
+            });
+        </script>
         <!-- Services-->
         
         <!-- Portfolio Grid-->
@@ -72,7 +241,7 @@
                     }
                 </style>
                 <div class="pt-4" style="background-color: rgba(0, 0, 0, 0.050);border-radius: 15px;padding:20px;">
-                    <h3> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt và định nghĩa dạng toán của Bài 2:</h3>
+                    <h3> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt dạng toán của Bài 2:</h3>
                     <h5 style="padding-top: 5px;padding-left: 35px;font-weight: 400;">
                         <i style="text-decoration: underline;">Định nghĩa:</i> Số tự nhiên là các số dùng để đếm và bắt đầu từ số 0 (0, 1, 2, 3, 4, ...).
                     </h5>
