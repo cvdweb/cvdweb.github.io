@@ -24,66 +24,7 @@
 	</head>
 	<body onload="chkUser()">
 		<div class="container box-shadow">
-			<!-- The Form -->
-			<div id="username">
-				<form class="form" onsubmit="return false;">
-					<i class="material-icons">face</i>
-					<h2>Tên của bạn là gì?</h2>
-					<div class="form-group mx-sm-3 mb-3 passBox">
-						<label for="pass" class="sr-only">Tên (Nick Name)</label>
-						<input
-							type="text"
-							class="form-control"
-							id="uname"
-							placeholder="Nick Name"
-							onfocus="this.style.borderColor = '#007bff'"
-							onblur="this.style.borderColor = '#ced4da'"
-						/>
-					</div>
-					<button
-						type="submit"
-						class="btn btn-primary mb-2"
-						onclick="askPass();"
-					>
-						Đang xử lý...
-					</button>
-				</form>
-			</div>
-			<!-- The Form -->
-			<div id="theForm">
-				<form class="form" onsubmit="return false;">
-					<i class="material-icons finger-print">https</i>
-					<i class="material-icons warning">warning</i>
-					<i class="material-icons success">done_all</i>
-					<h2
-						id="errH"
-						style="font-weight:bold;font-size:1.7em;margin-bottom: 30px;"
-					></h2>
-					<h2 id="err"></h2>
-					<div class="form-group mx-sm-3 mb-3 passBox">
-						<label for="pass" class="sr-only">Mật khẩu làm bài</label>
-						<input
-							type="password"
-							class="form-control animated"
-							id="pass"
-							placeholder="Mật khẩu làm bài"
-							onkeyup="typing();"
-							onfocus="resetErr();"
-							onblur="this.style.borderColor = '#ced4da';"
-						/>
-					</div>
-					<div>Mật khẩu: 11223344</div>
-					<button
-						type="submit"
-						disabled="disabled"
-						class="btn btn-primary mb-2"
-						id="submit"
-						onclick="chkPass(this);"
-					>
-						Xác nhận
-					</button>
-				</form>
-			</div>
+			
 
 			<!-- Quiz Starts Here -->
 			<section id="theQuiz">

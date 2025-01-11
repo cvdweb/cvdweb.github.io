@@ -11,29 +11,29 @@ function CQuiz(que, o1, o2, o3, o4, ans, d) {
 
 // Question 1
 var q1 = new CQuiz(
-	'Thông tin được xử lý như thế nào trước khi đưa vào máy tính?',
-	'Dãy bit',
-	'Hình ảnh',
-	'Âm thanh',
-	'Tùy ý',
-	1,
+	'Jack like doing DIY so he joined a _____ club,yesterday',
+	'music',
+	'english',
+	'craft',
+	'maths',
+	3,
 	0
 );
 
 // Question 2
 var q2 = new CQuiz(
-	'Câu hỏi số 2?',
-	'Đáp án 1',
-	'Đáp án 2',
-	'Đáp án 3',
-	'Đáp án 4',
-	1,
+	'Sakai knife is made by high skilled japanese ',
+	'people',
+	'chief',
+	'chef',
+	' Artisans',
+	4,
 	0	
 );
 
 // Question 3
 var q3 = new CQuiz(
-	'Câu hỏi số 3',
+	'',
 	'False',
 	'True',
 	'1',
