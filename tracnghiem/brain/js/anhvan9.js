@@ -22,7 +22,7 @@ var q1 = new CQuiz(
 
 // Question 2
 var q2 = new CQuiz(
-	'Sakai knife is made by high skilled japanese ',
+	'Sakai knife is made by high skilled japanese______',
 	'people',
 	'chief',
 	'chef',
@@ -33,33 +33,32 @@ var q2 = new CQuiz(
 
 // Question 3
 var q3 = new CQuiz(
-	'',
-	'False',
-	'True',
-	'1',
-	'0',
-	2,
-	0
+	"I have so many ingredients, but I don't know___to make!",
+	'how',
+	'what',
+	'when',
+	'where',
+	1,
+	0	
 );
-
 // Question 4
 var q4 = new CQuiz(
-	'Câu hỏi 4?',
-	'a',
-	'b',
-	'c',
-	'd',
-	3,
+	"Thương start learn english yesterday, and she don't know_____to start",
+	'how',
+	'what',
+	'when',
+	'where',
+	4,
 	0
 );
 
 // Question 5
 var q5 = new CQuiz(
-	'Câu hỏi số 5?',
-	'a',
-	'b',
-	'c',
-	'd',
+	'"we will travel till the next month, please______ our chilren"',
+	'take part in',
+	"take care of",
+	"take back",
+	'give up',
 	2,
 	0
 );
