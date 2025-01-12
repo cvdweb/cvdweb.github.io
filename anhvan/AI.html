@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>giáo sư lộc</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chatbox {
+            background-color: white;
+            width: 300px;
+            height: 400px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .messages {
+            overflow-y: scroll;
+            flex-grow: 1;
+            padding: 10px;
+            height: 80%;
+        }
+        .message {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .user-message {
+            background-color: #f1f1f1;
+            text-align: right;
+        }
+        .ai-message {
+            background-color: #e0e0e0;
+            text-align: left;
+        }
+        .input-area {
+            display: flex;
+        }
+        .input-area input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .input-area button {
+            width: 20%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .input-area button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbox">
+        <div class="messages" id="messages">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Hàm gửi tin nhắn
+        function sendMessage() {
+            var userMessage = document.getElementById('userInput').value;
+            if (userMessage.trim() === "") return;
+
+            // Hiển thị tin nhắn người dùng
+            var messagesDiv = document.getElementById('messages');
+            var userMessageDiv = document.createElement('div');
+            userMessageDiv.classList.add('message', 'user-message');
+            userMessageDiv.textContent = userMessage;
+            messagesDiv.appendChild(userMessageDiv);
+
+            // Xóa trường nhập liệu
+            document.getElementById('userInput').value = "";
+
+            // Phản hồi AI
+            var aiResponse = getAIResponse(userMessage);
+            var aiMessageDiv = document.createElement('div');
+            aiMessageDiv.classList.add('message', 'ai-message');
+            aiMessageDiv.textContent = aiResponse;
+            messagesDiv.appendChild(aiMessageDiv);
+
+            // Cuộn xuống dưới cùng để xem tin nhắn mới
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Hàm trả lời câu hỏi từ người dùng
+        function getAIResponse(userMessage) {
+            var response = "Sorry, I don't understand that.";
+            var messageLowerCase = userMessage.toLowerCase();
+
+            // Xử lý câu hỏi đơn giản
+            if (messageLowerCase.includes("hello")) {
+                response = "Hello! How can I help you today?";
+            } else if (messageLowerCase.includes("how are you")) {
+                response = "I'm just a bot, but I'm doing great! How about you?";
+            } else if (messageLowerCase.includes("bye")) {
+                response = "Goodbye! Have a great day!";
+            } else if (messageLowerCase.includes("thương")) {
+                response = "I love her";
+            }
+            
+            // Trả lời các câu hỏi khác
+            else if (messageLowerCase.includes("what's your name")) {
+                response = "I'm just a chatbot, I don't have a name. But you can call me Bot!";
+            } else if (messageLowerCase.includes("how old are you")) {
+                response = "I don't age, I'm just a program!";
+            } else if (messageLowerCase.includes("where are you from")) {
+                response = "I'm from the internet!";
+            }
+
+            return response;
+        }
+    </script>
+</body>
+</html>

@@ -11,55 +11,54 @@ function CQuiz(que, o1, o2, o3, o4, ans, d) {
 
 // Question 1
 var q1 = new CQuiz(
-	'Thông tin được xử lý như thế nào trước khi đưa vào máy tính?',
-	'Dãy bit',
-	'Hình ảnh',
-	'Âm thanh',
-	'Tùy ý',
-	1,
+	'Jack like doing DIY so he joined a _____ club,yesterday',
+	'music',
+	'english',
+	'craft',
+	'maths',
+	3,
 	0
 );
 
 // Question 2
 var q2 = new CQuiz(
-	'Câu hỏi số 2?',
-	'Đáp án 1',
-	'Đáp án 2',
-	'Đáp án 3',
-	'Đáp án 4',
-	1,
+	'Sakai knife is made by high skilled japanese______',
+	'people',
+	'chief',
+	'chef',
+	' Artisans',
+	4,
 	0	
 );
 
 // Question 3
 var q3 = new CQuiz(
-	'Câu hỏi số 3',
-	'False',
-	'True',
-	'1',
-	'0',
-	2,
-	0
+	"I have so many ingredients, but I don't know___to make!",
+	'how',
+	'what',
+	'when',
+	'where',
+	1,
+	0	
 );
-
 // Question 4
 var q4 = new CQuiz(
-	'Câu hỏi 4?',
-	'a',
-	'b',
-	'c',
-	'd',
-	3,
+	"Thương start learn english yesterday, and she don't know_____to start",
+	'how',
+	'what',
+	'when',
+	'where',
+	4,
 	0
 );
 
 // Question 5
 var q5 = new CQuiz(
-	'Câu hỏi số 5?',
-	'a',
-	'b',
-	'c',
-	'd',
+	'"we will travel till the next month, please______ our chilren"',
+	'take part in',
+	"take care of",
+	"take back",
+	'give up',
 	2,
 	0
 );
