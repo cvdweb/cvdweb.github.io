@@ -11376,4 +11376,19 @@ section#contact form#contactForm :-ms-input-placeholder {
 .section-anhvan9{
   background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata6tap1GV.jpg');
 }
-
+.chat-messages div {
+  width: fit-content;
+  max-width: 500px;
+  word-wrap: break-word;
+  height: auto;
+  border-radius: 40px;
+  background-color: rgb(202, 202, 202);
+  padding: 16px;
+  margin-top: 10px;
+  color: black;
+  font-size: 20px;
+}
+.chat-messages {
+  height: 300px !important;
+  padding: 16px !important;
+}

@@ -30,11 +30,9 @@
     </head>
     <body id="page-top">
         <!-- Navigation-->
-
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-
             <div class="container">
-                <a class="navbar-brand" href="/">CVĐ Web</a>
+                <a class="navbar-brand" href="../index.html">CVĐ Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ms-1"></i>
@@ -43,9 +41,29 @@
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
                         <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Nhóm</a></li>
+                        <li class="nav-item"><a class="nav-link" href="anhvan.html">Anh văn</a></li>
                     </ul>
+                    <!-- Search form -->
+                    <style>
+                        .form-control {
+                            border-radius: 50px;
+                            font-size: 20px;
+                        }
+                        form .btn {
+                            border-radius: 10px;
+                            font-size: 20px;
+                        }
+                        form {
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-variation-settings:"slnt" 0;
+                        }
+                    </style>
+                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -53,16 +71,10 @@
         <!-- Services-->
         
         <!-- Portfolio Grid-->
-<<<<<<< HEAD
-        <section class="page-section section-anhvan section-anhvan7" id="portfolio" >
-            <div class="container">
-                <div class="text-center d-none">
-=======
         <section class="page-section section-anhvan section-anhvan7" id="portfolio" > 
             <div class="text-with-glow" style="text-align: center;">TIẾNG ANH 7</div>
             <div class="container">
                 <div class="text-center d-none  ">
->>>>>>> dd9e876b7e7155d8846e49427d834cfd376cbf02
                     <h2 class="section-heading text-uppercase">Tin 8</h2>
                     <h3 class="section-subheading text-muted">Tin học 8-Chân trời sáng tạo.</h3>
                 </div>
@@ -108,7 +120,7 @@
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <!-- Portfolio item 3-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                            <a class="portfolio-link" href="#portfolioModal3">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
