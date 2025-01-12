@@ -15,21 +15,35 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/styles.css" rel="stylesheet" />
+        <style>
+         .text-with-glow {
+            position: relative;
+            font-size: 100px;
+            color: white; /* Màu chữ */
+            text-shadow: 
+                2px 2px 4px rgba(255, 165, 0, 0.7), /* Viền cam xung quanh */
+                -2px -2px 4px rgba(255, 165, 0, 0.7),
+                2px -2px 4px rgba(255, 165, 0, 0.7),
+                -2px 2px 4px rgba(255, 165, 0, 0.7);
+                top:-100px;
+        }</style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
+
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+
             <div class="container">
-                <a class="navbar-brand" href="#page-top">CVĐ Web</a>
+                <a class="navbar-brand" href="/">CVĐ Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ms-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#services">Tin học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">Anh văn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">Nhóm</a></li>
                     </ul>
                 </div>
@@ -39,9 +53,10 @@
         <!-- Services-->
         
         <!-- Portfolio Grid-->
-        <section class="page-section section-anhvan section-anhvan7" id="portfolio" >
+        <section class="page-section section-anhvan section-anhvan7" id="portfolio" > 
+            <div class="text-with-glow" style="text-align: center;">TIẾNG ANH 7</div>
             <div class="container">
-                <div class="text-center d-none">
+                <div class="text-center d-none  ">
                     <h2 class="section-heading text-uppercase">Tin 8</h2>
                     <h3 class="section-subheading text-muted">Tin học 8-Chân trời sáng tạo.</h3>
                 </div>
@@ -53,7 +68,15 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="../assets/img/portfolio/1.jpg" alt="..." />
+                                <style>
+                                    img{
+                                    width: 400px;
+                                    height:250px ;
+                                    object-fit: cover;
+                                    }
+    
+                                    </style>
+                                <img class="img-fluid" src="/toan//hinh/download.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">Bài 1</div>
