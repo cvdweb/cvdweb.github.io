@@ -73,161 +73,7 @@
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase"> <i class="bi bi-book"></i> Anh văn  <i class="fas fa-search"></i> </h2>
                     <h3 class="section-subheading text-muted">Muốn đi xa phải giao tiếp tốt.</h3>
-                   
-                        <style>
-                            /* body {
-                                font-family: Arial, sans-serif;
-                                background-color: #f0f0f0;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                height: 100vh;
-                                margin: 0;
-                            } */
-                            .circle {
-                                width: 60px;
-                                height: 60px;
-                                background-color: #4CAF50;
-                                border-radius: 50%;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                color: white;
-                                font-size: 20px;
-                                font-weight: bold;
-                                cursor: pointer;
-                                position: fixed;
-                                bottom: 20px;
-                                right: 20px;
-                                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-                            }
-                            .chatbox {
-                                position: fixed;
-                                bottom: 100px;
-                                right: 20px;
-                                background-color: white;
-                                width: 300px;
-                                height: 400px;
-                                padding: 10px;
-                                border-radius: 10px;
-                                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-                                display: none;
-                                flex-direction: column;
-                                justify-content: flex-end;
-                            }
-                            .messages {
-                                overflow-y: scroll;
-                                flex-grow: 1;
-                                padding: 10px;
-                                height: 80%;
-                            }
-                            .message {
-                                margin: 5px;
-                                padding: 10px;
-                                border-radius: 10px;
-                            }
-                            .user-message {
-                                background-color: #f1f1f1;
-                                text-align: right;
-                            }
-                            .ai-message {
-                                background-color: #e0e0e0;
-                                text-align: left;
-                            }
-                            .input-area {
-                                display: flex;
-                            }
-                            .input-area input {
-                                width: 80%;
-                                padding: 10px;
-                                border: 1px solid #ccc;
-                                border-radius: 10px;
-                            }
-                            .input-area button {
-                                width: 20%;
-                                padding: 10px;
-                                border: 1px solid #ccc;
-                                background-color: #4CAF50;
-                                color: white;
-                                border-radius: 10px;
-                                cursor: pointer;
-                            }
-                            .input-area button:hover {
-                                background-color: #45a049;
-                            }
-                        </style>
-                   
-                        <!-- Hình tròn -->
-                        <div class="circle" onclick="toggleChat()">AI</div>
                     
-                        <!-- Khung chat -->
-                        <div class="chatbox" id="chatbox">
-                            <div class="messages" id="messages">
-                                <!-- Tin nhắn sẽ hiển thị ở đây -->
-                            </div>
-                            <div class="input-area">
-                                <input type="text" id="userInput" placeholder="Type a message..." />
-                                <button onclick="sendMessage()">Send</button>
-                            </div>
-                        </div>
-                    
-                        <script>
-                            // Hàm bật/tắt khung chat
-                            function toggleChat() {
-                                var chatbox = document.getElementById('chatbox');
-                                if (chatbox.style.display === "none" || chatbox.style.display === "") {
-                                    chatbox.style.display = "flex";
-                                } else {
-                                    chatbox.style.display = "none";
-                                }
-                            }
-                    
-                            // Hàm gửi tin nhắn
-                            function sendMessage() {
-                                var userMessage = document.getElementById('userInput').value;
-                                if (userMessage.trim() === "") return;
-                    
-                                // Hiển thị tin nhắn người dùng
-                                var messagesDiv = document.getElementById('messages');
-                                var userMessageDiv = document.createElement('div');
-                                userMessageDiv.classList.add('message', 'user-message');
-                                userMessageDiv.textContent = userMessage;
-                                messagesDiv.appendChild(userMessageDiv);
-                    
-                                // Xóa trường nhập liệu
-                                document.getElementById('userInput').value = "";
-                    
-                                // Phản hồi AI
-                                var aiResponse = getAIResponse(userMessage);
-                                var aiMessageDiv = document.createElement('div');
-                                aiMessageDiv.classList.add('message', 'ai-message');
-                                aiMessageDiv.textContent = aiResponse;
-                                messagesDiv.appendChild(aiMessageDiv);
-                    
-                                // Cuộn xuống dưới cùng để xem tin nhắn mới
-                                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                            }
-                    
-                            // Hàm trả lời câu hỏi từ người dùng
-                            function getAIResponse(userMessage) {
-                                var response = "Sorry, I don't understand that.";
-                                var messageLowerCase = userMessage.toLowerCase();
-                    
-                                // Xử lý câu hỏi đơn giản
-                                if (messageLowerCase.includes("hello")) {
-                                    response = "Hello! How can I help you today?";
-                                } else if (messageLowerCase.includes("how are you")) {
-                                    response = "I'm just a bot, but I'm doing great! How about you?";
-                                } else if (messageLowerCase.includes("bye")) {
-                                    response = "Goodbye! Have a great day!";
-                                } else if (messageLowerCase.includes("thương")) {
-                                    response = "I love her";
-                                }
-                    
-                                return response;
-                            }
-                        </script>
-                 
                     
                     
                     <h2 class="chantroisangtao">
@@ -300,6 +146,239 @@
                     
                 </div>
             </div>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot AI</title>
+    <style>
+
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .circle {
+            width: 60px;
+            height: 60px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .chatbox {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background-color: white;
+            width: 300px;
+            height: 450px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+        }
+        .chatbox-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .chatbox-header .avatar {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .chatbox-header .name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .chatbox-header .close-btn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .messages {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 10px;
+        }
+        .message {
+            display: flex;
+            align-items: flex-end;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .user-message {
+            background-color: #f1f1f1;
+            align-self: flex-end;
+            text-align: right;
+        }
+        .ai-message {
+            background-color: #e0e0e0;
+            align-self: flex-start;
+            text-align: left;
+        }
+        .ai-message .ai-avatar {
+            width: 30px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .message-content {
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        .ai{   
+
+
+            
+        }
+        .input-area input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .input-area button {
+            width: 20%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .input-area button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hình tròn -->
+    <div class="circle" onclick="toggleChat()">AI</div>
+
+    <!-- Khung chat -->
+    <div class="chatbox" id="chatbox">
+        <!-- Header biểu thị danh tính -->
+        <div class="chatbox-header">
+            <div class="avatar">AI</div>
+            <div class="name">Chatbot AI</div>
+            <button class="close-btn" onclick="toggleChat()">✖</button>
+        </div>
+
+        <!-- Khung hiển thị tin nhắn -->
+        <div class="messages" id="messages"></div>
+
+        <!-- Khung nhập tin nhắn -->
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Hàm bật/tắt khung chat
+        function toggleChat() {
+            var chatbox = document.getElementById('chatbox');
+            if (chatbox.style.display === "none" || chatbox.style.display === "") {
+                chatbox.style.display = "flex";
+            } else {
+                chatbox.style.display = "none";
+            }
+        }
+
+        // Hàm gửi tin nhắn
+        function sendMessage() {
+            var userMessage = document.getElementById('userInput').value;
+            if (userMessage.trim() === "") return;
+
+            // Hiển thị tin nhắn người dùng
+            var messagesDiv = document.getElementById('messages');
+            var userMessageDiv = document.createElement('div');
+            userMessageDiv.classList.add('message', 'user-message');
+            userMessageDiv.innerHTML = `<div class="message-content">${userMessage}</div>`;
+            messagesDiv.appendChild(userMessageDiv);
+
+            // Xóa trường nhập liệu
+            document.getElementById('userInput').value = "";
+
+            // Phản hồi AI sau 1 giây
+            setTimeout(() => {
+                var aiResponse = getAIResponse(userMessage);
+                var aiMessageDiv = document.createElement('div');
+                aiMessageDiv.classList.add('message', 'ai-message');
+                aiMessageDiv.innerHTML = `
+                    <div class="ai-avatar">AI</div>
+                    <div class="message-content">${aiResponse}</div>
+                `;
+                messagesDiv.appendChild(aiMessageDiv);
+
+                // Cuộn xuống cuối khung chat
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 1000);
+        }
+
+        // Hàm phản hồi của AI
+        function getAIResponse(userMessage) {
+            var response = "I'm not sure I understand that.";
+            var messageLowerCase = userMessage.toLowerCase();
+
+            // Các câu trả lời đơn giản
+            if (messageLowerCase.includes("hello")) {
+                response = "Hello! How can I assist you today?";
+            } else if (messageLowerCase.includes("how are you")) {
+                response = "I'm just a bot, but I'm doing great!";
+            } else if (messageLowerCase.includes("bye")) {
+                response = "Goodbye! Have a nice day!";
+            }
+
+            return response;
+        }
+    </script>
+</body>
+</html>
+
         </section>
        
        
