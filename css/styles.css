@@ -11358,7 +11358,7 @@ section#contact form#contactForm :-ms-input-placeholder {
   }
 }
 .section-anhvan{
-  background-position: top 92px center;
+  background-position: top -100px center;
   background-repeat: no-repeat;
   background-size:cover;
  background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata6tap1GV.jpg');
@@ -11368,13 +11368,15 @@ section#contact form#contactForm :-ms-input-placeholder {
   background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata6tap1GV.jpg');
 }
 .section-anhvan7{
-  background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata6tap1GV.jpg');
+  background-image:  url(/toan/hinh/tiếng\ anh\ -\ tiến.png);
 }
 .section-anhvan8{
-  background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata6tap1GV.jpg');
+  background-image: url(/toan/hinh/tien-anh-2.png);
+
 }
+
 .section-anhvan9{
-  background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata6tap1GV.jpg');
+  background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata8tap1GV.jpg');
 }
 .chat-messages div {
   width: fit-content;

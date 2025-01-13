@@ -244,6 +244,7 @@ function next() {
 		// if reached the end of the questions
 		theQuiz.style.display = 'block';
 		document.getElementById('theResult').style.display = 'block';
+		document.getElementById('theQuiz').style.display = 'none'; //thêm dòng này
 		calcResult(); // calculates result
 		// alert('Good Job! Calculating Result');
 		return false;
