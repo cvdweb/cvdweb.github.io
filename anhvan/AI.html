@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>giáo sư lộc</title>
+    <title>Giáo Sư Lộc</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,14 +79,17 @@
     </div>
 
     <script>
+        // Thêm API Key của bạn tại đây
+        const apiKey = "YOUR_API_KEY_HERE"; // Thay bằng API Key thật của bạn
+
         // Hàm gửi tin nhắn
-        function sendMessage() {
-            var userMessage = document.getElementById('userInput').value;
+        async function sendMessage() {
+            const userMessage = document.getElementById('userInput').value;
             if (userMessage.trim() === "") return;
 
             // Hiển thị tin nhắn người dùng
-            var messagesDiv = document.getElementById('messages');
-            var userMessageDiv = document.createElement('div');
+            const messagesDiv = document.getElementById('messages');
+            const userMessageDiv = document.createElement('div');
             userMessageDiv.classList.add('message', 'user-message');
             userMessageDiv.textContent = userMessage;
             messagesDiv.appendChild(userMessageDiv);
@@ -95,9 +97,11 @@
             // Xóa trường nhập liệu
             document.getElementById('userInput').value = "";
 
-            // Phản hồi AI
-            var aiResponse = getAIResponse(userMessage);
-            var aiMessageDiv = document.createElement('div');
+            // Gửi tin nhắn đến GPT-3/4
+            const aiResponse = await getAIResponse(userMessage);
+
+            // Hiển thị phản hồi từ AI
+            const aiMessageDiv = document.createElement('div');
             aiMessageDiv.classList.add('message', 'ai-message');
             aiMessageDiv.textContent = aiResponse;
             messagesDiv.appendChild(aiMessageDiv);
@@ -106,33 +110,39 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        // Hàm trả lời câu hỏi từ người dùng
-        function getAIResponse(userMessage) {
-            var response = "Sorry, I don't understand that.";
-            var messageLowerCase = userMessage.toLowerCase();
+        // Hàm gọi OpenAI API để trả lời
+        async function getAIResponse(userMessage) {
+            const apiUrl = "https://api.openai.com/v1/chat/completions";
 
-            // Xử lý câu hỏi đơn giản
-            if (messageLowerCase.includes("hello")) {
-                response = "Hello! How can I help you today?";
-            } else if (messageLowerCase.includes("how are you")) {
-                response = "I'm just a bot, but I'm doing great! How about you?";
-            } else if (messageLowerCase.includes("bye")) {
-                response = "Goodbye! Have a great day!";
-            } else if (messageLowerCase.includes("thương")) {
-                response = "I love her";
-            }
-            
-            // Trả lời các câu hỏi khác
-            else if (messageLowerCase.includes("what's your name")) {
-                response = "I'm just a chatbot, I don't have a name. But you can call me Bot!";
-            } else if (messageLowerCase.includes("how old are you")) {
-                response = "I don't age, I'm just a program!";
-            } else if (messageLowerCase.includes("where are you from")) {
-                response = "I'm from the internet!";
-            }
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo", // Hoặc "gpt-4" nếu bạn muốn dùng GPT-4
+                        messages: [{ role: "user", content: userMessage }],
+                        max_tokens: 150
+                    })
+                });
 
-            return response;
+                const data = await response.json();
+
+                // Kiểm tra nếu API phản hồi lỗi
+                if (response.ok) {
+                    return data.choices[0].message.content;
+                } else {
+                    console.error("Error from API:", data);
+                    return `Error: ${data.error.message || "Unknown error occurred"}`;
+                }
+            } catch (error) {
+                console.error("Error connecting to OpenAI API:", error);
+                return "There was an error connecting to the server. Please try again.";
+            }
         }
     </script>
 </body>
 </html>
+
