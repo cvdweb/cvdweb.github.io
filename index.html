@@ -49,10 +49,62 @@
                             font-variation-settings:"slnt" 0;
                         }
                     </style>
-                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
-                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
-                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
-                    </form>
+                  <form class="d-flex ms-lg-3" action="./search.html" method="get">
+    <div style="position: relative; width: 100%;">
+        <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search" autocomplete="off">
+        <ul id="suggestions" class="list-group search-results d-none" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background-color: white; border: 1px solid #ccc; border-radius: 5px;"></ul>
+    </div>
+    <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+</form>
+
+<script>
+    // Danh sách bài học
+    const htmlFiles = [
+        { path: "/tin/tin.html", name: "Môn Tin" },
+        { path: "/tin/tin6-bai1.html", name: "Tin 6 - Bài 1" },
+        { path: "/toan/toan.html", name: "Môn Toán" },
+        { path: "/toan/toan6-bai1.html", name: "Toán 6 - Bài 1" },
+        { path: "/toan/toan7-bai2.html", name: "Toán 7 - Bài 2" }
+    ];
+
+    const searchInput = document.getElementById('searchInput');
+    const suggestions = document.getElementById('suggestions');
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        suggestions.innerHTML = ''; // Xóa gợi ý cũ
+        if (query.length > 0) {
+            const results = htmlFiles.filter(file => file.name.toLowerCase().includes(query));
+            if (results.length > 0) {
+                results.forEach(file => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.style.cursor = 'pointer';
+                    listItem.textContent = file.name;
+                    listItem.onclick = () => {
+                        searchInput.value = file.name; // Điền từ khóa vào ô tìm kiếm
+                        window.location.href = file.path; // Chuyển hướng khi nhấp
+                    };
+                    suggestions.appendChild(listItem);
+                });
+                suggestions.classList.remove('d-none'); // Hiển thị gợi ý
+            } else {
+                suggestions.innerHTML = '<li class="list-group-item">Không tìm thấy kết quả phù hợp.</li>';
+                suggestions.classList.remove('d-none');
+            }
+        } else {
+            suggestions.classList.add('d-none'); // Ẩn gợi ý nếu không có từ khóa
+        }
+    });
+
+    // Ẩn danh sách gợi ý khi nhấn ra ngoài
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-container') && e.target !== searchInput) {
+            suggestions.classList.add('d-none');
+        }
+    });
+</script>
+
                 </div>
             </div>
         </nav>

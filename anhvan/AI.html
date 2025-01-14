@@ -69,80 +69,41 @@
 </head>
 <body>
     <div class="chatbox">
-        <div class="messages" id="messages">
-            <!-- Messages will appear here -->
-        </div>
+        <div class="messages" id="messages"></div>
         <div class="input-area">
             <input type="text" id="userInput" placeholder="Type a message..." />
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
-
     <script>
-        // Thêm API Key của bạn tại đây
-        const apiKey = "YOUR_API_KEY_HERE"; // Thay bằng API Key thật của bạn
-
-        // Hàm gửi tin nhắn
         async function sendMessage() {
             const userMessage = document.getElementById('userInput').value;
             if (userMessage.trim() === "") return;
 
-            // Hiển thị tin nhắn người dùng
             const messagesDiv = document.getElementById('messages');
             const userMessageDiv = document.createElement('div');
             userMessageDiv.classList.add('message', 'user-message');
             userMessageDiv.textContent = userMessage;
             messagesDiv.appendChild(userMessageDiv);
-
-            // Xóa trường nhập liệu
             document.getElementById('userInput').value = "";
 
-            // Gửi tin nhắn đến GPT-3/4
-            const aiResponse = await getAIResponse(userMessage);
-
-            // Hiển thị phản hồi từ AI
-            const aiMessageDiv = document.createElement('div');
-            aiMessageDiv.classList.add('message', 'ai-message');
-            aiMessageDiv.textContent = aiResponse;
-            messagesDiv.appendChild(aiMessageDiv);
-
-            // Cuộn xuống dưới cùng để xem tin nhắn mới
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Hàm gọi OpenAI API để trả lời
-        async function getAIResponse(userMessage) {
-            const apiUrl = "https://api.openai.com/v1/chat/completions";
-
             try {
-                const response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-3.5-turbo", // Hoặc "gpt-4" nếu bạn muốn dùng GPT-4
-                        messages: [{ role: "user", content: userMessage }],
-                        max_tokens: 150
-                    })
+                const response = await fetch('http://localhost:3000/api/getAIResponse', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userMessage }),
                 });
 
                 const data = await response.json();
-
-                // Kiểm tra nếu API phản hồi lỗi
-                if (response.ok) {
-                    return data.choices[0].message.content;
-                } else {
-                    console.error("Error from API:", data);
-                    return `Error: ${data.error.message || "Unknown error occurred"}`;
-                }
+                const aiMessageDiv = document.createElement('div');
+                aiMessageDiv.classList.add('message', 'ai-message');
+                aiMessageDiv.textContent = data.aiResponse || "No response.";
+                messagesDiv.appendChild(aiMessageDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
             } catch (error) {
-                console.error("Error connecting to OpenAI API:", error);
-                return "There was an error connecting to the server. Please try again.";
+                console.error("Error:", error);
             }
         }
     </script>
 </body>
 </html>
-
