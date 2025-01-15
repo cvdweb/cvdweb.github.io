@@ -30,9 +30,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="../tin/tin.html">Tin học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="toan.html">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../anhvan/anhvan.html">Anh văn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
                     </ul>
                     <!-- Search form -->
                     <style>
@@ -52,9 +52,126 @@
                         }
                     </style>
                     <form class="d-flex ms-lg-3" action="./search.html" method="get">
-                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <div style="position: relative; width: 100%;">
+                            <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search" autocomplete="off">
+                            <ul id="suggestions" class="list-group search-results d-none" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background-color: white; border: 1px solid #ccc; border-radius: 5px;"></ul>
+                        </div>
                         <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
                     </form>
+                    <style>
+                        #suggestions {
+                            overflow-y: scroll;
+                            max-height: 330px;
+                            background-color: #242828;
+                            border: 1px solid #ffc800;
+                        }
+                        .list-group-item {
+                            border: 1px solid #ccc;
+                            background-color: #242828;
+                        }
+                        #suggestions li {
+                            color: #ffffff;
+                            font-weight: 700;
+                        }
+                    </style>
+                    <script>
+                        // Danh sách bài học
+                        const htmlFiles = [
+                            // Anh văn
+                            { path: "/anhvan/anhvan.html", name: "Môn Anh Văn / Tiếng Anh" },
+                            { path: "/anhvan/anhvan6 bài 1.html", name: "Anh Văn 6 - Bài 1" },
+                            { path: "/anhvan/anhvan6 bài 1 copy.html", name: "Anh Văn 6 - Bài 2" },
+                            { path: "/anhvan/anhvan6.html", name: "Anh Văn 6" },
+                            { path: "/anhvan/anhvan7-bài-1 copy 2.html", name: "Anh Văn 7 - Bài 2" },
+                            { path: "/anhvan/anhvan7-bài-1.html", name: "Anh Văn 7 - Bài 1" },
+                            { path: "/anhvan/anhvan7.html", name: "Anh Văn 7" },
+                            { path: "/anhvan/anhvan8-bai1.html", name: "Anh Văn 8 - Bài 1" },
+                            { path: "/anhvan/anhvan8-bai2.html", name: "Anh Văn 8 - Bài 2" },
+                            { path: "/anhvan/anhvan8.html", name: "Anh Văn 8" },
+                            { path: "/anhvan/anhvan9-bai-1.html", name: "Anh Văn 9 - Bài 1" },
+                            { path: "/anhvan/anhvan9-bai-2.html", name: "Anh Văn 9 - Bài 2" },
+                            { path: "/anhvan/anhvan9.html", name: "Anh Văn 9" },
+                            // Tin học:
+                            { path: "/tin/tin.html", name: "Môn Tin" },
+                            { path: "/tin/tin6-bai1.html", name: "Tin 6 - Bài 1" },
+                            { path: "/tin/tin6-bai2.html", name: "Tin 6 - Bài 2" },
+                            { path: "/tin/tin6-bai3.html", name: "Tin 6 - Bài 3" },
+                            { path: "/tin/tin6.html", name: "Trọn bộ Tin 6" },
+                            { path: "/tin/tin7-bai1.html", name: "Tin 7 - Bài 1" },
+                            { path: "/tin/tin7-bai2.html", name: "Tin 7 - Bài 2" },
+                            { path: "/tin/tin7.html", name: "Trọn bộ Tin 7" },
+                            { path: "/tin/tin8-bai1.html", name: "Tin 8 - Bài 1" },
+                            { path: "/tin/tin8-bai2.html", name: "Tin 8 - Bài 2" },
+                            { path: "/tin/tin8-bai3.html", name: "Tin 8 - Bài 3" },
+                            { path: "/tin/tin8-bai4.html", name: "Tin 8 - Bài 4" },
+                            { path: "/tin/tin8.html", name: "Trọn bộ Tin 8" },
+                            { path: "/tin/tin9-bai1.html", name: "Tin 9 - Bài 1" },
+                            { path: "/tin/tin9-bai2.html", name: "Tin 9 - Bài 2" },
+                            { path: "/tin/tin9-bai3.html", name: "Tin 9 - Bài 3" },
+                            { path: "/tin/tin9-cuoi_chuong.html", name: "Tin 9 - Bài tập cuối chương" },
+                            { path: "/tin/tin9.html", name: "Trọn bộ Tin 9" },
+                            // Toán học
+                            { path: "/toan/toan.html", name: "Môn Toán" },
+                            { path: "/toan/toan6-bai1.html", name: "Toán 6 - Bài 1" },
+                            { path: "/toan/toan6-bai2.html", name: "Toán 6 - Bài 2" },
+                            { path: "/toan/toan6-bai3.html", name: "Toán 6 - Bài 3" },
+                            { path: "/toan/toan6-bai4.html", name: "Toán 6 - Bài 4" },
+                            { path: "/toan/toan6.html", name: "Trọn bộ Toán 6" },
+                            { path: "/toan/toan7-bai1.html", name: "Toán 7 - Bài 1" },
+                            { path: "/toan/toan7-bai2.html", name: "Toán 7 - Bài 2" },
+                            { path: "/toan/toan7-bai3.html", name: "Toán 7 - Bài 3" },
+                            { path: "/toan/toan7-bai4.html", name: "Toán 7 - Bài 4" },
+                            { path: "/toan/toan7.html", name: "Trọn bộ Toán 7" },
+                            { path: "/toan/toan8-bai1.html", name: "Toán 8 - Bài 1" },
+                            { path: "/toan/toan8-bai2.html", name: "Toán 8 - Bài 2" },
+                            { path: "/toan/toan8-bai3.html", name: "Toán 8 - Bài 3" },
+                            { path: "/toan/toan8-bai4.html", name: "Toán 8 - Bài 4" },
+                            { path: "/toan/toan8.html", name: "Trọn bộ Toán 8" },
+                            { path: "/toan/toan9-bai1.html", name: "Toán 9 - Bài 1" },
+                            { path: "/toan/toan9-bai2.html", name: "Toán 9 - Bài 2" },
+                            { path: "/toan/toan9-bai3.html", name: "Toán 9 - Bài 3" },
+                            { path: "/toan/toan9-cuoi_chuong.html", name: "Toán 9 - Bài tập cuối chương" },
+                            { path: "/toan/toan9.html", name: "Trọn bộ Toán 9" }
+                        ];
+
+
+                        const searchInput = document.getElementById('searchInput');
+                        const suggestions = document.getElementById('suggestions');
+
+                        searchInput.addEventListener('input', () => {
+                            const query = searchInput.value.toLowerCase();
+                            suggestions.innerHTML = ''; // Xóa gợi ý cũ
+                            if (query.length > 0) {
+                                const results = htmlFiles.filter(file => file.name.toLowerCase().includes(query));
+                                if (results.length > 0) {
+                                    results.forEach(file => {
+                                        const listItem = document.createElement('li');
+                                        listItem.className = 'list-group-item';
+                                        listItem.style.cursor = 'pointer';
+                                        listItem.textContent = file.name;
+                                        listItem.onclick = () => {
+                                            searchInput.value = file.name; // Điền từ khóa vào ô tìm kiếm
+                                            window.location.href = file.path; // Chuyển hướng khi nhấp
+                                        };
+                                        suggestions.appendChild(listItem);
+                                    });
+                                    suggestions.classList.remove('d-none'); // Hiển thị gợi ý
+                                } else {
+                                    suggestions.innerHTML = '<li class="list-group-item">Không tìm thấy kết quả phù hợp.</li>';
+                                    suggestions.classList.remove('d-none');
+                                }
+                            } else {
+                                suggestions.classList.add('d-none'); // Ẩn gợi ý nếu không có từ khóa
+                            }
+                        });
+
+                        // Ẩn danh sách gợi ý khi nhấn ra ngoài
+                        document.addEventListener('click', (e) => {
+                            if (!e.target.closest('.search-container') && e.target !== searchInput) {
+                                suggestions.classList.add('d-none');
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </nav>
@@ -242,7 +359,7 @@
                     h4 {
                         padding-left: 54px;
                     }
-                    ul {
+                    .des ul {
                         font-family: "Raleway", serif;
                         font-optical-sizing: auto;
                         font-style: normal;
@@ -254,54 +371,56 @@
                 </style>
                 <div class="pt-4" style="background-color: rgba(0, 0, 0, 0.050);border-radius: 15px;padding:20px;">
                     <h2> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt dạng toán của Bài 2:</h2>
-                    <h3>Lý thuyết Các phép tính với số hữu tỉ</h3>
+                    <div class="des">
+                        <h3>Lý thuyết Các phép tính với số hữu tỉ</h3>
 
-                    <h4 style="padding-top: 15px;">1. Cộng, trừ hai số hữu tỉ</h4>
-                    <p>Để cộng, trừ hai số hữu tỉ <i>x</i>, <i>y</i>, ta có thể viết chúng dưới dạng hai phân số rồi áp dụng quy tắc cộng, trừ phân số.</p>
+                        <h4 style="padding-top: 15px;">1. Cộng, trừ hai số hữu tỉ</h4>
+                        <p>Để cộng, trừ hai số hữu tỉ <i>x</i>, <i>y</i>, ta có thể viết chúng dưới dạng hai phân số rồi áp dụng quy tắc cộng, trừ phân số.</p>
 
-                    <h5>Ví dụ 1: Tính:</h5>
-                    <p>a) 0,3 + <sup>-2</sup>&frasl;<sub>3</sub></p>
-                    <p>0,3 = <sup>3</sup>&frasl;<sub>10</sub></p>
-                    <p><sup>3</sup>&frasl;<sub>10</sub> + <sup>-2</sup>&frasl;<sub>3</sub> = <sup>3</sup>&frasl;<sub>10</sub> + <sup>-20</sup>&frasl;<sub>30</sub> = <sup>9</sup>&frasl;<sub>30</sub> + <sup>-20</sup>&frasl;<sub>30</sub> = <sup>-11</sup>&frasl;<sub>30</sub></p>
-                    <p>b) 2<sup>5</sup>&frasl;<sub>6</sub> - (-4)</p>
-                    <p>2<sup>5</sup>&frasl;<sub>6</sub> = <sup>17</sup>&frasl;<sub>6</sub></p>
-                    <p><sup>17</sup>&frasl;<sub>6</sub> - (-4) = <sup>17</sup>&frasl;<sub>6</sub> + <sup>24</sup>&frasl;<sub>6</sub> = <sup>41</sup>&frasl;<sub>6</sub></p>
+                        <h5>Ví dụ 1: Tính:</h5>
+                        <p>a) 0,3 + <sup>-2</sup>&frasl;<sub>3</sub></p>
+                        <p>0,3 = <sup>3</sup>&frasl;<sub>10</sub></p>
+                        <p><sup>3</sup>&frasl;<sub>10</sub> + <sup>-2</sup>&frasl;<sub>3</sub> = <sup>3</sup>&frasl;<sub>10</sub> + <sup>-20</sup>&frasl;<sub>30</sub> = <sup>9</sup>&frasl;<sub>30</sub> + <sup>-20</sup>&frasl;<sub>30</sub> = <sup>-11</sup>&frasl;<sub>30</sub></p>
+                        <p>b) 2<sup>5</sup>&frasl;<sub>6</sub> - (-4)</p>
+                        <p>2<sup>5</sup>&frasl;<sub>6</sub> = <sup>17</sup>&frasl;<sub>6</sub></p>
+                        <p><sup>17</sup>&frasl;<sub>6</sub> - (-4) = <sup>17</sup>&frasl;<sub>6</sub> + <sup>24</sup>&frasl;<sub>6</sub> = <sup>41</sup>&frasl;<sub>6</sub></p>
 
-                    <h4>2. Tính chất của phép cộng số hữu tỉ</h4>
-                    <p>Phép cộng số hữu tỉ cũng có các tính chất như phép cộng số nguyên: giao hoán, kết hợp và cộng với số 0.</p>
+                        <h4>2. Tính chất của phép cộng số hữu tỉ</h4>
+                        <p>Phép cộng số hữu tỉ cũng có các tính chất như phép cộng số nguyên: giao hoán, kết hợp và cộng với số 0.</p>
 
-                    <h5>Ví dụ 2: Tính hợp lý biểu thức:</h5>
-                    <p>-<sup>3</sup>&frasl;<sub>10</sub> + 0,125 + <sup>-7</sup>&frasl;<sub>10</sub> + 0,875 + <sup>4</sup>&frasl;<sub>5</sub></p>
-                    <p>-<sup>3</sup>&frasl;<sub>10</sub> + <sup>-7</sup>&frasl;<sub>10</sub> + 0,125 + 0,875 + <sup>4</sup>&frasl;<sub>5</sub></p>
-                    <p>-1 + 1 + <sup>4</sup>&frasl;<sub>5</sub> = <sup>4</sup>&frasl;<sub>5</sub></p>
+                        <h5>Ví dụ 2: Tính hợp lý biểu thức:</h5>
+                        <p>-<sup>3</sup>&frasl;<sub>10</sub> + 0,125 + <sup>-7</sup>&frasl;<sub>10</sub> + 0,875 + <sup>4</sup>&frasl;<sub>5</sub></p>
+                        <p>-<sup>3</sup>&frasl;<sub>10</sub> + <sup>-7</sup>&frasl;<sub>10</sub> + 0,125 + 0,875 + <sup>4</sup>&frasl;<sub>5</sub></p>
+                        <p>-1 + 1 + <sup>4</sup>&frasl;<sub>5</sub> = <sup>4</sup>&frasl;<sub>5</sub></p>
 
-                    <h4>3. Nhân hai số hữu tỉ</h4>
-                    <p>Cho <i>x, y</i> là hai số hữu tỉ: <i>x = <sup>a</sup>&frasl;<sub>b</sub>, y = <sup>c</sup>&frasl;<sub>d</sub></i>, ta có:</p>
-                    <p>x &sdot; y = <sup>a</sup>&frasl;<sub>b</sub> &sdot; <sup>c</sup>&frasl;<sub>d</sub> = <sup>a &sdot; c</sup>&frasl;<sub>b &sdot; d</sub></p>
+                        <h4>3. Nhân hai số hữu tỉ</h4>
+                        <p>Cho <i>x, y</i> là hai số hữu tỉ: <i>x = <sup>a</sup>&frasl;<sub>b</sub>, y = <sup>c</sup>&frasl;<sub>d</sub></i>, ta có:</p>
+                        <p>x &sdot; y = <sup>a</sup>&frasl;<sub>b</sub> &sdot; <sup>c</sup>&frasl;<sub>d</sub> = <sup>a &sdot; c</sup>&frasl;<sub>b &sdot; d</sub></p>
 
-                    <h5>Ví dụ 3: Tính:</h3>
-                    <p>a) 2<sup>3</sup>&frasl;<sub>8</sub> &sdot; <sup>-3</sup>&frasl;<sub>5</sub></p>
-                    <p>2<sup>3</sup>&frasl;<sub>8</sub> = <sup>19</sup>&frasl;<sub>8</sub> &sdot; <sup>-3</sup>&frasl;<sub>5</sub> = -<sup>57</sup>&frasl;<sub>40</sub> = -1<sup>17</sup>&frasl;<sub>40</sub></p>
-                    <p>b) 5,75 &sdot; <sup>9</sup>&frasl;<sub>10</sub></p>
-                    <p>5,75 = <sup>575</sup>&frasl;<sub>100</sub> &sdot; <sup>9</sup>&frasl;<sub>10</sub> = <sup>23</sup>&frasl;<sub>4</sub> &sdot; <sup>9</sup>&frasl;<sub>10</sub> = <sup>207</sup>&frasl;<sub>40</sub> = 5<sup>7</sup>&frasl;<sub>40</sub></p>
+                        <h5>Ví dụ 3: Tính:</h3>
+                        <p>a) 2<sup>3</sup>&frasl;<sub>8</sub> &sdot; <sup>-3</sup>&frasl;<sub>5</sub></p>
+                        <p>2<sup>3</sup>&frasl;<sub>8</sub> = <sup>19</sup>&frasl;<sub>8</sub> &sdot; <sup>-3</sup>&frasl;<sub>5</sub> = -<sup>57</sup>&frasl;<sub>40</sub> = -1<sup>17</sup>&frasl;<sub>40</sub></p>
+                        <p>b) 5,75 &sdot; <sup>9</sup>&frasl;<sub>10</sub></p>
+                        <p>5,75 = <sup>575</sup>&frasl;<sub>100</sub> &sdot; <sup>9</sup>&frasl;<sub>10</sub> = <sup>23</sup>&frasl;<sub>4</sub> &sdot; <sup>9</sup>&frasl;<sub>10</sub> = <sup>207</sup>&frasl;<sub>40</sub> = 5<sup>7</sup>&frasl;<sub>40</sub></p>
 
-                    <h4>4. Tính chất của phép nhân số hữu tỉ</h4>
-                    <p>Phép nhân số hữu tỉ cũng có các tính chất như phép nhân số nguyên: giao hoán, kết hợp, nhân với số 1, tính chất phân phối của phép nhân đối với phép cộng.</p>
+                        <h4>4. Tính chất của phép nhân số hữu tỉ</h4>
+                        <p>Phép nhân số hữu tỉ cũng có các tính chất như phép nhân số nguyên: giao hoán, kết hợp, nhân với số 1, tính chất phân phối của phép nhân đối với phép cộng.</p>
 
-                    <h5>Ví dụ 4: Tính hợp lý biểu thức:</h5>
-                    <p>a) A = (<sup>9</sup>&frasl;<sub>13</sub> &sdot; <sup>-8</sup>&frasl;<sub>5</sub>) &sdot; 3</p>
-                    <p>A = (<sup>9</sup>&frasl;<sub>13</sub> &sdot; <sup>-8</sup>&frasl;<sub>5</sub>) &sdot; 3 = <sup>9</sup>&frasl;<sub>13</sub> &sdot; (<sup>-8</sup>&frasl;<sub>5</sub> &sdot; 3) = -<sup>216</sup>&frasl;<sub>65</sub></p>
-                    <p>b) B = (<sup>-8</sup>&frasl;<sub>3</sub> &sdot; <sup>11</sup>&frasl;<sub>15</sub>) &sdot; 3</p>
-                    <p>B = (<sup>-8</sup>&frasl;<sub>3</sub> &sdot; <sup>11</sup>&frasl;<sub>15</sub>) &sdot; 3 = -<sup>88</sup>&frasl;<sub>45</sub> &sdot; 3 = -<sup>264</sup>&frasl;<sub>45</sub> = -<sup>88</sup>&frasl;<sub>15</sub></p>
+                        <h5>Ví dụ 4: Tính hợp lý biểu thức:</h5>
+                        <p>a) A = (<sup>9</sup>&frasl;<sub>13</sub> &sdot; <sup>-8</sup>&frasl;<sub>5</sub>) &sdot; 3</p>
+                        <p>A = (<sup>9</sup>&frasl;<sub>13</sub> &sdot; <sup>-8</sup>&frasl;<sub>5</sub>) &sdot; 3 = <sup>9</sup>&frasl;<sub>13</sub> &sdot; (<sup>-8</sup>&frasl;<sub>5</sub> &sdot; 3) = -<sup>216</sup>&frasl;<sub>65</sub></p>
+                        <p>b) B = (<sup>-8</sup>&frasl;<sub>3</sub> &sdot; <sup>11</sup>&frasl;<sub>15</sub>) &sdot; 3</p>
+                        <p>B = (<sup>-8</sup>&frasl;<sub>3</sub> &sdot; <sup>11</sup>&frasl;<sub>15</sub>) &sdot; 3 = -<sup>88</sup>&frasl;<sub>45</sub> &sdot; 3 = -<sup>264</sup>&frasl;<sub>45</sub> = -<sup>88</sup>&frasl;<sub>15</sub></p>
 
-                    <h4>5. Chia hai số hữu tỉ</h4>
-                    <p>Cho <i>x, y</i> là hai số hữu tỉ: <i>x = <sup>a</sup>&frasl;<sub>b</sub>, y = <sup>c</sup>&frasl;<sub>d</sub></i> (<i>y ≠ 0</i>), ta có:</p>
-                    <p>x : y = <sup>a</sup>&frasl;<sub>b</sub> : <sup>c</sup>&frasl;<sub>d</sub> = <sup>a</sup>&frasl;<sub>b</sub> &sdot; <sup>d</sup>&frasl;<sub>c</sub> = <sup>ad</sup>&frasl;<sub>bc</sub></p>
+                        <h4>5. Chia hai số hữu tỉ</h4>
+                        <p>Cho <i>x, y</i> là hai số hữu tỉ: <i>x = <sup>a</sup>&frasl;<sub>b</sub>, y = <sup>c</sup>&frasl;<sub>d</sub></i> (<i>y ≠ 0</i>), ta có:</p>
+                        <p>x : y = <sup>a</sup>&frasl;<sub>b</sub> : <sup>c</sup>&frasl;<sub>d</sub> = <sup>a</sup>&frasl;<sub>b</sub> &sdot; <sup>d</sup>&frasl;<sub>c</sub> = <sup>ad</sup>&frasl;<sub>bc</sub></p>
 
-                    <h5>Ví dụ 5: Tính:</h5>
-                    <p>a) <sup>12</sup>&frasl;<sub>5</sub> : -6.5</p>
-                    <p><sup>12</sup>&frasl;<sub>5</sub> : -6.5 = <sup>12</sup>&frasl;<sub>5</sub> &sdot; <sup>-2</sup>&frasl;<sub>13</sub> = -<sup>24</sup>&frasl;<sub>65</sub></p>
-                    <p><strong>Chú ý:</strong></p> <p>Thương của phép chia số hữu tỉ x cho số hữu tỉ y (y ≠ 0) gọi là tỉ số của hai số x và y, kí hiệu là <code>&#x1D53C;/&#x1D53E;</code> hay x : y.
+                        <h5>Ví dụ 5: Tính:</h5>
+                        <p>a) <sup>12</sup>&frasl;<sub>5</sub> : -6.5</p>
+                        <p><sup>12</sup>&frasl;<sub>5</sub> : -6.5 = <sup>12</sup>&frasl;<sub>5</sub> &sdot; <sup>-2</sup>&frasl;<sub>13</sub> = -<sup>24</sup>&frasl;<sub>65</sub></p>
+                        <p><strong>Chú ý:</strong></p> <p>Thương của phép chia số hữu tỉ x cho số hữu tỉ y (y ≠ 0) gọi là tỉ số của hai số x và y, kí hiệu là <code>&#x1D53C;/&#x1D53E;</code> hay x : y.
+                    </div>
                 </div>
                 <div class="text-center pt-5">
                     <a href="../tracnghiem/TN-b2t7.html" class="btn btn-primary" style="box-shadow: #ffc800 0px 0px 50px 10px;"><span>Làm bài trắc nghiệm!</span></a>

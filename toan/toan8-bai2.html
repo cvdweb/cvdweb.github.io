@@ -30,9 +30,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="../tin/tin.html">Tin học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="toan.html">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../anhvan/anhvan.html">Anh văn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
                     </ul>
                     <!-- Search form -->
                     <style>
@@ -52,9 +52,126 @@
                         }
                     </style>
                     <form class="d-flex ms-lg-3" action="./search.html" method="get">
-                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <div style="position: relative; width: 100%;">
+                            <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search" autocomplete="off">
+                            <ul id="suggestions" class="list-group search-results d-none" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background-color: white; border: 1px solid #ccc; border-radius: 5px;"></ul>
+                        </div>
                         <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
                     </form>
+                    <style>
+                        #suggestions {
+                            overflow-y: scroll;
+                            max-height: 330px;
+                            background-color: #242828;
+                            border: 1px solid #ffc800;
+                        }
+                        .list-group-item {
+                            border: 1px solid #ccc;
+                            background-color: #242828;
+                        }
+                        #suggestions li {
+                            color: #ffffff;
+                            font-weight: 700;
+                        }
+                    </style>
+                    <script>
+                        // Danh sách bài học
+                        const htmlFiles = [
+                            // Anh văn
+                            { path: "/anhvan/anhvan.html", name: "Môn Anh Văn / Tiếng Anh" },
+                            { path: "/anhvan/anhvan6 bài 1.html", name: "Anh Văn 6 - Bài 1" },
+                            { path: "/anhvan/anhvan6 bài 1 copy.html", name: "Anh Văn 6 - Bài 2" },
+                            { path: "/anhvan/anhvan6.html", name: "Anh Văn 6" },
+                            { path: "/anhvan/anhvan7-bài-1 copy 2.html", name: "Anh Văn 7 - Bài 2" },
+                            { path: "/anhvan/anhvan7-bài-1.html", name: "Anh Văn 7 - Bài 1" },
+                            { path: "/anhvan/anhvan7.html", name: "Anh Văn 7" },
+                            { path: "/anhvan/anhvan8-bai1.html", name: "Anh Văn 8 - Bài 1" },
+                            { path: "/anhvan/anhvan8-bai2.html", name: "Anh Văn 8 - Bài 2" },
+                            { path: "/anhvan/anhvan8.html", name: "Anh Văn 8" },
+                            { path: "/anhvan/anhvan9-bai-1.html", name: "Anh Văn 9 - Bài 1" },
+                            { path: "/anhvan/anhvan9-bai-2.html", name: "Anh Văn 9 - Bài 2" },
+                            { path: "/anhvan/anhvan9.html", name: "Anh Văn 9" },
+                            // Tin học:
+                            { path: "/tin/tin.html", name: "Môn Tin" },
+                            { path: "/tin/tin6-bai1.html", name: "Tin 6 - Bài 1" },
+                            { path: "/tin/tin6-bai2.html", name: "Tin 6 - Bài 2" },
+                            { path: "/tin/tin6-bai3.html", name: "Tin 6 - Bài 3" },
+                            { path: "/tin/tin6.html", name: "Trọn bộ Tin 6" },
+                            { path: "/tin/tin7-bai1.html", name: "Tin 7 - Bài 1" },
+                            { path: "/tin/tin7-bai2.html", name: "Tin 7 - Bài 2" },
+                            { path: "/tin/tin7.html", name: "Trọn bộ Tin 7" },
+                            { path: "/tin/tin8-bai1.html", name: "Tin 8 - Bài 1" },
+                            { path: "/tin/tin8-bai2.html", name: "Tin 8 - Bài 2" },
+                            { path: "/tin/tin8-bai3.html", name: "Tin 8 - Bài 3" },
+                            { path: "/tin/tin8-bai4.html", name: "Tin 8 - Bài 4" },
+                            { path: "/tin/tin8.html", name: "Trọn bộ Tin 8" },
+                            { path: "/tin/tin9-bai1.html", name: "Tin 9 - Bài 1" },
+                            { path: "/tin/tin9-bai2.html", name: "Tin 9 - Bài 2" },
+                            { path: "/tin/tin9-bai3.html", name: "Tin 9 - Bài 3" },
+                            { path: "/tin/tin9-cuoi_chuong.html", name: "Tin 9 - Bài tập cuối chương" },
+                            { path: "/tin/tin9.html", name: "Trọn bộ Tin 9" },
+                            // Toán học
+                            { path: "/toan/toan.html", name: "Môn Toán" },
+                            { path: "/toan/toan6-bai1.html", name: "Toán 6 - Bài 1" },
+                            { path: "/toan/toan6-bai2.html", name: "Toán 6 - Bài 2" },
+                            { path: "/toan/toan6-bai3.html", name: "Toán 6 - Bài 3" },
+                            { path: "/toan/toan6-bai4.html", name: "Toán 6 - Bài 4" },
+                            { path: "/toan/toan6.html", name: "Trọn bộ Toán 6" },
+                            { path: "/toan/toan7-bai1.html", name: "Toán 7 - Bài 1" },
+                            { path: "/toan/toan7-bai2.html", name: "Toán 7 - Bài 2" },
+                            { path: "/toan/toan7-bai3.html", name: "Toán 7 - Bài 3" },
+                            { path: "/toan/toan7-bai4.html", name: "Toán 7 - Bài 4" },
+                            { path: "/toan/toan7.html", name: "Trọn bộ Toán 7" },
+                            { path: "/toan/toan8-bai1.html", name: "Toán 8 - Bài 1" },
+                            { path: "/toan/toan8-bai2.html", name: "Toán 8 - Bài 2" },
+                            { path: "/toan/toan8-bai3.html", name: "Toán 8 - Bài 3" },
+                            { path: "/toan/toan8-bai4.html", name: "Toán 8 - Bài 4" },
+                            { path: "/toan/toan8.html", name: "Trọn bộ Toán 8" },
+                            { path: "/toan/toan9-bai1.html", name: "Toán 9 - Bài 1" },
+                            { path: "/toan/toan9-bai2.html", name: "Toán 9 - Bài 2" },
+                            { path: "/toan/toan9-bai3.html", name: "Toán 9 - Bài 3" },
+                            { path: "/toan/toan9-cuoi_chuong.html", name: "Toán 9 - Bài tập cuối chương" },
+                            { path: "/toan/toan9.html", name: "Trọn bộ Toán 9" }
+                        ];
+
+
+                        const searchInput = document.getElementById('searchInput');
+                        const suggestions = document.getElementById('suggestions');
+
+                        searchInput.addEventListener('input', () => {
+                            const query = searchInput.value.toLowerCase();
+                            suggestions.innerHTML = ''; // Xóa gợi ý cũ
+                            if (query.length > 0) {
+                                const results = htmlFiles.filter(file => file.name.toLowerCase().includes(query));
+                                if (results.length > 0) {
+                                    results.forEach(file => {
+                                        const listItem = document.createElement('li');
+                                        listItem.className = 'list-group-item';
+                                        listItem.style.cursor = 'pointer';
+                                        listItem.textContent = file.name;
+                                        listItem.onclick = () => {
+                                            searchInput.value = file.name; // Điền từ khóa vào ô tìm kiếm
+                                            window.location.href = file.path; // Chuyển hướng khi nhấp
+                                        };
+                                        suggestions.appendChild(listItem);
+                                    });
+                                    suggestions.classList.remove('d-none'); // Hiển thị gợi ý
+                                } else {
+                                    suggestions.innerHTML = '<li class="list-group-item">Không tìm thấy kết quả phù hợp.</li>';
+                                    suggestions.classList.remove('d-none');
+                                }
+                            } else {
+                                suggestions.classList.add('d-none'); // Ẩn gợi ý nếu không có từ khóa
+                            }
+                        });
+
+                        // Ẩn danh sách gợi ý khi nhấn ra ngoài
+                        document.addEventListener('click', (e) => {
+                            if (!e.target.closest('.search-container') && e.target !== searchInput) {
+                                suggestions.classList.add('d-none');
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </nav>
@@ -242,7 +359,7 @@
                     h4 {
                         padding-left: 36px;
                     }
-                    ul {
+                    .des ul {
                         font-family: "Raleway", serif;
                         font-optical-sizing: auto;
                         font-style: normal;
@@ -253,61 +370,63 @@
                 </style>
                 <div class="pt-4" style="background-color: rgba(0, 0, 0, 0.050);border-radius: 15px;padding:20px;">
                     <h3> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt dạng toán của Bài 2:</h3>
-                    <h4>1. Cộng, trừ hai đa thức</h4>
-                    <p>Để cộng hoặc trừ hai đa thức, ta làm như sau:</p>
-                    <ul>
-                    <li>Viết các đa thức trong ngoặc và nối với dấu cộng ("+") hoặc trừ ("–").</li>
-                    <li>Bỏ dấu ngoặc và thu gọn các hạng tử đồng dạng.</li>
-                    </ul>
+                    <div class="des">
+                        <h4>1. Cộng, trừ hai đa thức</h4>
+                        <p>Để cộng hoặc trừ hai đa thức, ta làm như sau:</p>
+                        <ul>
+                        <li>Viết các đa thức trong ngoặc và nối với dấu cộng ("+") hoặc trừ ("–").</li>
+                        <li>Bỏ dấu ngoặc và thu gọn các hạng tử đồng dạng.</li>
+                        </ul>
 
-                    <p><strong>Ví dụ 1:</strong><br>
-                    Cho các đa thức:<br>
-                    A = x<sup>2</sup> + 2y – 3xy và B = x – 8y + x<sup>2</sup>y + 21xy<br>
-                    Tính A – B và A + B:</p>
+                        <p><strong>Ví dụ 1:</strong><br>
+                        Cho các đa thức:<br>
+                        A = x<sup>2</sup> + 2y – 3xy và B = x – 8y + x<sup>2</sup>y + 21xy<br>
+                        Tính A – B và A + B:</p>
 
-                    <p>A – B = x<sup>2</sup> + 2y – 3xy – (x – 8y + x<sup>2</sup>y + 21xy) = x<sup>2</sup> + 10y – 24xy – x – x<sup>2</sup>y</p>
-                    <p>A + B = x<sup>2</sup> + 2y – 3xy + x – 8y + x<sup>2</sup>y + 21xy = x<sup>2</sup> – 6y + 18xy + x + x<sup>2</sup>y</p>
+                        <p>A – B = x<sup>2</sup> + 2y – 3xy – (x – 8y + x<sup>2</sup>y + 21xy) = x<sup>2</sup> + 10y – 24xy – x – x<sup>2</sup>y</p>
+                        <p>A + B = x<sup>2</sup> + 2y – 3xy + x – 8y + x<sup>2</sup>y + 21xy = x<sup>2</sup> – 6y + 18xy + x + x<sup>2</sup>y</p>
 
-                    <h4>2. Nhân hai đa thức</h4>
-                    <h5>2.1. Nhân hai đơn thức</h5>
-                    <p>Nhân hệ số, sau đó nhân các lũy thừa của các biến cùng loại.</p>
+                        <h4>2. Nhân hai đa thức</h4>
+                        <h5>2.1. Nhân hai đơn thức</h5>
+                        <p>Nhân hệ số, sau đó nhân các lũy thừa của các biến cùng loại.</p>
 
-                    <p><strong>Ví dụ 2:</strong><br>
-                    Nhân đơn thức 3x với đa thức (x<sup>3</sup> + 2xy<sup>2</sup>):<br>
-                    3x(x<sup>3</sup> + 2xy<sup>2</sup>) = 3x<sup>4</sup> + 6x<sup>2</sup>y<sup>2</sup></p>
+                        <p><strong>Ví dụ 2:</strong><br>
+                        Nhân đơn thức 3x với đa thức (x<sup>3</sup> + 2xy<sup>2</sup>):<br>
+                        3x(x<sup>3</sup> + 2xy<sup>2</sup>) = 3x<sup>4</sup> + 6x<sup>2</sup>y<sup>2</sup></p>
 
-                    <h5>2.2. Nhân hai đa thức</h5>
-                    <p>Để nhân một đơn thức với một đa thức, nhân đơn thức với từng hạng tử của đa thức rồi cộng kết quả.<br>
-                    Để nhân hai đa thức, nhân từng hạng tử của đa thức này với đa thức kia rồi cộng kết quả.</p>
+                        <h5>2.2. Nhân hai đa thức</h5>
+                        <p>Để nhân một đơn thức với một đa thức, nhân đơn thức với từng hạng tử của đa thức rồi cộng kết quả.<br>
+                        Để nhân hai đa thức, nhân từng hạng tử của đa thức này với đa thức kia rồi cộng kết quả.</p>
 
-                    <p><strong>Ví dụ 3:</strong><br>
-                    a) 3x(x<sup>3</sup> + 2xy<sup>2</sup>) = 3x<sup>4</sup> + 6x<sup>2</sup>y<sup>2</sup><br>
-                    b) (2x<sup>2</sup>y + y) * (–5x<sup>2</sup>y<sup>2</sup> + y<sup>2</sup>) = –10x<sup>5</sup>y<sup>3</sup> + 2x<sup>2</sup>y<sup>3</sup> – 5x<sup>2</sup>y<sup>3</sup> + y<sup>3</sup> = –10x<sup>5</sup>y<sup>3</sup> – 3x<sup>2</sup>y<sup>3</sup> + y<sup>3</sup></p>
+                        <p><strong>Ví dụ 3:</strong><br>
+                        a) 3x(x<sup>3</sup> + 2xy<sup>2</sup>) = 3x<sup>4</sup> + 6x<sup>2</sup>y<sup>2</sup><br>
+                        b) (2x<sup>2</sup>y + y) * (–5x<sup>2</sup>y<sup>2</sup> + y<sup>2</sup>) = –10x<sup>5</sup>y<sup>3</sup> + 2x<sup>2</sup>y<sup>3</sup> – 5x<sup>2</sup>y<sup>3</sup> + y<sup>3</sup> = –10x<sup>5</sup>y<sup>3</sup> – 3x<sup>2</sup>y<sup>3</sup> + y<sup>3</sup></p>
 
-                    <h4>3. Chia đa thức cho đơn thức</h4>
-                    <h5>3.1. Chia đơn thức cho đơn thức</h5>
-                    <p>Chia hệ số của hai đơn thức và chia các lũy thừa của từng biến trong chúng.</p>
+                        <h4>3. Chia đa thức cho đơn thức</h4>
+                        <h5>3.1. Chia đơn thức cho đơn thức</h5>
+                        <p>Chia hệ số của hai đơn thức và chia các lũy thừa của từng biến trong chúng.</p>
 
-                    <p><strong>Ví dụ 4:</strong><br>
-                    Chia 18x<sup>5</sup>yz<sup>3</sup> cho –2x<sup>3</sup>z:<br>
-                    18x<sup>5</sup>yz<sup>3</sup> ÷ (–2x<sup>3</sup>z) = –9x<sup>2</sup>yz<sup>2</sup></p>
+                        <p><strong>Ví dụ 4:</strong><br>
+                        Chia 18x<sup>5</sup>yz<sup>3</sup> cho –2x<sup>3</sup>z:<br>
+                        18x<sup>5</sup>yz<sup>3</sup> ÷ (–2x<sup>3</sup>z) = –9x<sup>2</sup>yz<sup>2</sup></p>
 
-                    <h5>3.2. Chia đa thức cho đơn thức</h5>
-                    <p>Chia từng hạng tử của đa thức cho đơn thức rồi cộng các kết quả.</p>
+                        <h5>3.2. Chia đa thức cho đơn thức</h5>
+                        <p>Chia từng hạng tử của đa thức cho đơn thức rồi cộng các kết quả.</p>
 
-                    <p><strong>Ví dụ 5:</strong><br>
-                    a) (6ab<sup>2</sup> + 3a<sup>3</sup>b<sup>2</sup>) ÷ 3b = 2ab + a<sup>3</sup>b<br>
-                    b) (95a<sup>7</sup>b<sup>5</sup> – 50ab<sup>3</sup> + 5a<sup>2</sup>b<sup>2</sup>) ÷ (–5ab<sup>2</sup>) = –19a<sup>6</sup>b<sup>3</sup> + 10b – a</p>
+                        <p><strong>Ví dụ 5:</strong><br>
+                        a) (6ab<sup>2</sup> + 3a<sup>3</sup>b<sup>2</sup>) ÷ 3b = 2ab + a<sup>3</sup>b<br>
+                        b) (95a<sup>7</sup>b<sup>5</sup> – 50ab<sup>3</sup> + 5a<sup>2</sup>b<sup>2</sup>) ÷ (–5ab<sup>2</sup>) = –19a<sup>6</sup>b<sup>3</sup> + 10b – a</p>
 
-                    <p>Ví dụ:</p>
-                    <ul>
-                        <li>So sánh các số hữu tỉ làm như sau: 0.5 = <sup>1</sup>&frasl;<sub>2</sub> = <sup>2</sup>&frasl;<sub>4</sub> nên 0.5 = <sup>1</sup>&frasl;<sub>2</sub>.</li>
-                        <li>0.25 = <sup>1</sup>&frasl;<sub>4</sub>, nên 0.25 nằm trước <sup>1</sup>&frasl;<sub>2</sub> trên trục số.</li>
-                    </ul>
-                    <p>Chú ý:</p>
-                    <ul>
-                        <li>Trên trục số, các điểm nằm trước gốc <i>O</i> biểu diễn số hữu tỉ âm (tức số hữu tỉ nhỏ hơn 0). Số 0 không là số hữu tỉ dương, cũng không là số hữu tỉ âm.</li>
-                    </ul>
+                        <p>Ví dụ:</p>
+                        <ul>
+                            <li>So sánh các số hữu tỉ làm như sau: 0.5 = <sup>1</sup>&frasl;<sub>2</sub> = <sup>2</sup>&frasl;<sub>4</sub> nên 0.5 = <sup>1</sup>&frasl;<sub>2</sub>.</li>
+                            <li>0.25 = <sup>1</sup>&frasl;<sub>4</sub>, nên 0.25 nằm trước <sup>1</sup>&frasl;<sub>2</sub> trên trục số.</li>
+                        </ul>
+                        <p>Chú ý:</p>
+                        <ul>
+                            <li>Trên trục số, các điểm nằm trước gốc <i>O</i> biểu diễn số hữu tỉ âm (tức số hữu tỉ nhỏ hơn 0). Số 0 không là số hữu tỉ dương, cũng không là số hữu tỉ âm.</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="text-center pt-5">
                     <a href="../tracnghiem/TN-b2t8.html" class="btn btn-primary" style="box-shadow: #ffc800 0px 0px 50px 10px;"><span>Làm bài trắc nghiệm!</span></a>

@@ -30,7 +30,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
                         <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
                         <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
                     </ul>
@@ -52,9 +52,126 @@
                         }
                     </style>
                     <form class="d-flex ms-lg-3" action="./search.html" method="get">
-                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <div style="position: relative; width: 100%;">
+                            <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search" autocomplete="off">
+                            <ul id="suggestions" class="list-group search-results d-none" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background-color: white; border: 1px solid #ccc; border-radius: 5px;"></ul>
+                        </div>
                         <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
                     </form>
+                    <style>
+                        #suggestions {
+                            overflow-y: scroll;
+                            max-height: 330px;
+                            background-color: #242828;
+                            border: 1px solid #ffc800;
+                        }
+                        .list-group-item {
+                            border: 1px solid #ccc;
+                            background-color: #242828;
+                        }
+                        #suggestions li {
+                            color: #ffffff;
+                            font-weight: 700;
+                        }
+                    </style>
+                    <script>
+                        // Danh sách bài học
+                        const htmlFiles = [
+                            // Anh văn
+                            { path: "/anhvan/anhvan.html", name: "Môn Anh Văn / Tiếng Anh" },
+                            { path: "/anhvan/anhvan6 bài 1.html", name: "Anh Văn 6 - Bài 1" },
+                            { path: "/anhvan/anhvan6 bài 1 copy.html", name: "Anh Văn 6 - Bài 2" },
+                            { path: "/anhvan/anhvan6.html", name: "Anh Văn 6" },
+                            { path: "/anhvan/anhvan7-bài-1 copy 2.html", name: "Anh Văn 7 - Bài 2" },
+                            { path: "/anhvan/anhvan7-bài-1.html", name: "Anh Văn 7 - Bài 1" },
+                            { path: "/anhvan/anhvan7.html", name: "Anh Văn 7" },
+                            { path: "/anhvan/anhvan8-bai1.html", name: "Anh Văn 8 - Bài 1" },
+                            { path: "/anhvan/anhvan8-bai2.html", name: "Anh Văn 8 - Bài 2" },
+                            { path: "/anhvan/anhvan8.html", name: "Anh Văn 8" },
+                            { path: "/anhvan/anhvan9-bai-1.html", name: "Anh Văn 9 - Bài 1" },
+                            { path: "/anhvan/anhvan9-bai-2.html", name: "Anh Văn 9 - Bài 2" },
+                            { path: "/anhvan/anhvan9.html", name: "Anh Văn 9" },
+                            // Tin học:
+                            { path: "/tin/tin.html", name: "Môn Tin" },
+                            { path: "/tin/tin6-bai1.html", name: "Tin 6 - Bài 1" },
+                            { path: "/tin/tin6-bai2.html", name: "Tin 6 - Bài 2" },
+                            { path: "/tin/tin6-bai3.html", name: "Tin 6 - Bài 3" },
+                            { path: "/tin/tin6.html", name: "Trọn bộ Tin 6" },
+                            { path: "/tin/tin7-bai1.html", name: "Tin 7 - Bài 1" },
+                            { path: "/tin/tin7-bai2.html", name: "Tin 7 - Bài 2" },
+                            { path: "/tin/tin7.html", name: "Trọn bộ Tin 7" },
+                            { path: "/tin/tin8-bai1.html", name: "Tin 8 - Bài 1" },
+                            { path: "/tin/tin8-bai2.html", name: "Tin 8 - Bài 2" },
+                            { path: "/tin/tin8-bai3.html", name: "Tin 8 - Bài 3" },
+                            { path: "/tin/tin8-bai4.html", name: "Tin 8 - Bài 4" },
+                            { path: "/tin/tin8.html", name: "Trọn bộ Tin 8" },
+                            { path: "/tin/tin9-bai1.html", name: "Tin 9 - Bài 1" },
+                            { path: "/tin/tin9-bai2.html", name: "Tin 9 - Bài 2" },
+                            { path: "/tin/tin9-bai3.html", name: "Tin 9 - Bài 3" },
+                            { path: "/tin/tin9-cuoi_chuong.html", name: "Tin 9 - Bài tập cuối chương" },
+                            { path: "/tin/tin9.html", name: "Trọn bộ Tin 9" },
+                            // Toán học
+                            { path: "/toan/toan.html", name: "Môn Toán" },
+                            { path: "/toan/toan6-bai1.html", name: "Toán 6 - Bài 1" },
+                            { path: "/toan/toan6-bai2.html", name: "Toán 6 - Bài 2" },
+                            { path: "/toan/toan6-bai3.html", name: "Toán 6 - Bài 3" },
+                            { path: "/toan/toan6-bai4.html", name: "Toán 6 - Bài 4" },
+                            { path: "/toan/toan6.html", name: "Trọn bộ Toán 6" },
+                            { path: "/toan/toan7-bai1.html", name: "Toán 7 - Bài 1" },
+                            { path: "/toan/toan7-bai2.html", name: "Toán 7 - Bài 2" },
+                            { path: "/toan/toan7-bai3.html", name: "Toán 7 - Bài 3" },
+                            { path: "/toan/toan7-bai4.html", name: "Toán 7 - Bài 4" },
+                            { path: "/toan/toan7.html", name: "Trọn bộ Toán 7" },
+                            { path: "/toan/toan8-bai1.html", name: "Toán 8 - Bài 1" },
+                            { path: "/toan/toan8-bai2.html", name: "Toán 8 - Bài 2" },
+                            { path: "/toan/toan8-bai3.html", name: "Toán 8 - Bài 3" },
+                            { path: "/toan/toan8-bai4.html", name: "Toán 8 - Bài 4" },
+                            { path: "/toan/toan8.html", name: "Trọn bộ Toán 8" },
+                            { path: "/toan/toan9-bai1.html", name: "Toán 9 - Bài 1" },
+                            { path: "/toan/toan9-bai2.html", name: "Toán 9 - Bài 2" },
+                            { path: "/toan/toan9-bai3.html", name: "Toán 9 - Bài 3" },
+                            { path: "/toan/toan9-cuoi_chuong.html", name: "Toán 9 - Bài tập cuối chương" },
+                            { path: "/toan/toan9.html", name: "Trọn bộ Toán 9" }
+                        ];
+
+
+                        const searchInput = document.getElementById('searchInput');
+                        const suggestions = document.getElementById('suggestions');
+
+                        searchInput.addEventListener('input', () => {
+                            const query = searchInput.value.toLowerCase();
+                            suggestions.innerHTML = ''; // Xóa gợi ý cũ
+                            if (query.length > 0) {
+                                const results = htmlFiles.filter(file => file.name.toLowerCase().includes(query));
+                                if (results.length > 0) {
+                                    results.forEach(file => {
+                                        const listItem = document.createElement('li');
+                                        listItem.className = 'list-group-item';
+                                        listItem.style.cursor = 'pointer';
+                                        listItem.textContent = file.name;
+                                        listItem.onclick = () => {
+                                            searchInput.value = file.name; // Điền từ khóa vào ô tìm kiếm
+                                            window.location.href = file.path; // Chuyển hướng khi nhấp
+                                        };
+                                        suggestions.appendChild(listItem);
+                                    });
+                                    suggestions.classList.remove('d-none'); // Hiển thị gợi ý
+                                } else {
+                                    suggestions.innerHTML = '<li class="list-group-item">Không tìm thấy kết quả phù hợp.</li>';
+                                    suggestions.classList.remove('d-none');
+                                }
+                            } else {
+                                suggestions.classList.add('d-none'); // Ẩn gợi ý nếu không có từ khóa
+                            }
+                        });
+
+                        // Ẩn danh sách gợi ý khi nhấn ra ngoài
+                        document.addEventListener('click', (e) => {
+                            if (!e.target.closest('.search-container') && e.target !== searchInput) {
+                                suggestions.classList.add('d-none');
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </nav>
@@ -247,13 +364,11 @@
                             font-weight: 400;
                             line-height: 2;
                         }
-                        ul {
-                            font-size: 26px;
-                        }
                         strong {
                             padding-left: 36px;
                         }
                         .baoblabla ul{
+                            font-size: 26px;
                             padding-top: 15px;
                             margin-left: auto;
                             margin-right: auto;
