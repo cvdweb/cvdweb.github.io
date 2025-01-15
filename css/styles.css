@@ -11371,12 +11371,30 @@ section#contact form#contactForm :-ms-input-placeholder {
   background-image:  url(/toan/hinh/tiếng\ anh\ -\ tiến.png);
 }
 .section-anhvan8{
-  background-image: url(/toan/hinh/tien-anh-2.png);
+  
+    background-image: url(/toan/hinh/tien\ anh\ 2.png);
+    background-size: cover; /* Đảm bảo hình ảnh lấp đầy khung hình */
+    background-position: center; /* Đảm bảo hình ảnh căn giữa trong khung */
+    background-repeat: no-repeat; /* Ngăn không cho hình ảnh bị lặp lại */
+  
 
 }
-
-.section-anhvan9{
-  background-image:  url('https://cdn2.hoclieuthongminh.com/public/images/v2/TA6T1SHS/units/Biata8tap1GV.jpg');
+.text-with-glow {
+  position: relative;
+  font-size: 100px;
+  color: white; /* Màu chữ */
+  text-shadow: 
+      2px 2px 4px rgba(255, 165, 0, 0.7), /* Viền cam xung quanh */
+      -2px -2px 4px rgba(255, 165, 0, 0.7),
+      2px -2px 4px rgba(255, 165, 0, 0.7),
+      -2px 2px 4px rgba(255, 165, 0, 0.7);
+      top:-100px;
+}
+.section-anhvan9 {
+  background-image: url(/toan/hinh/Screenshot\ 2025-01-14\ 224947.png);
+  background-size: cover; /* Đảm bảo hình ảnh lấp đầy khung hình */
+  background-position: center; /* Đảm bảo hình ảnh căn giữa trong khung */
+  background-repeat: no-repeat; /* Ngăn không cho hình ảnh bị lặp lại */
 }
 .chat-messages div {
   width: fit-content;
