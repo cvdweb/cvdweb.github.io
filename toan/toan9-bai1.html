@@ -30,9 +30,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="../tin/tin.html">Tin học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="toan.html">Toán học</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../anhvan/anhvan.html">Anh văn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/anhvan/anhvan.html">Anh văn</a></li>
                     </ul>
                     <!-- Search form -->
                     <style>
@@ -52,9 +52,126 @@
                         }
                     </style>
                     <form class="d-flex ms-lg-3" action="./search.html" method="get">
-                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <div style="position: relative; width: 100%;">
+                            <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search" autocomplete="off">
+                            <ul id="suggestions" class="list-group search-results d-none" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background-color: white; border: 1px solid #ccc; border-radius: 5px;"></ul>
+                        </div>
                         <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
                     </form>
+                    <style>
+                        #suggestions {
+                            overflow-y: scroll;
+                            max-height: 330px;
+                            background-color: #242828;
+                            border: 1px solid #ffc800;
+                        }
+                        .list-group-item {
+                            border: 1px solid #ccc;
+                            background-color: #242828;
+                        }
+                        #suggestions li {
+                            color: #ffffff;
+                            font-weight: 700;
+                        }
+                    </style>
+                    <script>
+                        // Danh sách bài học
+                        const htmlFiles = [
+                            // Anh văn
+                            { path: "/anhvan/anhvan.html", name: "Môn Anh Văn / Tiếng Anh" },
+                            { path: "/anhvan/anhvan6 bài 1.html", name: "Anh Văn 6 - Bài 1" },
+                            { path: "/anhvan/anhvan6 bài 1 copy.html", name: "Anh Văn 6 - Bài 2" },
+                            { path: "/anhvan/anhvan6.html", name: "Anh Văn 6" },
+                            { path: "/anhvan/anhvan7-bài-1 copy 2.html", name: "Anh Văn 7 - Bài 2" },
+                            { path: "/anhvan/anhvan7-bài-1.html", name: "Anh Văn 7 - Bài 1" },
+                            { path: "/anhvan/anhvan7.html", name: "Anh Văn 7" },
+                            { path: "/anhvan/anhvan8-bai1.html", name: "Anh Văn 8 - Bài 1" },
+                            { path: "/anhvan/anhvan8-bai2.html", name: "Anh Văn 8 - Bài 2" },
+                            { path: "/anhvan/anhvan8.html", name: "Anh Văn 8" },
+                            { path: "/anhvan/anhvan9-bai-1.html", name: "Anh Văn 9 - Bài 1" },
+                            { path: "/anhvan/anhvan9-bai-2.html", name: "Anh Văn 9 - Bài 2" },
+                            { path: "/anhvan/anhvan9.html", name: "Anh Văn 9" },
+                            // Tin học:
+                            { path: "/tin/tin.html", name: "Môn Tin" },
+                            { path: "/tin/tin6-bai1.html", name: "Tin 6 - Bài 1" },
+                            { path: "/tin/tin6-bai2.html", name: "Tin 6 - Bài 2" },
+                            { path: "/tin/tin6-bai3.html", name: "Tin 6 - Bài 3" },
+                            { path: "/tin/tin6.html", name: "Trọn bộ Tin 6" },
+                            { path: "/tin/tin7-bai1.html", name: "Tin 7 - Bài 1" },
+                            { path: "/tin/tin7-bai2.html", name: "Tin 7 - Bài 2" },
+                            { path: "/tin/tin7.html", name: "Trọn bộ Tin 7" },
+                            { path: "/tin/tin8-bai1.html", name: "Tin 8 - Bài 1" },
+                            { path: "/tin/tin8-bai2.html", name: "Tin 8 - Bài 2" },
+                            { path: "/tin/tin8-bai3.html", name: "Tin 8 - Bài 3" },
+                            { path: "/tin/tin8-bai4.html", name: "Tin 8 - Bài 4" },
+                            { path: "/tin/tin8.html", name: "Trọn bộ Tin 8" },
+                            { path: "/tin/tin9-bai1.html", name: "Tin 9 - Bài 1" },
+                            { path: "/tin/tin9-bai2.html", name: "Tin 9 - Bài 2" },
+                            { path: "/tin/tin9-bai3.html", name: "Tin 9 - Bài 3" },
+                            { path: "/tin/tin9-cuoi_chuong.html", name: "Tin 9 - Bài tập cuối chương" },
+                            { path: "/tin/tin9.html", name: "Trọn bộ Tin 9" },
+                            // Toán học
+                            { path: "/toan/toan.html", name: "Môn Toán" },
+                            { path: "/toan/toan6-bai1.html", name: "Toán 6 - Bài 1" },
+                            { path: "/toan/toan6-bai2.html", name: "Toán 6 - Bài 2" },
+                            { path: "/toan/toan6-bai3.html", name: "Toán 6 - Bài 3" },
+                            { path: "/toan/toan6-bai4.html", name: "Toán 6 - Bài 4" },
+                            { path: "/toan/toan6.html", name: "Trọn bộ Toán 6" },
+                            { path: "/toan/toan7-bai1.html", name: "Toán 7 - Bài 1" },
+                            { path: "/toan/toan7-bai2.html", name: "Toán 7 - Bài 2" },
+                            { path: "/toan/toan7-bai3.html", name: "Toán 7 - Bài 3" },
+                            { path: "/toan/toan7-bai4.html", name: "Toán 7 - Bài 4" },
+                            { path: "/toan/toan7.html", name: "Trọn bộ Toán 7" },
+                            { path: "/toan/toan8-bai1.html", name: "Toán 8 - Bài 1" },
+                            { path: "/toan/toan8-bai2.html", name: "Toán 8 - Bài 2" },
+                            { path: "/toan/toan8-bai3.html", name: "Toán 8 - Bài 3" },
+                            { path: "/toan/toan8-bai4.html", name: "Toán 8 - Bài 4" },
+                            { path: "/toan/toan8.html", name: "Trọn bộ Toán 8" },
+                            { path: "/toan/toan9-bai1.html", name: "Toán 9 - Bài 1" },
+                            { path: "/toan/toan9-bai2.html", name: "Toán 9 - Bài 2" },
+                            { path: "/toan/toan9-bai3.html", name: "Toán 9 - Bài 3" },
+                            { path: "/toan/toan9-cuoi_chuong.html", name: "Toán 9 - Bài tập cuối chương" },
+                            { path: "/toan/toan9.html", name: "Trọn bộ Toán 9" }
+                        ];
+
+
+                        const searchInput = document.getElementById('searchInput');
+                        const suggestions = document.getElementById('suggestions');
+
+                        searchInput.addEventListener('input', () => {
+                            const query = searchInput.value.toLowerCase();
+                            suggestions.innerHTML = ''; // Xóa gợi ý cũ
+                            if (query.length > 0) {
+                                const results = htmlFiles.filter(file => file.name.toLowerCase().includes(query));
+                                if (results.length > 0) {
+                                    results.forEach(file => {
+                                        const listItem = document.createElement('li');
+                                        listItem.className = 'list-group-item';
+                                        listItem.style.cursor = 'pointer';
+                                        listItem.textContent = file.name;
+                                        listItem.onclick = () => {
+                                            searchInput.value = file.name; // Điền từ khóa vào ô tìm kiếm
+                                            window.location.href = file.path; // Chuyển hướng khi nhấp
+                                        };
+                                        suggestions.appendChild(listItem);
+                                    });
+                                    suggestions.classList.remove('d-none'); // Hiển thị gợi ý
+                                } else {
+                                    suggestions.innerHTML = '<li class="list-group-item">Không tìm thấy kết quả phù hợp.</li>';
+                                    suggestions.classList.remove('d-none');
+                                }
+                            } else {
+                                suggestions.classList.add('d-none'); // Ẩn gợi ý nếu không có từ khóa
+                            }
+                        });
+
+                        // Ẩn danh sách gợi ý khi nhấn ra ngoài
+                        document.addEventListener('click', (e) => {
+                            if (!e.target.closest('.search-container') && e.target !== searchInput) {
+                                suggestions.classList.add('d-none');
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </nav>
@@ -242,7 +359,7 @@
                     h4 {
                         padding-left: 36px;
                     }
-                    ul {
+                    .des ul {
                         font-family: "Raleway", serif;
                         font-optical-sizing: auto;
                         font-style: normal;
@@ -254,80 +371,82 @@
                 <div class="pt-4" style="background-color: rgba(0, 0, 0, 0.050);border-radius: 15px;padding:20px;">
                     <h3> <i class="fa-solid fa-list"></i> <span>    </span>Tóm tắt dạng toán của Bài 1:</h3>
                     <h4 style="padding-top: 15px;">1. Phương trình tích</h4>
-                    <p>Muốn giải phương trình <span>(a1x + b1)(a2x + b2) = 0</span>, ta giải hai phương trình <span>a1x + b1 = 0</span> và <span>a2x + b2 = 0</span>, rồi lấy tất cả các nghiệm của chúng.</p>
+                    <div class="des">
+                        <p>Muốn giải phương trình <span>(a1x + b1)(a2x + b2) = 0</span>, ta giải hai phương trình <span>a1x + b1 = 0</span> và <span>a2x + b2 = 0</span>, rồi lấy tất cả các nghiệm của chúng.</p>
                     
-                    <h5>Ví dụ 1. Giải các phương trình:</h5>
+                        <h5>Ví dụ 1. Giải các phương trình:</h5>
+                        
+                        <h5>a) 5x(x – 11) = 0;</h5>
+                        <p>Ta có 5x(x – 11) = 0</p>
+                        <p>5x = 0 hoặc x – 11 = 0</p>
+                        <p>x = 0 hoặc x = 11.</p>
+                        <p>Vậy phương trình đã cho có hai nghiệm là x = 0 và x = 11.</p>
+                        
+                        <h5>b) (x + 6)(3x – 1) = 0;</h5>
+                        <p>Ta có x + 6 = 0 hoặc 3x – 1 = 0</p>
+                        <p>x = –6 hoặc 3x = 1</p>
+                        <p>x = –6 hoặc x = 1/3.</p>
+                        <p>Vậy phương trình đã cho có hai nghiệm là x = –6 và x = 1/3.</p>
                     
-                    <h5>a) 5x(x – 11) = 0;</h5>
-                    <p>Ta có 5x(x – 11) = 0</p>
-                    <p>5x = 0 hoặc x – 11 = 0</p>
-                    <p>x = 0 hoặc x = 11.</p>
-                    <p>Vậy phương trình đã cho có hai nghiệm là x = 0 và x = 11.</p>
+                        <h4>Chú ý:</h4>
+                        <p>Trong nhiều trường hợp, để giải một phương trình, ta biến đổi để đưa phương trình đó về phương trình tích.</p>
                     
-                    <h5>b) (x + 6)(3x – 1) = 0;</h5>
-                    <p>Ta có x + 6 = 0 hoặc 3x – 1 = 0</p>
-                    <p>x = –6 hoặc 3x = 1</p>
-                    <p>x = –6 hoặc x = 1/3.</p>
-                    <p>Vậy phương trình đã cho có hai nghiệm là x = –6 và x = 1/3.</p>
-                
-                    <h4>Chú ý:</h4>
-                    <p>Trong nhiều trường hợp, để giải một phương trình, ta biến đổi để đưa phương trình đó về phương trình tích.</p>
-                
-                    <h5>Ví dụ 2. Giải các phương trình:</h5>
+                        <h5>Ví dụ 2. Giải các phương trình:</h5>
+                        
+                        <h5>a) x² – 2x = 0;</h5>
+                        <p>Ta có x² – 2x = 0</p>
+                        <p>x(x – 2) = 0</p>
+                        <p>x = 0 hoặc x – 2 = 0</p>
+                        <p>x = 0 hoặc x = 2.</p>
+                        <p>Vậy phương trình đã cho có hai nghiệm là x = 0 và x = 2.</p>
+                        
+                        <h5>b) (2x + 1)² – 9x² = 0;</h5>
+                        <p>Ta có (2x + 1)² – (3x)² = 0</p>
+                        <p>(2x + 1 + 3x)(2x + 1 – 3x) = 0</p>
+                        <p>(5x + 1)(–x + 1) = 0</p>
+                        <p>5x + 1 = 0 hoặc –x + 1 = 0</p>
+                        <p>5x = –1 hoặc –x = –1</p>
+                        <p>x = –1/5 hoặc x = 1.</p>
+                        <p>Vậy phương trình đã cho có hai nghiệm là x = –1/5 và x = 1.</p>
+                        
+                        <h4>2. Phương trình chứa ẩn ở mẫu quy về phương trình bậc nhất</h4>
                     
-                    <h5>a) x² – 2x = 0;</h5>
-                    <p>Ta có x² – 2x = 0</p>
-                    <p>x(x – 2) = 0</p>
-                    <p>x = 0 hoặc x – 2 = 0</p>
-                    <p>x = 0 hoặc x = 2.</p>
-                    <p>Vậy phương trình đã cho có hai nghiệm là x = 0 và x = 2.</p>
+                        <h4>2.1. Điều kiện xác định của phương trình</h4>
+                        <p>Đối với phương trình chứa ẩn ở mẫu, điều kiện của ẩn để tất cả các mẫu thức trong phương trình đều khác 0 gọi là điều kiện xác định của phương trình.</p>
+                        
+                        <h5>Ví dụ 3. Tìm điều kiện xác định của mỗi phương trình sau:</h5>
+                        
+                        <h5>a) 3/x + 1/(x – 4) = 2;</h5>
+                        <p>Điều kiện xác định của phương trình là x ≠ 4.</p>
                     
-                    <h5>b) (2x + 1)² – 9x² = 0;</h5>
-                    <p>Ta có (2x + 1)² – (3x)² = 0</p>
-                    <p>(2x + 1 + 3x)(2x + 1 – 3x) = 0</p>
-                    <p>(5x + 1)(–x + 1) = 0</p>
-                    <p>5x + 1 = 0 hoặc –x + 1 = 0</p>
-                    <p>5x = –1 hoặc –x = –1</p>
-                    <p>x = –1/5 hoặc x = 1.</p>
-                    <p>Vậy phương trình đã cho có hai nghiệm là x = –1/5 và x = 1.</p>
+                        <h5>b) 2/(x + 2) – 3/x + 2 = 1/(2x + 1);</h5>
+                        <p>Ta có x + 2 ≠ 0 khi x ≠ –2 và 2x + 1 ≠ 0 khi x ≠ –1/2.</p>
+                        <p>Vậy điều kiện xác định của phương trình là x ≠ –2 và x ≠ –1/2.</p>
                     
-                    <h4>2. Phương trình chứa ẩn ở mẫu quy về phương trình bậc nhất</h4>
-                
-                    <h4>2.1. Điều kiện xác định của phương trình</h4>
-                    <p>Đối với phương trình chứa ẩn ở mẫu, điều kiện của ẩn để tất cả các mẫu thức trong phương trình đều khác 0 gọi là điều kiện xác định của phương trình.</p>
+                        <h5>Nhận xét:</h5>
+                        <p>Những giá trị của ẩn không thoả mãn điều kiện xác định không thể là nghiệm của phương trình.</p>
                     
-                    <h5>Ví dụ 3. Tìm điều kiện xác định của mỗi phương trình sau:</h5>
+                        <h4>2.2. Giải phương trình chứa ẩn ở mẫu</h4>
+                        <p>Các bước giải phương trình chứa ẩn ở mẫu:</p>
+                        <ul>
+                            <li>Bước 1: Tìm điều kiện xác định của phương trình.</li>
+                            <li>Bước 2: Quy đồng mẫu thức hai vế của phương trình, rồi khử mẫu.</li>
+                            <li>Bước 3: Giải phương trình vừa nhận được.</li>
+                            <li>Bước 4: Xét mỗi giá trị tìm được ở Bước 3, giá trị nào thoả mãn điều kiện xác định thì đó là nghiệm của phương trình đã cho.</li>
+                        </ul>
                     
-                    <h5>a) 3/x + 1/(x – 4) = 2;</h5>
-                    <p>Điều kiện xác định của phương trình là x ≠ 4.</p>
-                
-                    <h5>b) 2/(x + 2) – 3/x + 2 = 1/(2x + 1);</h5>
-                    <p>Ta có x + 2 ≠ 0 khi x ≠ –2 và 2x + 1 ≠ 0 khi x ≠ –1/2.</p>
-                    <p>Vậy điều kiện xác định của phương trình là x ≠ –2 và x ≠ –1/2.</p>
-                
-                    <h5>Nhận xét:</h5>
-                    <p>Những giá trị của ẩn không thoả mãn điều kiện xác định không thể là nghiệm của phương trình.</p>
-                
-                    <h4>2.2. Giải phương trình chứa ẩn ở mẫu</h4>
-                    <p>Các bước giải phương trình chứa ẩn ở mẫu:</p>
-                    <ul>
-                        <li>Bước 1: Tìm điều kiện xác định của phương trình.</li>
-                        <li>Bước 2: Quy đồng mẫu thức hai vế của phương trình, rồi khử mẫu.</li>
-                        <li>Bước 3: Giải phương trình vừa nhận được.</li>
-                        <li>Bước 4: Xét mỗi giá trị tìm được ở Bước 3, giá trị nào thoả mãn điều kiện xác định thì đó là nghiệm của phương trình đã cho.</li>
-                    </ul>
-                
-                    <h5>Ví dụ 4. Giải các phương trình:</h5>
+                        <h5>Ví dụ 4. Giải các phương trình:</h5>
+                        
+                        <h5>a) 2/(x + 1) + 1/(x – 2) = x – 5/x – 2;</h5>
+                        <p>Điều kiện xác định: x ≠ 0 và x ≠ 2.</p>
+                        <p>Ta có:</p>
+                        <p>2x(x – 2)/(x(x – 2)) – (x + 1)(x – 2)/(x(x – 2)) = x(x – 5)/(x(x – 2))</p>
+                        <p>Giải phương trình, ta tìm được x = –1 (thoả mãn điều kiện xác định).</p>
                     
-                    <h5>a) 2/(x + 1) + 1/(x – 2) = x – 5/x – 2;</h5>
-                    <p>Điều kiện xác định: x ≠ 0 và x ≠ 2.</p>
-                    <p>Ta có:</p>
-                    <p>2x(x – 2)/(x(x – 2)) – (x + 1)(x – 2)/(x(x – 2)) = x(x – 5)/(x(x – 2))</p>
-                    <p>Giải phương trình, ta tìm được x = –1 (thoả mãn điều kiện xác định).</p>
-                
-                    <h5>b) 3x – 2 + 2x + 1 = 2x + 5(x – 2)(x + 1);</h5>
-                    <p>Điều kiện xác định: x ≠ 2 và x ≠ –1.</p>
-                    <p>Giải phương trình, ta tìm được x = 2 (thoả mãn điều kiện xác định).</p>                  
+                        <h5>b) 3x – 2 + 2x + 1 = 2x + 5(x – 2)(x + 1);</h5>
+                        <p>Điều kiện xác định: x ≠ 2 và x ≠ –1.</p>
+                        <p>Giải phương trình, ta tìm được x = 2 (thoả mãn điều kiện xác định).</p>
+                    </div>                  
 
                 </div>
                 <div class="text-center pt-5">

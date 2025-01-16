@@ -473,3 +473,6 @@ $RESPONSIVENESS
 	text-wrap: wrap;
 	font-size: 1.5rem;
 }
+body {
+	overflow-y: hidden !important;
+}
