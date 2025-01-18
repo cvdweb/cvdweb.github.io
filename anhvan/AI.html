@@ -1,109 +1,278 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giáo Sư Lộc</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .chatbox {
-            background-color: white;
-            width: 300px;
-            height: 400px;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-        .messages {
-            overflow-y: scroll;
-            flex-grow: 1;
-            padding: 10px;
-            height: 80%;
-        }
-        .message {
-            margin: 5px;
-            padding: 10px;
-            border-radius: 10px;
-        }
-        .user-message {
-            background-color: #f1f1f1;
-            text-align: right;
-        }
-        .ai-message {
-            background-color: #e0e0e0;
-            text-align: left;
-        }
-        .input-area {
-            display: flex;
-        }
-        .input-area input {
-            width: 80%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
-        .input-area button {
-            width: 20%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .input-area button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <div class="chatbox">
-        <div class="messages" id="messages"></div>
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="Type a message..." />
-            <button onclick="sendMessage()">Send</button>
-        </div>
-    </div>
-    <script>
-        async function sendMessage() {
-            const userMessage = document.getElementById('userInput').value;
-            if (userMessage.trim() === "") return;
 
-            const messagesDiv = document.getElementById('messages');
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.classList.add('message', 'user-message');
-            userMessageDiv.textContent = userMessage;
-            messagesDiv.appendChild(userMessageDiv);
-            document.getElementById('userInput').value = "";
 
-            try {
-                const response = await fetch('http://localhost:3000/api/getAIResponse', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userMessage }),
-                });
 
-                const data = await response.json();
-                const aiMessageDiv = document.createElement('div');
-                aiMessageDiv.classList.add('message', 'ai-message');
-                aiMessageDiv.textContent = data.aiResponse || "No response.";
-                messagesDiv.appendChild(aiMessageDiv);
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            } catch (error) {
-                console.error("Error:", error);
-            }
+                /*body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f0f0f0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                }*/
+                .circle {
+                    width: 60px;
+                    height: 60px;
+                   background-color: black;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: yellow;
+                    font-size: 20px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+                }
+                .chatbox {
+                    position: fixed;
+                    bottom: 100px;
+                    right: 20px;
+                    background-color: white;
+                    width: 300px;
+                    height: 450px;
+                    border-radius: 10px;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+                    display: none;
+                    flex-direction: column;
+                }
+                .chatbox-header {
+                    background-color:gray;
+                    color: yellow;
+                    padding: 10px;
+                    border-radius: 10px 10px 0 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                .chatbox-header .avatar {
+                    width: 30px;
+                    height: 30px;
+                    background-color: black;
+                    color: yellow;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: bold;
+                    margin-right: 10px;
+                }
+                .chatbox-header .name {
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+                .chatbox-header .close-btn {
+                    background-color: transparent;
+                    border: none;
+                    color: white;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+                .messages {
+                    overflow-y: auto;
+                    flex-grow: 1;
+                    padding: 10px;
+                }
+                .message {
+                    display: flex;
+                    align-items: flex-end;
+                    margin: 5px;
+                    padding: 10px;
+                    border-radius: 10px;
+                }
+                .user-message {
+                    background-color: #f1f1f1;
+                    align-self: flex-end;
+                    text-align: right;
+                }
+                .ai-message {
+                    background-color: #e0e0e0;
+                    align-self: flex-start;
+                    text-align: left;
+                }
+                .ai-message .ai-avatar {
+                    width: 30px;
+                    height: 30px;
+                    background-color: black;
+                    color: rgb(216, 219, 12);
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-right: 10px;
+                }
+                .message-content {
+                    max-width: 80%;
+                    padding: 10px;
+                    border-radius: 10px;
+                }
+                .input-area {
+                    display: flex;
+                    padding: 10px;
+                    border-top: 1px solid #ccc;
+                }
+                .input-area input {
+                    width: 80%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                }
+                .input-area button {
+                    width: 20%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    background-color: #4CAF50;
+                    color: white;
+                    border-radius: 10px;
+                    cursor: pointer;
+                 
+                }
+                .input-area button:hover {
+                    background-color: #45a049;
+                }
+            </style>
+        </head>
+        <body>
+            <!-- Hình tròn -->
+            <div class="circle" onclick="toggleChat()">Tiến</div>
+        
+            <!-- Khung chat -->
+            <div class="chatbox" id="chatbox">
+                <!-- Header biểu thị danh tính -->
+                <div class="chatbox-header">
+                    <div class="avatar">Tiến</div>
+                    <div class="name">Giáo sư tiến</div>
+                    <button class="close-btn" onclick="toggleChat()">✖</button>
+                </div>
+        
+                <!-- Khung hiển thị tin nhắn -->
+                <div class="messages" id="messages"></div>
+        
+                <!-- Khung nhập tin nhắn -->
+                <div class="input-area">
+                    <input type="text" id="userInput" placeholder="Type a message..." />
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        
+            <script>
+                // Hàm bật/tắt khung chat
+                function toggleChat() {
+                    var chatbox = document.getElementById('chatbox');
+                    if (chatbox.style.display === "none" || chatbox.style.display === "") {
+                        chatbox.style.display = "flex";
+            
+                        // Hiển thị tin nhắn chào mừng khi mở khung chat lần đầu
+                        var messagesDiv = document.getElementById('messages');
+                        var welcomeMessageDiv = document.createElement('div');
+                        welcomeMessageDiv.classList.add('message', 'ai-message');
+                        welcomeMessageDiv.innerHTML = `
+                            <div class="ai-avatar">Tiến</div>
+                            <div class="message-content">Xin chào, bạn cần giúp gì không?</div>
+                        `;
+                        messagesDiv.appendChild(welcomeMessageDiv);
+            
+                        // Cuộn xuống cuối khung chat
+                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    } else {
+                        chatbox.style.display = "none";
+                    }
+                }
+            
+                // Hàm gửi tin nhắn
+                function sendMessage() {
+                    var userMessage = document.getElementById('userInput').value;
+                    if (userMessage.trim() === "") return;
+            
+                    // Hiển thị tin nhắn người dùng
+                    var messagesDiv = document.getElementById('messages');
+                    var userMessageDiv = document.createElement('div');
+                    userMessageDiv.classList.add('message', 'user-message');
+                    userMessageDiv.innerHTML = `<div class="message-content">${userMessage}</div>`;
+                    messagesDiv.appendChild(userMessageDiv);
+            
+                    // Xóa trường nhập liệu
+                    document.getElementById('userInput').value = "";
+            
+                    // Phản hồi AI sau 1 giây
+                    setTimeout(() => {
+                        var aiResponse = getAIResponse(userMessage);
+                        var aiMessageDiv = document.createElement('div');
+                        aiMessageDiv.classList.add('message', 'ai-message');
+                        aiMessageDiv.innerHTML = `
+                            <div class="ai-avatar">Tiến</div>
+                            <div class="message-content">${aiResponse}</div>
+                        `;
+                        messagesDiv.appendChild(aiMessageDiv);
+            
+                        // Cuộn xuống cuối khung chat
+                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    }, 1000);
+                }
+            
+                // Hàm phản hồi của AI
+                function getAIResponse(userMessage) {
+                    var response = "I'm not sure I understand that.";
+                    var messageLowerCase = userMessage.toLowerCase();
+            
+                    // Các câu trả lời đơn giản
+                    if (messageLowerCase.includes("hello")) {
+                        response = "Hello! How can I assist you today?";
+                    } else if (messageLowerCase.includes("how are you")) {
+                        response = "I'm just a bot, but I'm doing great!";
+                    } else if (messageLowerCase.includes("bye")) {
+                        response = "Goodbye! Have a nice day!";
+                    }else if (messageLowerCase.includes("thương")) {
+                        response = "Thương so đẹp gái";
+                    } else if (messageLowerCase.includes("thì tương lai đơn")) {
+                        response = `
+                            <strong>Thì tương lai đơn (Simple future tense)</strong>: Dùng để diễn tả hành động sẽ xảy ra trong tương lai.
+                            Cấu trúc: Subject + will + verb (base form).
+                            Ví dụ: I will go to the market tomorrow.
+                        `;
+                    } else if (messageLowerCase.includes("thì hiện tại đơn")) {
+                        response = `
+                            <strong>Thì hiện tại đơn (Simple present tense)</strong>: Dùng để diễn tả thói quen, sự thật hiển nhiên hoặc các hành động lặp đi lặp lại.
+                            Cấu trúc: Subject + verb (base form) (với "s" ở ngôi thứ 3 số ít).
+                            Ví dụ: She eats breakfast every day.
+                        `;
+                    } else if (messageLowerCase.includes("thì hiện tại tiếp diễn")) {
+                        response = `
+                            <strong>Thì hiện tại tiếp diễn (Present continuous tense)</strong>: Dùng để diễn tả hành động đang xảy ra tại thời điểm nói.
+                            Cấu trúc: Subject + am/are/is + verb-ing.
+                            Ví dụ: I am reading a book right now.
+                        `;
+                    } else if (messageLowerCase.includes("thì quá khứ đơn")) {
+                        response = `
+                            <strong>Thì quá khứ đơn (Simple past tense)</strong>: Dùng để diễn tả hành động đã xảy ra và kết thúc trong quá khứ.
+                            Cấu trúc: Subject + verb-ed (hoặc dạng quá khứ của động từ bất quy tắc).
+                            Ví dụ: I watched a movie yesterday.
+                        `;
+                    } else if (messageLowerCase.includes("thì tương lai tiếp diễn")) {
+                        response = `
+                            <strong>Thì tương lai tiếp diễn (Future continuous tense)</strong>: Dùng để diễn tả hành động sẽ đang diễn ra tại một thời điểm trong tương lai.
+                            Cấu trúc: Subject + will + be + verb-ing.
+                            Ví dụ: I will be working at 10 AM tomorrow.
+                        `;
+                    } else if (messageLowerCase.includes("thì quá khứ tiếp diễn")) {
+                        response = `
+                            <strong>Thì quá khứ tiếp diễn (Past continuous tense)</strong>: Dùng để diễn tả hành động đang diễn ra tại một thời điểm cụ thể trong quá khứ.
+                            Cấu trúc: Subject + was/were + verb-ing.
+                            Ví dụ: She was reading a book when I called her.
+                        `;
+                    }
+            
+                    // Thêm câu hỏi "Bạn cần giúp gì nữa không? <3" vào cuối mỗi câu trả lời
+                    response += "<br>Bạn cần giúp gì nữa không? <3";
+                    return response;
+                } 
+                document.getElementById('userInput').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
         }
-    </script>
-</body>
-</html>
+    });
+            </script>  

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh Biểu Tượng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+}
+
+.container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.circle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background-color: #000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.main-circle {
+  background-color: #000;
+}
+
+.icon {
+  color: #FFD700;
+  font-size: 30px;
+}
+
+.sub-circles {
+  position: absolute;
+  top: 50%;
+  right: 100%;  /* Đưa các hình tròn nhỏ sang trái */
+  transform: translateY(-50%);
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 10px; /* Khoảng cách giữa vòng tròn chính và các vòng tròn nhỏ */
+}
+
+.sub-circle {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-color: #000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFD700;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.sub-circle:hover {
+  transform: translateX(10px);
+  background-color: #fff;
+}
+
+.sub-circle .sub-icon {
+  font-size: 20px;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #000;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.sub-circle:hover .tooltip {
+  display: block;
+}
+
+.circle:hover .sub-circles {
+  display: flex;
+}
+
+.circle:hover {
+  background-color: #fff;
+}
+
+.circle:hover .icon {
+  color: #000;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="circle main-circle">
+      <span class="icon">&#128218;</span> <!-- Biểu tượng sách -->
+      <div class="sub-circles">
+        <div class="sub-circle english">
+          <span class="sub-icon">EN</span> <!-- Biểu tượng Tiếng Anh -->
+          <div class="tooltip">Tiếng Anh</div>
+        </div>
+        <div class="sub-circle it">
+          <span class="sub-icon">IT</span> <!-- Biểu tượng Tin học -->
+          <div class="tooltip">Tin học</div>
+        </div>
+        <div class="sub-circle math">
+          <span class="sub-icon">MT</span> <!-- Biểu tượng Toán -->
+          <div class="tooltip">Toán</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
