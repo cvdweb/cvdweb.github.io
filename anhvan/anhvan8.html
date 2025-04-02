@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Agency - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">CVĐ Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="anhvan.html">Anh văn</a></li>
+                    </ul>
+                    <!-- Search form -->
+                    <style>
+                        .form-control {
+                            border-radius: 50px;
+                            font-size: 20px;
+                        }
+                        form .btn {
+                            border-radius: 10px;
+                            font-size: 20px;
+                        }
+                        form {
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-variation-settings:"slnt" 0;
+                        }
+                    </style>
+                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
+                        <div style="position: relative; width: 100%;">
+                            <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search" autocomplete="off">
+                            <ul id="suggestions" class="list-group search-results d-none" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background-color: white; border: 1px solid #ccc; border-radius: 5px;"></ul>
+                        </div>
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                    <style>
+                        #suggestions {
+                            overflow-y: scroll;
+                            max-height: 330px;
+                            background-color: #242828;
+                            border: 1px solid #ffc800;
+                        }
+                        .list-group-item {
+                            border: 1px solid #ccc;
+                            background-color: #242828;
+                        }
+                        #suggestions li {
+                            color: #ffffff;
+                            font-weight: 700;
+                        }
+                    </style>
+                    <script>
+                        // Danh sách bài học
+                        const htmlFiles = [
+                            // Anh văn
+                            { path: "/anhvan/anhvan.html", name: "Môn Anh Văn / Tiếng Anh" },
+                            { path: "/anhvan/anhvan6 bài 1.html", name: "Anh Văn 6 - Bài 1" },
+                            { path: "/anhvan/anhvan6 bài 1 copy.html", name: "Anh Văn 6 - Bài 2" },
+                            { path: "/anhvan/anhvan6.html", name: "Anh Văn 6" },
+                            { path: "/anhvan/anhvan7-bài-1 copy 2.html", name: "Anh Văn 7 - Bài 2" },
+                            { path: "/anhvan/anhvan7-bài-1.html", name: "Anh Văn 7 - Bài 1" },
+                            { path: "/anhvan/anhvan7.html", name: "Anh Văn 7" },
+                            { path: "/anhvan/anhvan8-bai1.html", name: "Anh Văn 8 - Bài 1" },
+                            { path: "/anhvan/anhvan8-bai2.html", name: "Anh Văn 8 - Bài 2" },
+                            { path: "/anhvan/anhvan8.html", name: "Anh Văn 8" },
+                            { path: "/anhvan/anhvan9-bai-1.html", name: "Anh Văn 9 - Bài 1" },
+                            { path: "/anhvan/anhvan9-bai-2.html", name: "Anh Văn 9 - Bài 2" },
+                            { path: "/anhvan/anhvan9.html", name: "Anh Văn 9" },
+                            // Tin học:
+                            { path: "/tin/tin.html", name: "Môn Tin" },
+                            { path: "/tin/tin6-bai1.html", name: "Tin 6 - Bài 1" },
+                            { path: "/tin/tin6-bai2.html", name: "Tin 6 - Bài 2" },
+                            { path: "/tin/tin6-bai3.html", name: "Tin 6 - Bài 3" },
+                            { path: "/tin/tin6.html", name: "Trọn bộ Tin 6" },
+                            { path: "/tin/tin7-bai1.html", name: "Tin 7 - Bài 1" },
+                            { path: "/tin/tin7-bai2.html", name: "Tin 7 - Bài 2" },
+                            { path: "/tin/tin7.html", name: "Trọn bộ Tin 7" },
+                            { path: "/tin/tin8-bai1.html", name: "Tin 8 - Bài 1" },
+                            { path: "/tin/tin8-bai2.html", name: "Tin 8 - Bài 2" },
+                            { path: "/tin/tin8-bai3.html", name: "Tin 8 - Bài 3" },
+                            { path: "/tin/tin8-bai4.html", name: "Tin 8 - Bài 4" },
+                            { path: "/tin/tin8.html", name: "Trọn bộ Tin 8" },
+                            { path: "/tin/tin9-bai1.html", name: "Tin 9 - Bài 1" },
+                            { path: "/tin/tin9-bai2.html", name: "Tin 9 - Bài 2" },
+                            { path: "/tin/tin9-bai3.html", name: "Tin 9 - Bài 3" },
+                            { path: "/tin/tin9-cuoi_chuong.html", name: "Tin 9 - Bài tập cuối chương" },
+                            { path: "/tin/tin9.html", name: "Trọn bộ Tin 9" },
+                            // Toán học
+                            { path: "/toan/toan.html", name: "Môn Toán" },
+                            { path: "/toan/toan6-bai1.html", name: "Toán 6 - Bài 1" },
+                            { path: "/toan/toan6-bai2.html", name: "Toán 6 - Bài 2" },
+                            { path: "/toan/toan6-bai3.html", name: "Toán 6 - Bài 3" },
+                            { path: "/toan/toan6-bai4.html", name: "Toán 6 - Bài 4" },
+                            { path: "/toan/toan6.html", name: "Trọn bộ Toán 6" },
+                            { path: "/toan/toan7-bai1.html", name: "Toán 7 - Bài 1" },
+                            { path: "/toan/toan7-bai2.html", name: "Toán 7 - Bài 2" },
+                            { path: "/toan/toan7-bai3.html", name: "Toán 7 - Bài 3" },
+                            { path: "/toan/toan7-bai4.html", name: "Toán 7 - Bài 4" },
+                            { path: "/toan/toan7.html", name: "Trọn bộ Toán 7" },
+                            { path: "/toan/toan8-bai1.html", name: "Toán 8 - Bài 1" },
+                            { path: "/toan/toan8-bai2.html", name: "Toán 8 - Bài 2" },
+                            { path: "/toan/toan8-bai3.html", name: "Toán 8 - Bài 3" },
+                            { path: "/toan/toan8-bai4.html", name: "Toán 8 - Bài 4" },
+                            { path: "/toan/toan8.html", name: "Trọn bộ Toán 8" },
+                            { path: "/toan/toan9-bai1.html", name: "Toán 9 - Bài 1" },
+                            { path: "/toan/toan9-bai2.html", name: "Toán 9 - Bài 2" },
+                            { path: "/toan/toan9-bai3.html", name: "Toán 9 - Bài 3" },
+                            { path: "/toan/toan9-cuoi_chuong.html", name: "Toán 9 - Bài tập cuối chương" },
+                            { path: "/toan/toan9.html", name: "Trọn bộ Toán 9" }
+                        ];
+
+
+                        const searchInput = document.getElementById('searchInput');
+                        const suggestions = document.getElementById('suggestions');
+
+                        searchInput.addEventListener('input', () => {
+                            const query = searchInput.value.toLowerCase();
+                            suggestions.innerHTML = ''; // Xóa gợi ý cũ
+                            if (query.length > 0) {
+                                const results = htmlFiles.filter(file => file.name.toLowerCase().includes(query));
+                                if (results.length > 0) {
+                                    results.forEach(file => {
+                                        const listItem = document.createElement('li');
+                                        listItem.className = 'list-group-item';
+                                        listItem.style.cursor = 'pointer';
+                                        listItem.textContent = file.name;
+                                        listItem.onclick = () => {
+                                            searchInput.value = file.name; // Điền từ khóa vào ô tìm kiếm
+                                            window.location.href = file.path; // Chuyển hướng khi nhấp
+                                        };
+                                        suggestions.appendChild(listItem);
+                                    });
+                                    suggestions.classList.remove('d-none'); // Hiển thị gợi ý
+                                } else {
+                                    suggestions.innerHTML = '<li class="list-group-item">Không tìm thấy kết quả phù hợp.</li>';
+                                    suggestions.classList.remove('d-none');
+                                }
+                            } else {
+                                suggestions.classList.add('d-none'); // Ẩn gợi ý nếu không có từ khóa
+                            }
+                        });
+
+                        // Ẩn danh sách gợi ý khi nhấn ra ngoài
+                        document.addEventListener('click', (e) => {
+                            if (!e.target.closest('.search-container') && e.target !== searchInput) {
+                                suggestions.classList.add('d-none');
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </nav>
+      
+        <!-- Services-->
+        
+        <!-- Portfolio Grid-->
+        <section class="page-section section-anhvan section-anhvan8" id="portfolio">
+
+            <div class="container">
+                <div class="text-center">
+                    <div class="text-with-glow" style="text-align: center;">TIẾNG ANH 8</div>
+                    
+                <div class="row anhvan">
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link"  href="anhvan8-bai1.html">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <style>
+                                    img{
+                                    width: 400px;
+                                    height:250px ;
+                                    object-fit: cover;
+                                    }
+    
+                                    </style>
+                                <img class="img-fluid" src="https://cdn.hoclieuthongminh.com/estudy/picture/2023/0310/ex1-getting-u1-ta8-global.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Unit-1</div>
+                                <div class="portfolio-caption-subheading text-muted">leisure time</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 2-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="anhvan8-bai2.html">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="https://cdn.hoclieuthongminh.com/hoclieu/hoclieu/SHStuhoc/01_SHSTA8-Globle/1_Unit1/TA8_U2_getting%20started_1.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">unit-2</div>
+                                <div class="portfolio-caption-subheading text-muted">life in the countryside</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 3-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="#portfolioModal3">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="data:image/jpeg;base64,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" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">unit-3</div>
+                                <div class="portfolio-caption-subheading text-muted">Teenager</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+       
+       
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Contact Us</h2>
+                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                </div>
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- * * SB Forms Contact Form * *-->
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- This form is pre-integrated with SB Forms.-->
+                <!-- To make this form functional, sign up at-->
+                <!-- https://startbootstrap.com/solution/contact-forms-->
+                <!-- to get an API token!-->
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                    <div class="row align-items-stretch mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <!-- Name input-->
+                                <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                            </div>
+                            <div class="form-group">
+                                <!-- Email address input-->
+                                <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
+                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                            </div>
+                            <div class="form-group mb-md-0">
+                                <!-- Phone number input-->
+                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-textarea mb-md-0">
+                                <!-- Message input-->
+                                <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
+                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Submit success message-->
+                    <!---->
+                    <!-- This is what your users will see when the form-->
+                    <!-- has successfully submitted-->
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center text-white mb-3">
+                            <div class="fw-bolder">Form submission successful!</div>
+                            To activate this form, sign up at
+                            <br />
+                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                        </div>
+                    </div>
+                    <!-- Submit error message-->
+                    <!---->
+                    <!-- This is what your users will see when there is-->
+                    <!-- an error submitting the form-->
+                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                    <!-- Submit Button-->
+                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
+                </form>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Portfolio Modals-->
+        <!-- Portfolio item 1 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Threads
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Illustration
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 2 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Explore
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Graphic Design
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 3 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/3.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Finish
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Identity
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 4 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/4.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Lines
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Branding
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 5 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/5.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Southwest
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Website Design
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 6 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/6.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Window
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Photography
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>

@@ -1,0 +1,107 @@
+/* Định dạng cho menu chính */
+ul.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #333;
+}
+
+ul.menu li {
+    position: relative;
+    padding: 10px 20px;
+}
+
+ul.menu li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Ẩn các mục con (submenu) */
+ul.menu .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style-type: none;
+    background-color: #444;
+    padding: 0;
+    margin: 0;
+    min-width: 200px;
+}
+
+/* Hiển thị submenu khi di chuột vào mục cha */
+ul.menu li:hover .submenu {
+    display: block;
+}
+
+ul.menu .submenu li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+/* Thay đổi màu sắc khi di chuột vào các mục */
+ul.menu li a:hover,
+ul.menu .submenu li a:hover {
+    background-color: #555;
+}
+
+
+
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+h1, h2 {
+    color: #5d5dff;
+}
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.section {
+    margin-bottom: 30px;
+}
+.example {
+    background-color: #e9f7ff;
+    padding: 10px;
+    border-left: 5px solid #5d5dff;
+    margin-bottom: 15px;
+}
+.emoji {
+    font-size: 24px;
+    margin-right: 8px;
+}
+.audio-icon {
+    cursor: pointer;
+    color: #5d5dff;
+    font-size: 22px;
+}
+.audio-icon:hover {
+    color: #0044cc;
+}
+.card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.card h3 {
+    color: #333;
+}
+.card p {
+    font-size: 16px;
+    color: #666;
+}

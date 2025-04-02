@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>CVĐ - KHKT</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"></n>
+       
+
+    </head>
+
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">CVĐ Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="anhvan.html">Anh văn</a></li>
+                    </ul>
+                    <!-- Search form -->
+                    <style>
+                        .form-control {
+                            border-radius: 50px;
+                            font-size: 20px;
+                        }
+                        form .btn {
+                            border-radius: 10px;
+                            font-size: 20px;
+                        }
+                        form {
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-variation-settings:"slnt" 0;
+                        }
+                    </style>
+                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
+                        <div style="position: relative; width: 100%;">
+                            <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search" autocomplete="off">
+                            <ul id="suggestions" class="list-group search-results d-none" style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background-color: white; border: 1px solid #ccc; border-radius: 5px;"></ul>
+                        </div>
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                    <style>
+                        #suggestions {
+                            overflow-y: scroll;
+                            max-height: 330px;
+                            background-color: #242828;
+                            border: 1px solid #ffc800;
+                        }
+                        .list-group-item {
+                            border: 1px solid #ccc;
+                            background-color: #242828;
+                        }
+                        #suggestions li {
+                            color: #ffffff;
+                            font-weight: 700;
+                        }
+                    </style>
+                    <script>
+                        // Danh sách bài học
+                        const htmlFiles = [
+                            // Anh văn
+                            { path: "/anhvan/anhvan.html", name: "Môn Anh Văn / Tiếng Anh" },
+                            { path: "/anhvan/anhvan6 bài 1.html", name: "Anh Văn 6 - Bài 1" },
+                            { path: "/anhvan/anhvan6 bài 1 copy.html", name: "Anh Văn 6 - Bài 2" },
+                            { path: "/anhvan/anhvan6.html", name: "Anh Văn 6" },
+                            { path: "/anhvan/anhvan7-bài-1 copy 2.html", name: "Anh Văn 7 - Bài 2" },
+                            { path: "/anhvan/anhvan7-bài-1.html", name: "Anh Văn 7 - Bài 1" },
+                            { path: "/anhvan/anhvan7.html", name: "Anh Văn 7" },
+                            { path: "/anhvan/anhvan8-bai1.html", name: "Anh Văn 8 - Bài 1" },
+                            { path: "/anhvan/anhvan8-bai2.html", name: "Anh Văn 8 - Bài 2" },
+                            { path: "/anhvan/anhvan8.html", name: "Anh Văn 8" },
+                            { path: "/anhvan/anhvan9-bai-1.html", name: "Anh Văn 9 - Bài 1" },
+                            { path: "/anhvan/anhvan9-bai-2.html", name: "Anh Văn 9 - Bài 2" },
+                            { path: "/anhvan/anhvan9.html", name: "Anh Văn 9" },
+                            // Tin học:
+                            { path: "/tin/tin.html", name: "Môn Tin" },
+                            { path: "/tin/tin6-bai1.html", name: "Tin 6 - Bài 1" },
+                            { path: "/tin/tin6-bai2.html", name: "Tin 6 - Bài 2" },
+                            { path: "/tin/tin6-bai3.html", name: "Tin 6 - Bài 3" },
+                            { path: "/tin/tin6.html", name: "Trọn bộ Tin 6" },
+                            { path: "/tin/tin7-bai1.html", name: "Tin 7 - Bài 1" },
+                            { path: "/tin/tin7-bai2.html", name: "Tin 7 - Bài 2" },
+                            { path: "/tin/tin7.html", name: "Trọn bộ Tin 7" },
+                            { path: "/tin/tin8-bai1.html", name: "Tin 8 - Bài 1" },
+                            { path: "/tin/tin8-bai2.html", name: "Tin 8 - Bài 2" },
+                            { path: "/tin/tin8-bai3.html", name: "Tin 8 - Bài 3" },
+                            { path: "/tin/tin8-bai4.html", name: "Tin 8 - Bài 4" },
+                            { path: "/tin/tin8.html", name: "Trọn bộ Tin 8" },
+                            { path: "/tin/tin9-bai1.html", name: "Tin 9 - Bài 1" },
+                            { path: "/tin/tin9-bai2.html", name: "Tin 9 - Bài 2" },
+                            { path: "/tin/tin9-bai3.html", name: "Tin 9 - Bài 3" },
+                            { path: "/tin/tin9-cuoi_chuong.html", name: "Tin 9 - Bài tập cuối chương" },
+                            { path: "/tin/tin9.html", name: "Trọn bộ Tin 9" },
+                            // Toán học
+                            { path: "/toan/toan.html", name: "Môn Toán" },
+                            { path: "/toan/toan6-bai1.html", name: "Toán 6 - Bài 1" },
+                            { path: "/toan/toan6-bai2.html", name: "Toán 6 - Bài 2" },
+                            { path: "/toan/toan6-bai3.html", name: "Toán 6 - Bài 3" },
+                            { path: "/toan/toan6-bai4.html", name: "Toán 6 - Bài 4" },
+                            { path: "/toan/toan6.html", name: "Trọn bộ Toán 6" },
+                            { path: "/toan/toan7-bai1.html", name: "Toán 7 - Bài 1" },
+                            { path: "/toan/toan7-bai2.html", name: "Toán 7 - Bài 2" },
+                            { path: "/toan/toan7-bai3.html", name: "Toán 7 - Bài 3" },
+                            { path: "/toan/toan7-bai4.html", name: "Toán 7 - Bài 4" },
+                            { path: "/toan/toan7.html", name: "Trọn bộ Toán 7" },
+                            { path: "/toan/toan8-bai1.html", name: "Toán 8 - Bài 1" },
+                            { path: "/toan/toan8-bai2.html", name: "Toán 8 - Bài 2" },
+                            { path: "/toan/toan8-bai3.html", name: "Toán 8 - Bài 3" },
+                            { path: "/toan/toan8-bai4.html", name: "Toán 8 - Bài 4" },
+                            { path: "/toan/toan8.html", name: "Trọn bộ Toán 8" },
+                            { path: "/toan/toan9-bai1.html", name: "Toán 9 - Bài 1" },
+                            { path: "/toan/toan9-bai2.html", name: "Toán 9 - Bài 2" },
+                            { path: "/toan/toan9-bai3.html", name: "Toán 9 - Bài 3" },
+                            { path: "/toan/toan9-cuoi_chuong.html", name: "Toán 9 - Bài tập cuối chương" },
+                            { path: "/toan/toan9.html", name: "Trọn bộ Toán 9" }
+                        ];
+
+
+                        const searchInput = document.getElementById('searchInput');
+                        const suggestions = document.getElementById('suggestions');
+
+                        searchInput.addEventListener('input', () => {
+                            const query = searchInput.value.toLowerCase();
+                            suggestions.innerHTML = ''; // Xóa gợi ý cũ
+                            if (query.length > 0) {
+                                const results = htmlFiles.filter(file => file.name.toLowerCase().includes(query));
+                                if (results.length > 0) {
+                                    results.forEach(file => {
+                                        const listItem = document.createElement('li');
+                                        listItem.className = 'list-group-item';
+                                        listItem.style.cursor = 'pointer';
+                                        listItem.textContent = file.name;
+                                        listItem.onclick = () => {
+                                            searchInput.value = file.name; // Điền từ khóa vào ô tìm kiếm
+                                            window.location.href = file.path; // Chuyển hướng khi nhấp
+                                        };
+                                        suggestions.appendChild(listItem);
+                                    });
+                                    suggestions.classList.remove('d-none'); // Hiển thị gợi ý
+                                } else {
+                                    suggestions.innerHTML = '<li class="list-group-item">Không tìm thấy kết quả phù hợp.</li>';
+                                    suggestions.classList.remove('d-none');
+                                }
+                            } else {
+                                suggestions.classList.add('d-none'); // Ẩn gợi ý nếu không có từ khóa
+                            }
+                        });
+
+                        // Ẩn danh sách gợi ý khi nhấn ra ngoài
+                        document.addEventListener('click', (e) => {
+                            if (!e.target.closest('.search-container') && e.target !== searchInput) {
+                                suggestions.classList.add('d-none');
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </nav>
+      
+        <!-- Services-->
+        
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-light" id="portfolio">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase pt-5">
+                    <i class="fas fa-globe" ></i>    Global Success   <i class="fas fa-search"></i> 
+                </h2>
+                <h3 class="section-subheading text-muted">unit1-Hobbies</h3>
+            </div>
+               <div>
+               
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h2 ><i class="fas fa-book " style="font-size: 34px; color: #FFD700;"></i>  VOCABUALARY<i class="bi bi-wechat"><path xmlns="http://www.w3.org/2000/svg" d="M0 6.826c0 1.455.781 2.765 2.001 3.656a.385.385 0 0 1 .143.439l-.161.6-.1.373a.5.5 0 0 0-.032.14.19.19 0 0 0 .193.193q.06 0 .111-.029l1.268-.733a.6.6 0 0 1 .308-.088q.088 0 .171.025a6.8 6.8 0 0 0 1.625.26 4.5 4.5 0 0 1-.177-1.251c0-2.936 2.785-5.02 5.824-5.02l.15.002C10.587 3.429 8.392 2 5.796 2 2.596 2 0 4.16 0 6.826m4.632-1.555a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0m3.875 0a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0"/></i>
+</h2>
+
+ 
+  <!--<table border="1">
+    <tr>
+        <th>TỪ VỰNG</th>
+        <th>NGHĨA</th>
+    
+    
+    <tr>
+        <td>Catch</td>
+        <td>Đánh được (câu cá)</td>
+    </tr>
+    <tr>
+        <td>Crop</td>
+        <td>Vụ, mùa</td>
+    </tr>
+    <tr>
+        <td>Cattle</td>
+        <td>Gia súc</td>
+    </tr>
+    <tr>
+        <td>Combine harvester</td>
+        <td>Máy gặt liên hợp</td>
+    </tr>
+</table>-->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Từ Vựng Sáng Tạo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color:  hsl(128, 82%, 51%);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .highlight {
+            color: #e91e63;
+            font-weight: bold;
+        }
+
+        .example {
+            color: #009688;
+        }
+
+        .emoji {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <th>Từ Vựng</th>
+            <th>Ý Nghĩa</th>
+            <th>Ví Dụ</th>
+        </tr>  
+        <tr>
+            <td><span class="emoji">🔑</span> <span class="highlight">Belong to  <!-- Biểu tượng âm thanh -->
+                <span class="audio-icon" onclick="playAudio()">🔊</span>
+            
+                <!-- Thẻ âm thanh -->
+                <audio id="audio" src="https://www.soundjay.com/button/beep-07.wav"></audio></span></td>
+            <td>Thuộc về</td>
+            <td class="example">"This book belongs to Sarah." (Cuốn sách này thuộc về Sarah.)</td>
+        </tr>
+        <tr>
+            <td><span class="emoji">💡</span> <span class="highlight">Benefit  <!-- Biểu tượng âm thanh -->
+                <span class="audio-icon" onclick="playAudio()">🔊</span>
+            
+                <!-- Thẻ âm thanh -->
+                <audio id="audio" src="https://www.soundjay.com/button/beep-07.wav"></audio> </span></td>
+            <td>Lợi ích</td>
+            <td class="example">"Regular exercise has many health benefits." (Tập thể dục thường xuyên có nhiều lợi ích cho sức khỏe.)</td>
+        </tr>
+        <tr>
+            <td><span class="emoji">🐞</span> <span class="highlight">Bug  <!-- Biểu tượng âm thanh -->
+                <span class="audio-icon" onclick="playAudio()">🔊</span>
+            
+                <!-- Thẻ âm thanh -->
+                <audio id="audio" src="https://www.soundjay.com/button/beep-07.wav"></audio> </span></td>
+            <td>Con bọ</td>
+            <td class="example">"I found a bug in my room." (Tôi tìm thấy một con bọ trong phòng của mình.)</td>
+        </tr>
+        <tr>
+            <td><span class="emoji">📦</span> <span class="highlight">Cardboard  <!-- Biểu tượng âm thanh -->
+                <span class="audio-icon" onclick="playAudio()">🔊</span>
+            
+                <!-- Thẻ âm thanh -->
+                <audio id="audio" src="https://www.soundjay.com/button/beep-07.wav"></audio> </span></td>
+            <td>Thùng bìa cứng</td>
+            <td class="example">"The toys are packed in a cardboard box." (Những món đồ chơi được đóng gói trong thùng bìa cứng.)</td>
+        </tr>
+        <tr>
+            <td><span class="emoji">🏠</span> <span class="highlight">Doll house  <!-- Biểu tượng âm thanh -->
+                <span class="audio-icon" onclick="playAudio()">🔊</span>
+            
+                <!-- Thẻ âm thanh -->
+                <audio id="audio" src="https://www.soundjay.com/button/beep-07.wav"></audio> </span></td>
+            <td>Nhà búp bê</td>
+            <td class="example">"She has a beautiful doll house in her room." (Cô ấy có một ngôi nhà búp bê xinh đẹp trong phòng.)</td>
+        </tr>
+    </table>
+    
+    <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Simple Tense</title>
+    
+</head>
+<body>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Sentences</title>
+    <link href="https://kit.fontawesome.com/a076d05399.js" rel="stylesheet">
+    <style>
+        
+
+        
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        h12 {
+            color: #3498db;
+        }
+
+        .highlight2 {
+            background-color: #ffeb3b;
+            padding: 0.2em;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .example {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-left: 5px solid #3498db;
+        }
+
+        .list {
+            padding-left: 20px;
+        }
+
+        .list li {
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            font-size: 30px;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1><span class="icon"><i class="fas fa-pen"></i></span> Simple Sentences</h1>
+    
+        <div class="section">
+            <h2><span class="icon"><i class="fas fa-book"></i></span> 1. Định Nghĩa</h2>
+            <p>Simple sentence (Câu đơn) là câu chỉ chứa một mệnh đề chính, bao gồm một chủ ngữ và một động từ. Câu đơn diễn tả một ý tưởng hoàn chỉnh.</p>
+        </div>
+    
+        <div class="section">
+            <h2><span class="icon"><i class="fas fa-cogs"></i></span> 2. Cấu Trúc</h2>
+            <p><b>Cấu trúc câu đơn cơ bản:</b></p>
+            <div class="example">
+                <p><b>Chủ ngữ + Động từ + ...</b></p>
+                <p><i>Ví dụ:</i> "She sings beautifully." (Cô ấy hát rất hay.)</p>
+            </div>
+            <p><b>Với bổ ngữ hoặc trạng từ:</b></p>
+            <div class="example">
+                <p><b>Chủ ngữ + Động từ + Bổ ngữ/Trạng từ</b></p>
+                <p><i>Ví dụ:</i> "He plays football every day." (Anh ấy chơi bóng đá mỗi ngày.)</p>
+            </div>
+        </div>
+    
+        <div class="section">
+            <h2><span class="icon"><i class="fas fa-brain"></i></span> 3. Các Trường Hợp Sử Dụng</h2>
+            <ul class="list">
+                <li><b>Diễn tả hành động xảy ra thường xuyên hoặc thói quen:</b> "I go to the gym every morning." (Tôi đi tập gym mỗi sáng.)</li>
+                <li><b>Diễn tả sự thật hiển nhiên hoặc chân lý:</b> "The Earth orbits around the Sun." (Trái đất quay quanh Mặt trời.)</li>
+                <li><b>Diễn tả tình trạng hiện tại:</b> "She works in a bank." (Cô ấy làm việc tại một ngân hàng.)</li>
+            </ul>
+        </div>
+    
+        <div class="section">
+            <h2><span class="icon"><i class="fas fa-key"></i></span> 4. Lưu Ý Đặc Biệt</h2>
+            <ul class="list">
+                <li><b>Chủ ngữ "he", "she", "it" sẽ thêm "s" vào động từ khi chia ở hiện tại đơn:</b> "He runs every morning." (Anh ấy chạy mỗi sáng.)</li>
+                <li><b>Không thêm "s" với động từ khi chủ ngữ là "I", "you", "we", "they":</b> "We eat lunch at noon." (Chúng tôi ăn trưa vào buổi trưa.)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon"><i class="fas fa-distance"></i></span> 5. Dùng "It" để Nói về Khoảng Cách</h2>
+            <div class="example">
+                <p><b>Chủ ngữ: It</b><br>
+                <b>Cấu trúc:</b> It + động từ (is, takes, etc.) + khoảng cách hoặc thời gian<br>
+                <b>Câu:</b> "It is 5 kilometers to the nearest supermarket." (Cách siêu thị gần nhất là 5 km.)
+                </p>
+            </div>
+            <div class="example">
+                <p><b>Chủ ngữ: It</b><br>
+                <b>Cấu trúc:</b> It + takes + thời gian + to + động từ<br>
+                <b>Câu:</b> "It takes 30 minutes to walk to the park." (Mất 30 phút để đi bộ đến công viên.)
+                </p>
+            </div>
+        </div>
+    
+        <div class="section">
+            <h2><span class="icon"><i class="fas fa-check-circle"></i></span> 6. Should / Shouldn't</h2>
+            <p><b>Cấu trúc:</b> Should / Shouldn't + động từ nguyên mẫu</p>
+            <div class="example">
+                <p><i>Ví dụ:</i> "You should study harder." (Bạn nên học chăm chỉ hơn.)</p>
+                <p><i>Ví dụ:</i> "He shouldn't go out late." (Anh ấy không nên ra ngoài muộn.)</p>
+            </div>
+            <ul class="list">
+                <li><b>Should:</b> Dùng để khuyên ai đó làm gì hoặc để chỉ ra rằng một hành động là đúng đắn.</li>
+                <li><b>Shouldn't:</b> Dùng để chỉ ra rằng một hành động là sai hoặc không nên làm.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon"><i class="fas fa-pencil-alt"></i></span> 7. Ví Dụ Thực Tế</h2>
+            <div class="example">
+                <p><b>Chủ ngữ: I, you, we, they</b> <br>
+                <b>Động từ: eat</b> <br>
+                <b>Câu:</b> "I eat pizza every Friday."
+                </p>
+            </div>
+            <div class="example">
+                <p><b>Chủ ngữ: He, she, it</b> <br>
+                <b>Động từ: go</b> <br>
+                <b>Câu:</b> "She goes to school by bus."
+                </p>
+            </div>
+        </div>
+    </div>
+    <a href="../tracnghiem/anhvan7-bai-1.html"class="btn btn-primary">Làm bài trắc nghiệm</a>
+</body>
+</html>
+
+    
+</body>
+</html>
+
+    
+             
+   
+    
+    <!-- Javascript to play audio -->
+    <script>
+        function playAudio(url) {
+            const audio = new Audio(url);
+            audio.play();
+        }
+    </script>
+    
+   
+      
+            
+        
+    
+    
+   
+    
+    <a href="../tracnghiem/anhvan7-bai-1.html"class="btn btn-primary">Làm bài trắc nghiệm</a>>
+
+    <script>
+        function playAudio() {
+            var audio = document.getElementById("audio");
+            audio.play();
+        }
+    </script>
+</body>
+</div>

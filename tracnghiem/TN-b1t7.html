@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+		<!-- Bootstrap CSS -->
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		/>
+		<!-- Google Material Icons -->
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<!-- Custom Style Sheet -->
+		<link rel="stylesheet" href="brain/css/style.css" />
+		<title>Trắc nghiệm toán học</title>
+		<link rel="icon" type="image/png" href="brain/img/fav.png" />
+	</head>
+	<style>
+		body {
+			overflow-y: scroll; /* Hiển thị thanh cuộn dọc */
+		}
+	</style>
+	<body onload="chkUser()">
+		<div class="container box-shadow">
+			<!-- The Form -->
+			<div id="username" class="d-none">
+				<form class="form" onsubmit="return false;">
+					<i class="material-icons">face</i>
+					<h2>Tên của bạn là gì?</h2>
+					<div class="form-group mx-sm-3 mb-3 passBox">
+						<label for="pass" class="sr-only">Tên (Nick Name)</label>
+						<input
+							type="text"
+							class="form-control"
+							id="uname"
+							placeholder="Nick Name"
+							onfocus="this.style.borderColor = '#007bff'"
+							onblur="this.style.borderColor = '#ced4da'"
+						/>
+					</div>
+					<button
+						type="submit"
+						class="btn btn-primary mb-2"
+						onclick="askPass();"
+					>
+						Xác nhận!
+					</button>
+				</form>
+			</div>
+			<!-- The Form -->
+			<div id="theForm" class="d-none">
+				<form class="form" onsubmit="return false;">
+					<i class="material-icons finger-print">https</i>
+					<i class="material-icons warning">warning</i>
+					<i class="material-icons success">done_all</i>
+					<h2
+						id="errH"
+						style="font-weight:bold;font-size:1.7em;margin-bottom: 30px;"
+					></h2>
+					<h2 id="err"></h2>
+					<div class="form-group mx-sm-3 mb-3 passBox">
+						<label for="pass" class="sr-only">Mật khẩu làm bài</label>
+						<input
+							type="password"
+							class="form-control animated"
+							id="pass"
+							placeholder="Mật khẩu làm bài"
+							onkeyup="typing();"
+							onfocus="resetErr();"
+							onblur="this.style.borderColor = '#ced4da';"
+						/>
+					</div>
+					<div>Mật khẩu: 11223344</div>
+					<button
+						type="submit"
+						disabled="disabled"
+						class="btn btn-primary mb-2"
+						id="submit"
+						onclick="chkPass(this);"
+					>
+						Xác nhận
+					</button>
+				</form>
+			</div>
+			<div class="text-center quiz-start" id="start-quiz-link" onclick="startQuiz(); hideButton(this);"><button class="btn btn-primary">Bắt đầu làm trắc nghiệm</button></div>
+
+			<!-- Quiz Starts Here -->
+			<section id="theQuiz" >
+				<form id="quizForm" onsubmit="return false;">
+					<h2>Trắc nghiệm toán học</h2>
+
+					<div id="steps" style="text-align:center;">
+						<!-- Steps will be shown as per questions length -->
+					</div>
+
+					<hr />
+					<!-- One "tab" for each step in the form: -->
+					<div id="tab">
+						<p id="que">---Question---</p>
+						<hr />
+						<div class="custom-control custom-radio">
+							<input
+								type="radio"
+								id="opt1"
+								name="q"
+								class="custom-control-input"
+								onclick="enableBtn(this)"
+								value="1"
+							/>
+							<label
+								class="custom-control-label"
+								onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)"
+								>---Option 1---</label
+							>
+						</div>
+						<div class="custom-control custom-radio">
+							<input
+								type="radio"
+								id="opt2"
+								name="q"
+								class="custom-control-input"
+								onclick="enableBtn(this)"
+								value="2"
+							/>
+							<label
+								class="custom-control-label"
+								onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)"
+								>---Option 2---</label
+							>
+						</div>
+						<div class="custom-control custom-radio">
+							<input
+								type="radio"
+								id="opt3"
+								name="q"
+								class="custom-control-input"
+								onclick="enableBtn(this)"
+								value="3"
+							/>
+							<label
+								class="custom-control-label"
+								onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)"
+								>---Option 3---</label
+							>
+						</div>
+						<div class="custom-control custom-radio">
+							<input
+								type="radio"
+								id="opt4"
+								name="q"
+								class="custom-control-input"
+								onclick="enableBtn(this)"
+								value="4"
+							/>
+							<label
+								class="custom-control-label"
+								onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)"
+								>---Option 4---</label
+							>
+						</div>
+					</div>
+
+					<div style="overflow:auto;">
+						<div style="float:right;">
+							<button
+								type="button"
+								disabled="disabled"
+								class="btn btn-info mb-2"
+								id="next-button"
+								onclick="next();"
+							>
+								Next
+							</button>
+						</div>
+					</div>
+				</form>
+			</section>
+
+			<!-- The Result -->
+			<section id="theResult">
+				<div id="resultCircle">
+					Đang tính toán kết quả của bạn...
+				</div>
+				<!-- Result Circle End -->
+				<br />
+				<!-- <h1>Congrats! Your Are Passed</h1> -->
+				<h2 id="resultFb" style="font-weight: bold;"></h2>
+				<h3 id="correctAns"></h3>
+				<hr />
+				<button class="btn btn-info" onclick="retakeQuiz();">
+					Làm lại!
+				</button>
+			</section>
+		</div>
+		<!-- Container End -->
+		<button
+			class="btn btn-danger"
+			style="position:absolute; bottom:5px; right:5px;"
+			onclick="logout();"
+			id="logoutBtn"
+		>
+			Logout
+		</button>
+		<div class="text-center mt-5">
+			<a href="../toan/toan7-bai1.html" class="btn btn-primary">Về trang bài học</a>
+		</div>
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		<script src="brain/js/TN-tin7-bai1.js"></script>
+		<script src="brain/js/script.js"></script>
+	</body>
+</html>

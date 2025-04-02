@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>CVĐ - KHKT</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="./index.html">CVĐ Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="./tin/tin.html">Tin học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./toan/toan.html">Toán học</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./anhvan/anhvan.html">Anh văn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#team">Nhóm</a></li>
+                    </ul>
+                    <!-- Search form -->
+                    <style>
+                        .form-control {
+                            border-radius: 50px;
+                            font-size: 20px;
+                        }
+                        form .btn {
+                            border-radius: 10px;
+                            font-size: 20px;
+                        }
+                        form {
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-style: normal;
+                            font-variation-settings:"slnt" 0;
+                        }
+                    </style>
+                    <form class="d-flex ms-lg-3" action="./search.html" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Tìm bài học..." name="query" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <style>
+            .chat-bubble {
+                font-size: 50px;
+                position: fixed;
+                z-index: 1000;
+                bottom: 20px;
+                right: 20px;
+                background-color: #ffc800;
+                color: white;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 0px 100px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, all 0.3s ease;
+                color: black
+             }
+
+            .chat-bubble:hover {
+                transform: scale(1.1);
+                background-color: black;
+                color: #ffc800;
+                box-shadow: 0 0 5px 5px #ffc800;
+            }
+            .chat-box {
+                position: fixed;
+                z-index: 1000;
+                bottom: 120px;
+                right: 120px;
+                width: 600px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                box-shadow: 0px 0px 10px 1px black;
+            }
+    
+            .chat-header {
+                position: relative;
+                z-index: 1000;
+                background-color: #ffc800;
+                color: black;
+                padding: 10px;
+                font-size: 30px;
+            }
+    
+            .chat-messages {
+                flex-grow: 1;
+                padding: 30px;
+                overflow-y: auto;
+                max-height: 200px;
+                background-color: rgb(255, 255, 255);
+                font-size: 28px;
+                border: solid #000000 1px;
+                color: #000000;
+                font-weight: 600;
+            }
+    
+            .chat-input {
+                display: flex;
+                padding: 10px;
+                background-color: #ffc800;
+            }
+    
+            .chat-input input {
+                flex-grow: 1;
+                padding: 8px;
+                border: 2px solid #000000;
+                border-radius: 4px;
+                font-size: 20px;
+            }
+    
+            .chat-input button {
+                margin-left: 5px;
+                padding: 8px 12px;
+                background-color: #000000;
+                color: #ffc800;
+                font-weight: 600;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 20px;
+                transition: transform 0.3s ease, all 0.3s ease;
+            }
+    
+            .chat-input button:hover {
+                background-color: #ffffff;
+                color: black;
+                transform: scale(1.1);
+                box-shadow: 0 0 5px 5px #ffffff;
+            }
+            .bubble-chat-font{
+                font-family: "Afacad Flux", serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                font-variation-settings:"slnt" 0;
+            }
+        </style>
+        <div class="bubble-chat-font">
+            <div class="chat-bubble" id="chatToggle"><i style="font-weight: 500;" class="fa-brands fa-rocketchat"></i></div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">Hỏi giáo sư Lộc <i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Nhập câu hỏi...">
+                <button id="chatSend">Gửi</button>
+            </div>
+        </div>
+
+        <script>
+            const chatToggle = document.getElementById('chatToggle');
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Toggle chat box visibility
+            chatToggle.addEventListener('click', () => {
+                if (chatBox.style.display === 'flex') {
+                    chatBox.style.display = 'none';
+                } else {
+                    chatBox.style.display = 'flex';
+                }
+            });
+
+            // Send message
+            chatSend.addEventListener('click', () => {
+                const message = chatInput.value.trim();
+                if (message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+
+            // Allow Enter key to send message
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    chatSend.click();
+                }
+            });
+        </script>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-subheading">Website làm bài trắc nghiệm hỗ trợ học tập</div>
+                <div class="masthead-heading text-uppercase">Dự án KHKT cấp tỉnh</div>
+                <!-- <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a> -->
+            </div>
+        </header>
+        <!-- Services-->
+        <section class="page-section" id="services">
+            <div class="container">
+                <div class="text-center">
+                    <h2 style="background-color: #0000002e;padding: 16px;width: 300px;margin-left: auto;margin-right: auto;border-radius: 14px;box-shadow: #989898 6px 6px 0 0px;" class="section-heading text-uppercase">Môn học</h2>
+                    <h3 style="color: gray !important;" class="section-subheading">"Cùng giải trắc nghiệm ngay tại nhà nhé!"</h3>
+                </div>
+                <style>
+                    .row1{
+                        position: relative;
+                        z-index: 10;
+                        padding: 0px;
+                        border-radius: 18px;
+                        background-color: #282424;
+                    }
+                    .row1 {
+                        --bs-gutter-x: 1.5rem;
+                        --bs-gutter-y: 0;
+                        display: flex;
+                        flex-wrap: wrap;
+                        margin-top: calc(-1* var(--bs-gutter-y));
+                        margin-right: calc(-0.5* var(--bs-gutter-x));
+                        margin-left: calc(-0.5* var(--bs-gutter-x));
+                    }
+                    .row1 p{
+                        max-width: 300px;
+                        padding-top: 15px;
+                        margin-left: auto;
+                        margin-right: auto;
+                        font-size: 24px;
+                        color: white;
+                        text-shadow: #000000 0 0 2px;
+                        text-align:center;
+                    }
+                    .subjects {
+                        position: relative;
+                        z-index: 10;
+                        margin-left: auto;
+                        margin-right: auto;
+                        border-radius: 15px;
+                        padding: 10px;
+                        padding-top: 30px;
+                        width: 200px;
+                        background-color: #ffc800;
+                        transition: all 1s ease;
+                        box-shadow: #ffc800 0 0 10px 1px;
+                    }
+                    .subjects:hover {
+                        transform: scale(1.1);
+                        box-shadow: 0 0 100px 1px #ffc800;
+                    }
+                    .hide-text {
+                        font-size: 18px;
+                        font-style: italic;
+                        background-color: white;
+                        font-weight: 700;
+                        text-shadow: #ffc800 0 0 5px;
+                        height: 100px;
+                        padding-top: 20px;
+                        border-radius: 5px;
+                        top: 180px;
+                        position: relative;
+                        left: 50%;
+                        right: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 190px;
+                        bottom: -100px;
+                        opacity: 1;
+                        color: rgb(0, 0, 0);
+                    }
+                    span {text-decoration: underline;}
+                </style>
+                <div class="row1 text-center">
+                    <!--TIN HỌC-->
+                    <div class="col-md-4">
+                        <div class="bao">
+                            <div class="hide-text"> RÈN TRẮC NGHIỆM <span>TIN HỌC</span> NHÉ BẠN HIỀN? </div>
+                            <div class="subjects">
+                                <span class="fa-stack fa-4x">
+                                    <a href="tin/tin.html"><img src="./assets/img/computer.png" alt="" width="90"></a>
+                                </span>
+                                <h4 class="my-3">Tin học</h4>
+                            </div>
+                        <p>"Trường phái của sự logic, tự động hóa và sáng tạo!<i style="padding:0 5px 0 5px;" class="fa-solid fa-brain"></i>"</p>
+                        </div>
+                    </div>
+                    <!--TOÁN HỌC-->
+                    <div class="col-md-4">
+                        <div class="bao">
+                            <div class="hide-text"> LÀM TÍ ĐẠI SỐ KHÔNG BẠN HIỀN? </div>
+                            <div class="subjects">
+                                <span class="fa-stack fa-4x">
+                                    <a href="toan/toan.html"><img src="./assets/img/logarithm.png" alt="" width="90"></a>
+                                </span>
+                                <h4 class="my-3">Toán học</h4>
+                            </div>
+                        <p>"Vũ điệu của con số và đường kẻ!<i style="padding:0 5px 0 5px;" class="fa-solid fa-shapes"></i>"</p>
+                        </div>
+                    </div>
+                    <!--ANH VĂN-->
+                    <div class="col-md-4">
+                        <div class="bao">
+                            <div class="hide-text"> THỬ SỨC VỚI <span>ANH VĂN</span> KHÔNG? </div>
+                            <div class="subjects">
+                                <span class="fa-stack fa-4x">
+                                    <a href="anhvan/anhvan.html"><img src="./assets/img/eng.png" alt="" width="90"></a>
+                                </span>
+                                <h4 class="my-3">Anh văn</h4>
+                            </div>
+                        <p>"Nền tảng của hội nhập và tri thức hiện đại!<i style="padding:0 5px 0 5px;" class="fa-solid fa-language"></i>"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-light" id="portfolio">
+            <style>
+                body {
+                    overflow-x: hidden;
+                }
+                .thusucnao h2{
+                    background-color: #ffc800;
+                    padding: 30px;
+                    border-radius: 20px;
+                    margin-right: auto;
+                    margin-left: auto;
+                    width: 600px;
+                    box-shadow: #7f5700 7px 4px 0px 2px;
+                    color: #282424;
+                }
+                .thusucnao h2:hover {
+                    box-shadow: inset #7f5700 7px 4px 0px 2px;;
+                }
+                a {
+                    text-decoration: none;
+                }
+            </style>
+            <div class="container">
+                <style>
+                    .timeline h4{
+                        color: #ffffff;
+                    }
+                    .bao-timeline {
+                        padding: 60px;
+                        background-color: #2428282a;
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 1000px;
+                        border-radius: 13px;
+                        position: relative;
+                        transform: scale(1);
+                        line-height: 1.5;
+                        text-align: left;
+                    }
+                    
+                    .timeline > li .timeline-panel {text-align: left;}
+                    .text-mutedfake{font-size: 20px;
+                        color: white !important ;    
+                    }
+                    .text-meo {
+                        font-size: 20px;
+                        --bs-text-opacity: 1;
+                        font-style: italic;
+                        color: #ffc800;
+                    }
+                    .bao-timeline ul {
+                        margin-top: 70px;
+                    }
+                    .bao-timeline h2 {
+                        text-shadow: #ffc800 0 0 15px;
+                        line-height:2.5;
+                    }
+                    .bao-timeline h2 span {
+                        font-size: 40px;
+                        background-color: #282424;
+                        padding: 26px;
+                        border-radius: 70px;
+                        text-decoration: none;
+                        text-shadow: none;
+                    }
+                    .khung-bikip {
+                        border-radius: 8px;
+                        background-color: #282424;
+                        padding: 15px;
+                        width: 245px;
+                    }
+                    .timeline-heading h4{
+                        font-size: 40px;
+                    }
+                    .bao-timeline .timeline-image {
+                        background-size: cover; /* Hình ảnh sẽ bao phủ toàn bộ phần tử */
+                        background-position: center; /* Căn giữa hình ảnh */
+                        background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+                    }
+                    .bao-timeline {
+                        margin-bottom: 200px;
+                    }
+                </style>
+                <div class="bao-timeline">
+                    <div class="text-center">
+                        <h2 class="section-heading text-uppercase"><i>BÍ KÍP TRẮC NGHIỆM NHẠY BÉN CÙNG </i><span style="color: #ffc800;">CVĐ WEB</span></h2>
+                    </div>
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-image" style="background-image: url(/assets/img/loc-img/dockycauhoi.jpg);"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Bước 1:</h4>
+                                </div>
+                                <div class="khung-bikip">
+                                    <h4 class="subheading">Đọc kỹ câu hỏi</h4>
+                                    <div class="timeline-body"><p class="text-mutedfake">Hiểu rõ yêu cầu, chú ý từ khóa như "đúng nhất", "sai", "không".</p><p class="text-meo">Mẹo: Nếu câu dài, đọc qua đáp án trước để nắm ý chính.</p></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image" style="background-image: url(/assets/img/loc-img/phantichdapan.jpg);"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Bước 2:</h4>
+                                </div>
+                                <div class="khung-bikip">
+                                    <h4 class="subheading">Phân tích đáp án</h4>
+                                    <div class="timeline-body"><p class="text-mutedfake">Đọc từng đáp án cẩn thận, loại bỏ ngay các đáp án sai hoặc không hợp lý.</p><p class="text-meo">Mẹo: Đáp án chi tiết hoặc bao quát thường có khả năng đúng cao hơn.</p></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="timeline-image" style="background-image: url(/assets/img/loc-img/loaitru.jpg);"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Bước 3:</h4>
+                                </div>
+                                <div class="khung-bikip">
+                                    <h4 class="subheading">Sử dụng loại trừ</h4>
+                                    <div class="timeline-body"><p class="text-mutedfake">Dùng phương pháp loại trừ để thu hẹp lựa chọn, chọn đáp án khả thi nhất.</p><p class="text-meo">Mẹo: Tránh bị đánh lừa bởi các từ mang tính cực đoan như "luôn luôn" hoặc "không bao giờ".</p></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image" style="background-image: url(/assets/img/loc-img/kiemtralai.png);"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Bước 4:</h4>
+                                </div>
+                                <div class="khung-bikip">
+                                    <h4 class="subheading">Kiểm tra lại</h4>
+                                    <div class="timeline-body"><p class="text-mutedfake">Nếu còn thời gian, xem lại các câu khó và đảm bảo không bỏ sót hoặc nhầm lẫn.</p><p class="text-meo">Mẹo: Tin vào đáp án ban đầu nếu không tìm thấy lý do hợp lý để thay đổi.</p></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <style>
+                        .notebikip{
+                            font-size: 30px;
+                            border-radius: 5px;
+                            background-color: #282424;
+                            padding: 15px;
+                            padding-top: 30px;
+                        }
+                        .notebikip b {
+                            font-weight: 300;
+                            font-family: "Afacad Flux", serif;
+                            font-optical-sizing: auto;
+                            font-variation-settings:"slnt" 0;
+                            background-color: #ffc800;
+                            border-radius: 10px;
+                            padding: 8px 16px 8px 16px;
+                            color: white;
+                            box-shadow:#ffc800 0px 0px 50px 5px;
+                            margin-left: 20px;
+                            margin-right: 20px;
+                            transition: all 0.4s ease;                  
+                        }
+                        .notebikip b:hover {
+                            background-color: #9a6607;
+                        }
+                        .notebikip p {
+                            text-align: center;
+                            color: white;
+                        }
+                    </style>
+                    <div class="notebikip">
+                        <p>"Nhấn vào nút <b>Làm bài trắc nghiệm</b> ở mỗi bài để kiểm tra"</p>
+                    </div>
+                    <div style="margin-top: 100px;" class="text-center">
+                        <div class="thusucnao">
+                            <a href="#thusucnao"><h2 class="section-heading text-uppercase">Thử sức ngay thôi!<i 
+                                style="
+                                    padding: 0 10px 0 10px;
+                                    color: orangered;
+                                    " 
+                                class="fa-solid fa-fire"></i></h2>
+                            </a>
+                        </div>
+                        <h3 style="text-shadow: 0 0 10px black;font-size: 22px;" class="section-subheading text-mutedfake">"Bứt phá giới hạn của bạn với kho kiến thức miễn phí"</h3>
+                    </div>
+                </div>
+            </div>
+        <style>
+            .row2{
+                box-shadow: #282424 0 0 10px 2px;
+                border-radius: 18px;
+                position: relative;
+                transform: scale(0.8);
+                z-index: 1;
+                padding: 0px;
+                background-color: #282424;
+            }
+            .row2 {
+                --bs-gutter-x: 1.5rem;
+                --bs-gutter-y: 0;
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: calc(-1* var(--bs-gutter-y));
+                margin-right: calc(-0.5* var(--bs-gutter-x));
+                margin-left: calc(-0.5* var(--bs-gutter-x));
+            }
+            .row2 p{
+                max-width: 300px;
+                padding-top: 15px;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 24px;
+                color: white;
+                text-shadow: #000000 0 0 2px;
+                text-align:center;
+            }
+            .subjects2 {
+                position: relative;
+                z-index: 10;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 15px;
+                padding: 10px;
+                padding-top: 30px;
+                width: 280px;
+                background-color: #ffffff;
+                transition: all 1s ease;
+            }
+            .bao .subjects2:hover {
+                transform: translateY(60%);
+                transition-delay: 0.2s;
+                box-shadow: 0 0 10px 1px #ffc800;
+            }
+            .hide-text2 {
+                font-size: 18px;
+                font-style: italic;
+                background-color: white;
+                font-weight: 700;
+                text-shadow: #ffc800 0 0 5px;
+                height: 100px;
+                padding-top: 20px;
+                border-radius: 5px;
+                top: 180px;
+                position: relative;
+                left: 50%;
+                right: 50%;
+                transform: translate(-50%, -50%);
+                width: 190px;
+                bottom: -100px;
+                opacity: 1;
+                color: rgb(0, 0, 0);
+            }
+            span {text-decoration: underline;}
+            .thusucnao2 h2{
+                background-color: #ffc800;
+                padding: 30px;
+                border-radius: 20px;
+                text-align: left;
+                width: 730px;
+                box-shadow: #ffc800 0 0 10px 1px
+            }
+            .thusucnao2 {
+                position: relative;
+                z-index: 10;
+                margin-bottom: -190px;
+                transform: scale(0.9);
+            }
+        </style>
+    <div class="text-center">
+        <div class="thusucnao2" id="thusucnao">
+            <h2 class="section-heading text-uppercase"><i class="fa-solid fa-graduation-cap"></i> GỢI Ý BÀI TẬP TĂNG CƯỜNG</h2>
+            <h3 style="font-size: 20px;font-weight: 300;" class="section-subheading text-muted"></h3>
+        </div>
+    </div>
+        <div class="row2 text-center">
+            <!--TIN HỌC-->
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"> TRẮC NGHIỆM <span>HTML - CSS</span> NHA BẠN TÔI! </div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="tin/tin-comming soon.html"><img src="./assets/img/icon/image-removebg-preview.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Tin học nâng cao</h4>
+                    </div>
+                </div>
+            </div>
+            <!--TOÁN HỌC-->
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"> TRẮC NGHIỆM HÌNH HỌC NHÉ! </div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="toan/toan-comming soon.html"><img src="./assets/img/icon/shape.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Toán hình học</h4>
+                    </div>
+                </div>
+            </div>
+            <!--ANH VĂN-->
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"> <span>IELTS</span> LÀ CHỨNG CHỈ QUỐC TẾ ĐÓ!</div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="toan/toan-comming soon.html"><img src="./assets/img/icon/ielts.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Trắc nghiệm IELTS online</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"><span>TOEIC</span> KIỂM TRA CHẤT LƯỢNG GIAO TIẾP!</div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="tin/tin-comming soon.html"><img src="./assets/img/icon/toeic.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Trắc nghiệm TOEIC online</h4>
+                    </div>
+                <p></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"> RÈN TRẮC NGHIỆM <span>TIN HỌC</span> NHÉ BẠN HIỀN? </div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="tin/tin-comming soon.html"><img src="./assets/img/computer.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Tin học</h4>
+                    </div>
+                <p><!--NHẬP VĂN BẢN CHỖ NÀY--></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"> RÈN TRẮC NGHIỆM <span>TIN HỌC</span> NHÉ BẠN HIỀN? </div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="tin/tin-comming soon.html"><img src="./assets/img/computer.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Tin học</h4>
+                    </div>
+                <p><!--NHẬP VĂN BẢN CHỖ NÀY--></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"> RÈN TRẮC NGHIỆM <span>TIN HỌC</span> NHÉ BẠN HIỀN? </div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="tin/tin-comming soon.html"><img src="./assets/img/computer.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Tin học</h4>
+                    </div>
+                <p><!--NHẬP VĂN BẢN CHỖ NÀY--></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bao">
+                    <div class="hide-text2"> RÈN TRẮC NGHIỆM <span>TIN HỌC</span> NHÉ BẠN HIỀN? </div>
+                    <div class="subjects2">
+                        <span class="fa-stack fa-4x">
+                            <a href="tin/tin-comming soon.html"><img src="./assets/img/computer.png" alt="" width="90"></a>
+                        </span>
+                        <h4 class="my-3">Tin học</h4>
+                    </div>
+                <p><!--NHẬP VĂN BẢN CHỖ NÀY--></p>
+                </div>
+            </div>
+        </div>
+        <!-- Team-->
+        <section class="page-section bg-light" id="team">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Nhóm chúng tôi</h2>
+                    <h3 class="section-subheading text-muted">Thành viên thực hiện dự án.</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." />
+                            <h4>Lâm Visal</h4>
+                            <p class="text-muted">GV hướng dẫn</p>
+                          
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img style="object-fit: cover;" class="mx-auto rounded-circle" src="assets/img/team/2.jpg" alt="..." />
+                            <h4>Ung Thiên Lộc</h4>
+                            <p class="text-muted">Thành viên</p>
+                           
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img style="object-fit: cover;" class="mx-auto rounded-circle" src="assets/img/team/3.jpg" alt="..." />
+                            <h4>Châu Quang Tiến</h4>
+                            <p class="text-muted">Thành viên</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Dự án Website làm bài trắc nghiệm với mong muốn để các bạn học sinh có môi trường để học tập online bổ sung kiến thức, từ đó nâng cao năng lực học tập.</p></div>
+                </div>
+            </div>
+        </section>
+     
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12 text-center">Bản quyền &copy; Trường THCS Châu Văn Đơ</div>
+                    <div class="col-lg-4 text-lg-end d-none">
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
