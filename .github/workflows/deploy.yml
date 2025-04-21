@@ -1,0 +1,21 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - master  # Chạy workflow khi có push lên branch `main`
+  workflow_dispatch:  # Cho phép chạy thủ công từ GitHub Actions UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Branch để chứa website đã deploy
+          folder: .  # Thư mục chứa file HTML, đặt `.` nếu file ở thư mục gốc
