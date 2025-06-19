@@ -118,6 +118,8 @@
   <!-- (phần đầu không thay đổi) -->
 <!-- (phần đầu không thay đổi) -->
 <section class="section">
+  <div class="g-recaptcha" data-sitekey="6LdBVmYrAAAAAORnDn4fVhEHFMWLoGMviNG2wyxo"></div>
+
   <h2>Đặt hàng nhanh</h2>
   <form id="orderForm" style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     <label for="product">Sản phẩm:</label><br>
@@ -138,6 +140,8 @@
     <button type="submit" style="background: #C62828; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer;">Gửi đơn hàng</button>
   </form>
   <div id="orderResult" style="text-align: center; margin-top: 20px; color: green; font-weight: bold;"></div>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </section>
 
 <script>
@@ -147,18 +151,25 @@
   form.addEventListener('submit', function(e) {
     e.preventDefault();
 
+    // Kiểm tra reCAPTCHA
+    const captchaResponse = grecaptcha.getResponse();
+    if (!captchaResponse) {
+      result.innerText = '❌ Vui lòng xác minh “Tôi không phải người máy”.';
+      return;
+    }
+
     const order = {
       product: form.product.value.trim(),
       quantity: form.quantity.value,
       name: form.name.value.trim(),
       phone: form.phone.value.trim(),
       note: form.note.value.trim(),
-      time: new Date().toLocaleString()
+      time: new Date().toLocaleString(),
+      'g-recaptcha-response': captchaResponse // Gửi đi để xác minh nếu sau này dùng backend
     };
 
     // Gửi dữ liệu lên Google Sheets thông qua Google Apps Script Web App URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbz-aqzHnubq9qZcK6JXhijNqO9cbGlKEbNzvy7090-mGYYwJt4wUOeLawDTr2FXB8nv/exec';
-
     fetch(scriptURL, {
       method: 'POST',
       body: new URLSearchParams(order)
