@@ -157,7 +157,8 @@
     };
 
     // Gửi dữ liệu lên Google Sheets thông qua Google Apps Script Web App URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz-aqzHnubq9qZcK6JXhijNqO9cbGlKEbNzvy7090-mGYYwJt4wUOeLawDTr2FXB8nv/exec-aqzHnubq9qZcK6JXhijNqO9cbGlKEbNzvy7090-mGYYwJt4wUOeLawDTr2FXB8nv';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz-aqzHnubq9qZcK6JXhijNqO9cbGlKEbNzvy7090-mGYYwJt4wUOeLawDTr2FXB8nv/exec';
+
     fetch(scriptURL, {
       method: 'POST',
       body: new URLSearchParams(order)
