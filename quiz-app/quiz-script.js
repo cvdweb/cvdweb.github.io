@@ -51,7 +51,7 @@ async function loadQuestions() {
 function startQuiz() {
     // Set lesson title
     const lessonName = lesson.replace('_', ' ').replace('tin', 'Tin Học ').replace('bai', 'Bài ');
-    lessonTitle.textContent = `Bài Thi Trắc Nghiệm - ${lessonName}`;
+    lessonTitle.textContent = `Kiểm tra Trắc Nghiệm - ${lessonName}`;
     pageTitle.textContent = `Quiz - ${lessonName}`;
 
     displayQuestion();
