@@ -62,22 +62,56 @@ function displayQuestion() {
     questionNumber.textContent = `Câu hỏi ${currentQuestionIndex + 1}/${questions.length}`;
     questionText.textContent = question.question;
     optionsDiv.innerHTML = '';
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'list-group-item list-group-item-action';
-        btn.textContent = option;
-        btn.onclick = () => selectOption(index);
-        optionsDiv.appendChild(btn);
-    });
+    if (question.type === 'multiple') {
+        question.options.forEach((option, index) => {
+            const div = document.createElement('div');
+            div.className = 'form-check';
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'form-check-input';
+            checkbox.id = `option-${index}`;
+            checkbox.value = index;
+            checkbox.onchange = () => selectOption(index, true);
+            const label = document.createElement('label');
+            label.className = 'form-check-label';
+            label.htmlFor = `option-${index}`;
+            label.textContent = option;
+            div.appendChild(checkbox);
+            div.appendChild(label);
+            optionsDiv.appendChild(div);
+        });
+    } else {
+        question.options.forEach((option, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'list-group-item list-group-item-action';
+            btn.textContent = option;
+            btn.onclick = () => selectOption(index, false);
+            optionsDiv.appendChild(btn);
+        });
+    }
     nextBtn.disabled = true;
 }
 
-function selectOption(index) {
-    const buttons = optionsDiv.querySelectorAll('button');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    buttons[index].classList.add('active');
-    userAnswers[currentQuestionIndex] = index;
-    nextBtn.disabled = false;
+function selectOption(index, isMultiple) {
+    if (isMultiple) {
+        // For multiple choice, collect all checked options
+        const checkboxes = optionsDiv.querySelectorAll('input[type="checkbox"]');
+        const selectedIndices = [];
+        checkboxes.forEach((checkbox, idx) => {
+            if (checkbox.checked) {
+                selectedIndices.push(idx);
+            }
+        });
+        userAnswers[currentQuestionIndex] = selectedIndices;
+        nextBtn.disabled = selectedIndices.length === 0;
+    } else {
+        // For single choice, highlight selected button
+        const buttons = optionsDiv.querySelectorAll('button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        buttons[index].classList.add('active');
+        userAnswers[currentQuestionIndex] = index;
+        nextBtn.disabled = false;
+    }
 }
 
 nextBtn.onclick = () => {
@@ -90,25 +124,48 @@ nextBtn.onclick = () => {
 };
 
 function showResults() {
-    score = userAnswers.reduce((acc, answer, index) => {
-        return acc + (answer === questions[index].correct ? 1 : 0);
-    }, 0);
-    scoreDiv.textContent = `Điểm số: ${score}/${questions.length}`;
+    score = 0;
     detailedResults.innerHTML = '';
     questions.forEach((question, index) => {
         const div = document.createElement('div');
         div.className = 'mb-3 p-3 border rounded';
         const userAnswer = userAnswers[index];
-        const isCorrect = userAnswer === question.correct;
+        let isCorrect = false;
+        if (question.type === 'multiple') {
+            // Check if arrays are equal (ignoring order)
+            if (Array.isArray(userAnswer) && userAnswer.length === question.correct.length) {
+                const sortedUser = [...userAnswer].sort();
+                const sortedCorrect = [...question.correct].sort();
+                isCorrect = sortedUser.every((val, i) => val === sortedCorrect[i]);
+            }
+        } else {
+            isCorrect = userAnswer === question.correct;
+        }
+        if (isCorrect) {
+            score++;
+        }
+        let userAnswerText = '';
+        if (Array.isArray(userAnswer)) {
+            userAnswerText = userAnswer.map(i => question.options[i]).join(', ');
+        } else {
+            userAnswerText = question.options[userAnswer] || 'Không chọn';
+        }
+        let correctAnswerText = '';
+        if (Array.isArray(question.correct)) {
+            correctAnswerText = question.correct.map(i => question.options[i]).join(', ');
+        } else {
+            correctAnswerText = question.options[question.correct];
+        }
         div.innerHTML = `
             <strong>Câu ${index + 1}:</strong> ${question.question}<br>
             <span class="${isCorrect ? 'text-success' : 'text-danger'}">
-                Đáp án của bạn: ${question.options[userAnswer] || 'Không chọn'} (${isCorrect ? 'Đúng' : 'Sai'})
+                Đáp án của bạn: ${userAnswerText} (${isCorrect ? 'Đúng' : 'Sai'})
             </span><br>
-            <span class="text-primary">Đáp án đúng: ${question.options[question.correct]}</span>
+            <span class="text-primary">Đáp án đúng: ${correctAnswerText}</span>
         `;
         detailedResults.appendChild(div);
     });
+    scoreDiv.textContent = `Điểm số: ${score}/${questions.length}`;
     quizContainer.classList.add('d-none');
     resultContainer.classList.remove('d-none');
 }
