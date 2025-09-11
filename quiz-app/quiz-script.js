@@ -75,7 +75,7 @@ function displayQuestion() {
             const label = document.createElement('label');
             label.className = 'form-check-label';
             label.htmlFor = `option-${index}`;
-            label.textContent = option;
+            label.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
             div.appendChild(checkbox);
             div.appendChild(label);
             optionsDiv.appendChild(div);
@@ -84,7 +84,7 @@ function displayQuestion() {
         question.options.forEach((option, index) => {
             const btn = document.createElement('button');
             btn.className = 'list-group-item list-group-item-action';
-            btn.textContent = option;
+            btn.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
             btn.onclick = () => selectOption(index, false);
             optionsDiv.appendChild(btn);
         });
@@ -146,15 +146,15 @@ function showResults() {
         }
         let userAnswerText = '';
         if (Array.isArray(userAnswer)) {
-            userAnswerText = userAnswer.map(i => question.options[i]).join(', ');
+            userAnswerText = userAnswer.map(i => `${String.fromCharCode(65 + i)}. ${question.options[i]}`).join(', ');
         } else {
-            userAnswerText = question.options[userAnswer] || 'Không chọn';
+            userAnswerText = userAnswer !== undefined ? `${String.fromCharCode(65 + userAnswer)}. ${question.options[userAnswer]}` : 'Không chọn';
         }
         let correctAnswerText = '';
         if (Array.isArray(question.correct)) {
-            correctAnswerText = question.correct.map(i => question.options[i]).join(', ');
+            correctAnswerText = question.correct.map(i => `${String.fromCharCode(65 + i)}. ${question.options[i]}`).join(', ');
         } else {
-            correctAnswerText = question.options[question.correct];
+            correctAnswerText = `${String.fromCharCode(65 + question.correct)}. ${question.options[question.correct]}`;
         }
         div.innerHTML = `
             <strong>Câu ${index + 1}:</strong> ${question.question}<br>
