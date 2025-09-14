@@ -1,21 +1,22 @@
-# TODO: Update Quiz to Support Both Single and Multiple Choice Questions
+# TODO: Fix Excel Score Recording for Teachers
 
-## Completed
+## Overview
+Implement client-side score saving using localStorage and Excel generation for teacher downloads.
 
-- [x] Update question data structure in `questions/tin7_bai1.js` to include `type` field and handle multiple correct answers
-- [x] Improved hover effects in `style.css` for better visibility (changed to darker background on hover)
+## Steps
+- [x] Modified quiz-script.js to save scores to localStorage instead of server
+- [x] Modified teacher.html to generate Excel files client-side using localStorage data
+- [x] Scores are stored in browser localStorage with structure: {studentKey: {ho, ten, tx1_score, tx2_score, timestamp}}
+- [x] Excel download reads base Excel file and updates it with localStorage scores
+- [x] No backend server required - works with static hosting
 
-## Pending
+## How it works
+1. Student takes exam and score is saved to localStorage with key `quiz_scores_tin_hoc_{classCode}`
+2. Teacher enters class code and clicks download
+3. System fetches base Excel file from `result/all_lop.xls`
+4. Updates Excel with scores from localStorage
+5. Downloads updated Excel file
 
-- [ ] Modify `quiz-script.js` to detect question type and render appropriate UI (buttons for single, checkboxes for multiple)
-- [ ] Update `selectOption` function to handle multiple selections for multiple-choice questions
-- [ ] Update scoring logic in `showResults` to correctly score multiple-choice questions
-- [ ] Update `quiz.html` to include checkbox elements if needed (not needed, added dynamically)
-- [ ] Test the updated quiz with both single and multiple-choice questions (code updated, ready for testing)
-- [ ] Optionally, update other question files (tin7_bai2.js, etc.) to include mixed types
-
-## Notes
-- For single-choice: `type: "single"`, `correct: number`
-- For multiple-choice: `type: "multiple"`, `correct: [array of numbers]`
-- UI will use buttons for single (current behavior) and checkboxes for multiple
-- Scoring for multiple: user must select all correct options and no incorrect ones
+## Dependent Files
+- cvd/quiz-app/quiz-script.js (modified saveScoreToLocalFile function)
+- cvd/quiz-app/teacher.html (modified downloadResults function)

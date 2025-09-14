@@ -15,45 +15,87 @@ const restartBtn = document.getElementById('restart-btn');
 const lessonTitle = document.getElementById('lesson-title');
 const pageTitle = document.getElementById('page-title');
 
-// Get lesson parameter from URL
 const urlParams = new URLSearchParams(window.location.search);
+const examMode = urlParams.get('exam') === 'true';
 const lesson = urlParams.get('lesson');
+const classSelected = urlParams.get('class');
+const studentSelected = urlParams.get('student');
+const examPart = urlParams.get('part');
+const examCode = urlParams.get('code');
 
-if (!lesson) {
+if (!examMode && !lesson) {
     alert('Không tìm thấy bài học. Quay lại trang chọn bài học.');
     window.location.href = 'lessons.html';
 }
 
-// Load questions based on lesson
+// Load questions based on lesson or exam parameters
 async function loadQuestions() {
     try {
-        const response = await fetch(`questions/${lesson}.js`);
-        if (!response.ok) {
-            throw new Error('Không thể tải câu hỏi');
-        }
-        const script = await response.text();
-        // Execute the script to load questions
-        eval(script);
-        // Now questions should be loaded on window
-        if (window.questions && window.questions.length > 0) {
-            questions = window.questions; // Copy to local variable
-            startQuiz();
+        if (examMode) {
+            // Determine class number from classSelected, e.g. "6A" -> 6
+            const classNumber = classSelected.match(/\d+/)[0];
+            const questionFile = `exams/tin${classNumber}.js`;
+            const response = await fetch(questionFile);
+            if (!response.ok) {
+                throw new Error('Không thể tải câu hỏi kiểm tra');
+            }
+            const script = await response.text();
+            eval(script);
+            if (window.questions && window.questions.length > 0) {
+                // Filter and select 8 questions: 4 NB, 4 TH
+                const nbQuestions = window.questions.filter(q => q.level === 'NB');
+                const thQuestions = window.questions.filter(q => q.level === 'TH');
+                // Shuffle and take 4 each
+                const selectedNB = shuffleArray(nbQuestions).slice(0, 4);
+                const selectedTH = shuffleArray(thQuestions).slice(0, 4);
+                questions = selectedNB.concat(selectedTH);
+                // Shuffle the combined questions
+                questions = shuffleArray(questions);
+                startQuiz();
+            } else {
+                throw new Error('Không có câu hỏi kiểm tra');
+            }
         } else {
-            throw new Error('Không có câu hỏi cho bài học này');
+            const response = await fetch(`questions/${lesson}.js`);
+            if (!response.ok) {
+                throw new Error('Không thể tải câu hỏi');
+            }
+            const script = await response.text();
+            eval(script);
+            if (window.questions && window.questions.length > 0) {
+                questions = window.questions;
+                startQuiz();
+            } else {
+                throw new Error('Không có câu hỏi cho bài học này');
+            }
         }
     } catch (error) {
         console.error('Lỗi khi tải câu hỏi:', error);
-        alert('Không thể tải câu hỏi cho bài học này. Vui lòng thử lại sau.');
-        window.location.href = 'lessons.html';
+        alert('Không thể tải câu hỏi. Vui lòng thử lại sau.');
+        window.location.href = examMode ? 'exam.html' : 'lessons.html';
     }
 }
 
-function startQuiz() {
-    // Set lesson title
-    const lessonName = lesson.replace('_', ' ').replace('tin', 'Tin Học ').replace('bai', 'Bài ');
-    lessonTitle.textContent = `Kiểm tra Trắc Nghiệm - ${lessonName}`;
-    pageTitle.textContent = `Quiz - ${lessonName}`;
+// Helper function to shuffle array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
+function startQuiz() {
+    if (examMode) {
+        const displayClass = classSelected.replace('tin_hoc_', '');
+        lessonTitle.textContent = `Kiểm tra Trắc Nghiệm - Lớp ${displayClass} - ${studentSelected} - Phần ${examPart}`;
+        pageTitle.textContent = `Quiz - Lớp ${displayClass} - ${studentSelected} - Phần ${examPart}`;
+    } else {
+        // Set lesson title
+        const lessonName = lesson.replace('_', ' ').replace('tin', 'Tin Học ').replace('bai', 'Bài ');
+        lessonTitle.textContent = `Kiểm tra Trắc Nghiệm - ${lessonName}`;
+        pageTitle.textContent = `Quiz - ${lessonName}`;
+    }
     displayQuestion();
 }
 
@@ -168,6 +210,66 @@ function showResults() {
     scoreDiv.textContent = `Điểm số: ${score}/${questions.length}`;
     quizContainer.classList.add('d-none');
     resultContainer.classList.remove('d-none');
+    // Save score if in exam mode
+    if (examMode) {
+        saveScoreToJsonFile(score, `${classSelected}`, studentSelected, examPart);
+    }
+}
+
+async function saveScoreToJsonFile(score, className, studentName, part) {
+    try {
+        await saveScore(score, className, studentName, part);
+        return true;
+    } catch (error) {
+        console.error('Error saving score:', error);
+        alert('Không thể lưu điểm số.');
+        return false;
+    }
+}
+
+async function saveScore(score, className, studentName, part) {
+    try {
+        const response = await fetch('https://psmcvn.com/api/scores', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ className, studentName, part, score })
+        });
+        if (!response.ok) {
+            throw new Error('Lỗi khi lưu điểm số');
+        }
+        const result = await response.json();
+        showSaveNotification(result.message);
+    } catch (error) {
+        console.error('Error saving score:', error);
+        alert('Không thể lưu điểm số.');
+    }
+}
+
+// Show notification div at top-right corner
+function showSaveNotification(message) {
+    let notif = document.getElementById('save-notification');
+    if (!notif) {
+        notif = document.createElement('div');
+        notif.id = 'save-notification';
+        notif.style.position = 'fixed';
+        notif.style.top = '20px';
+        notif.style.right = '20px';
+        notif.style.backgroundColor = '#4caf50';
+        notif.style.color = 'white';
+        notif.style.padding = '10px 20px';
+        notif.style.borderRadius = '8px';
+        notif.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+        notif.style.fontSize = '16px';
+        notif.style.zIndex = '1000';
+        notif.style.opacity = '0';
+        notif.style.transition = 'opacity 0.5s ease';
+        document.body.appendChild(notif);
+    }
+    notif.textContent = message;
+    notif.style.opacity = '1';
+    setTimeout(() => {
+        notif.style.opacity = '0';
+    }, 3000);
 }
 
 restartBtn.onclick = () => {

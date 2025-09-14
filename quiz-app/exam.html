@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kiểm Tra - Chọn Lớp và Học Sinh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Choices.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  </head>
+
+<body>
+  <div class="container my-5">
+    <h1 class="text-center mb-5 fw-bold">Kiểm Tra Trắc Nghiệm</h1>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h2 class="card-title mb-0">Đăng Nhập Kiểm Tra</h2>
+          </div>
+          <div class="card-body">
+            <form id="examForm">
+              <div class="mb-3">
+                <label for="classSelect" class="form-label">Chọn Lớp:</label>
+                <select class="form-select" id="classSelect" required>
+                  <!-- <option value="">-- Chọn Lớp --</option> -->
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="studentSelect" class="form-label">Chọn Học Sinh:</label>
+                <select class="form-select" id="studentSelect" required disabled>
+                  <option value="">-- Chọn Học Sinh --</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="examPart" class="form-label">Phần Kiểm Tra:</label>
+                <select class="form-select" id="examPart" required>
+                  <!-- <option value="">-- Chọn Phần Kiểm Tra --</option> -->
+                  <option value="TX1">Thường xuyên (TX1)</option>
+                  <option value="TX2">Thường xuyên (TX2)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="examCode" class="form-label">Mã Thi:</label>
+                <input type="text" class="form-control" id="examCode" required placeholder="Nhập mã thi" />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Bắt Đầu Kiểm Tra</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-center mt-4">Được tài trợ bởi <a href="https://psmcvn.com/" target="_blank">PSMCVN</a></p>
+  </div>
+
+  <script>
+    let workbook;
+    let classChoices, studentChoices;
+
+    // Load the Excel file
+    fetch('data/all_lop.xls')
+      .then(response => response.arrayBuffer())
+      .then(data => {
+        workbook = XLSX.read(data, { type: 'array' });
+        populateClassDropdown();
+      })
+      .catch(error => console.error('Error loading Excel file:', error));
+
+    function populateClassDropdown() {
+      const classSelect = document.getElementById('classSelect');
+      workbook.SheetNames.forEach(sheetName => {
+        const displayName = sheetName.replace('tin_hoc_', '');
+        const option = document.createElement('option');
+        option.value = sheetName;
+        option.textContent = displayName;
+        classSelect.appendChild(option);
+      });
+      // Initialize Choices for classSelect
+      classChoices = new Choices('#classSelect', {
+        searchEnabled: true,
+        itemSelectText: '',
+        placeholder: true,
+        placeholderValue: '-- Chọn Lớp --'
+      });
+    }
+
+    document.getElementById('classSelect').addEventListener('change', function() {
+      const selectedClass = this.value;
+      const studentSelect = document.getElementById('studentSelect');
+      studentSelect.innerHTML = '<option value="">-- Chọn Học Sinh --</option>';
+      if (selectedClass) {
+        const worksheet = workbook.Sheets[selectedClass];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        // Assume first column is STT, second column is student name
+        studentSelect.innerHTML = '<option value="">-- Chọn Học Sinh --</option>';
+        jsonData.slice(1).forEach(row => {
+          // Combine columns B, C, D for full name
+          if (row[1] && row[2] && row[3]) {
+            const fullName = row[1].toString().trim() + ' ' + row[2].toString().trim() + ' ' + row[3].toString().trim();
+            const option = document.createElement('option');
+            option.value = fullName;
+            option.textContent = fullName;
+            studentSelect.appendChild(option);
+          }
+        });
+        studentSelect.disabled = false;
+        // Initialize Choices for studentSelect
+        if (studentChoices) studentChoices.destroy();
+        studentChoices = new Choices('#studentSelect', {
+          searchEnabled: true,
+          itemSelectText: '',
+          placeholder: true,
+          placeholderValue: '-- Chọn Học Sinh --'
+        });
+      } else {
+        studentSelect.disabled = true;
+        if (studentChoices) studentChoices.destroy();
+      }
+    });
+
+    // Initialize Choices for examPart
+    const examPartChoices = new Choices('#examPart', {
+      searchEnabled: false,
+      itemSelectText: '',
+      placeholder: true,
+      placeholderValue: '-- Chọn Phần Kiểm Tra --'
+    });
+
+    document.getElementById('examForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const classSelected = document.getElementById('classSelect').value;
+      const studentSelected = document.getElementById('studentSelect').value;
+      const examPart = document.getElementById('examPart').value;
+      const code = document.getElementById('examCode').value.trim();
+      // Redirect to quiz.html with parameters
+      window.location.href = `quiz.html?exam=true&class=${encodeURIComponent(classSelected)}&student=${encodeURIComponent(studentSelected)}&part=${examPart}&code=${encodeURIComponent(code)}`;
+    });
+  </script>
+</body>
+
+</html>
