@@ -1,0 +1,51 @@
+{
+    "tin_hoc_7a1_2405548502 \u0110inh D\u01b0\u01a1ng Vi\u1ec7t Anh_": {
+        "class_name": "tin_hoc_7a1",
+        "tx1_score": null,
+        "tx2_score": 0,
+        "ho_ten": "\u0110inh D\u01b0\u01a1ng Vi\u1ec7t Anh"
+    },
+    "tin_hoc_7a1_2405548506 Mai Ng\u1ecdc Kh\u00e1nh B\u0103ng_": {
+        "class_name": "tin_hoc_7a1",
+        "tx1_score": null,
+        "tx2_score": 0,
+        "ho_ten": "Mai Ng\u1ecdc Kh\u00e1nh B\u0103ng"
+    },
+    "tin_hoc_7a4_2405177138 L\u00fd Minh Ch\u00ed_": {
+        "class_name": "tin_hoc_7a4",
+        "tx1_score": null,
+        "tx2_score": 2,
+        "ho_ten": "L\u00fd Minh Ch\u00ed"
+    },
+    "tin_hoc_7a4_2405182040 T\u00f4n H\u1ea1nh Duy\u00ean_": {
+        "class_name": "tin_hoc_7a4",
+        "tx1_score": 2,
+        "tx2_score": null,
+        "ho_ten": "T\u00f4n H\u1ea1nh Duy\u00ean"
+    },
+    "tin_hoc_7a5_2405612684 Tr\u1ea7n Y\u1ebfn Ch\u00e2u_": {
+        "class_name": "tin_hoc_7a5",
+        "tx1_score": null,
+        "tx2_score": 4,
+        "ho_ten": "Tr\u1ea7n Y\u1ebfn Ch\u00e2u"
+    },
+    "tin_hoc_7a8_2404705768 Tr\u1ea7n Ng\u1ecdc Kim Anh_": {
+        "class_name": "tin_hoc_7a8",
+        "tx1_score": 5,
+        "tx2_score": null,
+        "ho_ten": "Tr\u1ea7n Ng\u1ecdc Kim Anh"
+    },
+    "tin_hoc_7a5_2405615244 D\u01b0\u01a1ng Th\u00f9y D\u01b0\u01a1ng_": {
+        "class_name": "tin_hoc_7a5",
+        "tx1_score": null,
+        "tx2_score": 1,
+        "ho_ten": "D\u01b0\u01a1ng Th\u00f9y D\u01b0\u01a1ng"
+    },
+    "tin_hoc_8a1_2. Phan Th\u1ecb Kim Anh 24\/05\/2012_": {
+        "class_name": "tin_hoc_8a1",
+        "ho": "2. Phan Th\u1ecb Kim Anh 24\/05\/2012",
+        "ten": "",
+        "tx1_score": 1,
+        "tx2_score": null
+    }
+}

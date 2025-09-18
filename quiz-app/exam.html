@@ -49,7 +49,7 @@
                 <label for="examCode" class="form-label">Mã Thi:</label>
                 <input type="text" class="form-control" id="examCode" required placeholder="Nhập mã thi" />
               </div>
-              <button type="submit" class="btn btn-primary w-100">Bắt Đầu Kiểm Tra</button>
+              <button type="submit" class="btn btn-primary btn-lg w-100">Bắt Đầu Kiểm Tra</button>
             </form>
           </div>
         </div>
@@ -61,6 +61,7 @@
   <script>
     let workbook;
     let classChoices, studentChoices;
+    let examCodes = {};
 
     // Load the Excel file
     fetch('data/all_lop.xls')
@@ -70,6 +71,14 @@
         populateClassDropdown();
       })
       .catch(error => console.error('Error loading Excel file:', error));
+
+    // Load exam codes
+    fetch('data/examcode.json')
+      .then(response => response.json())
+      .then(data => {
+        examCodes = data;
+      })
+      .catch(error => console.error('Error loading exam codes:', error));
 
     function populateClassDropdown() {
       const classSelect = document.getElementById('classSelect');
@@ -99,12 +108,13 @@
         // Assume first column is STT, second column is student name
         studentSelect.innerHTML = '<option value="">-- Chọn Học Sinh --</option>';
         jsonData.slice(1).forEach(row => {
-          // Combine columns B, C, D for full name
-          if (row[1] && row[2] && row[3]) {
-            const fullName = row[1].toString().trim() + ' ' + row[2].toString().trim() + ' ' + row[3].toString().trim();
+          // Combine columns C, D, E for full name (skip column B which may be code)
+          if (row[0] && row[2] && row[3] && row[4]) {
+            const stt = row[0].toString().trim();
+            const fullName = row[2].toString().trim() + ' ' + row[3].toString().trim() + ' ' + row[4].toString().trim();
             const option = document.createElement('option');
-            option.value = fullName;
-            option.textContent = fullName;
+            option.value = stt;
+            option.textContent = stt + '. ' + fullName;
             studentSelect.appendChild(option);
           }
         });
@@ -134,11 +144,36 @@
     document.getElementById('examForm').addEventListener('submit', function(event) {
       event.preventDefault();
       const classSelected = document.getElementById('classSelect').value;
-      const studentSelected = document.getElementById('studentSelect').value;
+      const studentSelect = document.getElementById('studentSelect');
+      const selectedOption = studentSelect.options[studentSelect.selectedIndex];
+      const studentName = selectedOption ? selectedOption.textContent : '';
       const examPart = document.getElementById('examPart').value;
       const code = document.getElementById('examCode').value.trim();
+
+      // Validation
+      if (!classSelected) {
+        alert('Vui lòng chọn lớp.');
+        return;
+      }
+      if (!studentName || studentName === '-- Chọn Học Sinh --') {
+        alert('Vui lòng chọn học sinh.');
+        return;
+      }
+      if (!examPart) {
+        alert('Vui lòng chọn phần kiểm tra.');
+        return;
+      }
+      if (!code) {
+        alert('Vui lòng nhập mã thi.');
+        return;
+      }
+      if (!examCodes[examPart] || !examCodes[examPart].includes(code)) {
+        alert('Mã thi không hợp lệ.');
+        return;
+      }
+
       // Redirect to quiz.html with parameters
-      window.location.href = `quiz.html?exam=true&class=${encodeURIComponent(classSelected)}&student=${encodeURIComponent(studentSelected)}&part=${examPart}&code=${encodeURIComponent(code)}`;
+      window.location.href = `quiz.html?exam=true&class=${encodeURIComponent(classSelected)}&student=${encodeURIComponent(studentName)}&part=${examPart}&code=${encodeURIComponent(code)}`;
     });
   </script>
 </body>

@@ -34,35 +34,69 @@ async function loadQuestions() {
         if (examMode) {
             // Determine class number from classSelected, e.g. "6A" -> 6
             const classNumber = classSelected.match(/\d+/)[0];
-            const questionFile = `exams/tin${classNumber}.js`;
+            const questionFile = `questions/tin${classNumber}.js`;
             const response = await fetch(questionFile);
             if (!response.ok) {
                 throw new Error('Không thể tải câu hỏi kiểm tra');
             }
             const script = await response.text();
             eval(script);
-            if (window.questions && window.questions.length > 0) {
-                // Filter and select 8 questions: 4 NB, 4 TH
-                const nbQuestions = window.questions.filter(q => q.level === 'NB');
-                const thQuestions = window.questions.filter(q => q.level === 'TH');
-                // Shuffle and take 4 each
-                const selectedNB = shuffleArray(nbQuestions).slice(0, 4);
-                const selectedTH = shuffleArray(thQuestions).slice(0, 4);
+            if (window.questionsByLesson) {
+                // Collect all questions from all lessons
+                let allQuestions = [];
+                for (let bai in window.questionsByLesson) {
+                    if (Array.isArray(window.questionsByLesson[bai])) {
+                        allQuestions = allQuestions.concat(window.questionsByLesson[bai]);
+                    }
+                }
+                // Filter by level
+                const nbQuestions = allQuestions.filter(q => q.level === 'NB');
+                const thQuestions = allQuestions.filter(q => q.level === 'TH');
+                // Shuffle and take 4 each (or all if less)
+                const selectedNB = shuffleArray(nbQuestions).slice(0, Math.min(1, nbQuestions.length));
+                const selectedTH = shuffleArray(thQuestions).slice(0, Math.min(1, thQuestions.length));
                 questions = selectedNB.concat(selectedTH);
                 // Shuffle the combined questions
                 questions = shuffleArray(questions);
+                if (questions.length === 0) {
+                    throw new Error('Không có câu hỏi kiểm tra');
+                }
+                startQuiz();
+            } else if (window.questions && window.questions.length > 0) {
+                // Fallback to old structure
+                const nbQuestions = window.questions.filter(q => q.level === 'NB');
+                const thQuestions = window.questions.filter(q => q.level === 'TH');
+                const selectedNB = shuffleArray(nbQuestions).slice(0, Math.min(4, nbQuestions.length));
+                const selectedTH = shuffleArray(thQuestions).slice(0, Math.min(4, thQuestions.length));
+                questions = selectedNB.concat(selectedTH);
+                questions = shuffleArray(questions);
+                if (questions.length === 0) {
+                    throw new Error('Không có câu hỏi kiểm tra');
+                }
                 startQuiz();
             } else {
                 throw new Error('Không có câu hỏi kiểm tra');
             }
         } else {
-            const response = await fetch(`questions/${lesson}.js`);
+            // Extract grade and bai from lesson param, e.g. tin6_bai1
+            const match = lesson.match(/tin(\d+)_bai(\d+)/);
+            if (!match) {
+                throw new Error('Định dạng bài học không hợp lệ');
+            }
+            const grade = match[1];
+            const bai = `bai${match[2]}`;
+            const questionFile = `questions/tin${grade}.js`;
+            const response = await fetch(questionFile);
             if (!response.ok) {
                 throw new Error('Không thể tải câu hỏi');
             }
             const script = await response.text();
             eval(script);
-            if (window.questions && window.questions.length > 0) {
+            if (window.questionsByLesson && window.questionsByLesson[bai] && window.questionsByLesson[bai].length > 0) {
+                questions = window.questionsByLesson[bai];
+                startQuiz();
+            } else if (window.questions && window.questions.length > 0) {
+                // fallback for old structure with window.questions array
                 questions = window.questions;
                 startQuiz();
             } else {
@@ -212,38 +246,31 @@ function showResults() {
     resultContainer.classList.remove('d-none');
     // Save score if in exam mode
     if (examMode) {
-        saveScoreToJsonFile(score, `${classSelected}`, studentSelected, examPart);
-    }
-}
-
-async function saveScoreToJsonFile(score, className, studentName, part) {
-    try {
-        await saveScore(score, className, studentName, part);
-        return true;
-    } catch (error) {
-        console.error('Error saving score:', error);
-        alert('Không thể lưu điểm số.');
-        return false;
-    }
-}
-
-async function saveScore(score, className, studentName, part) {
-    try {
-        const response = await fetch('https://psmcvn.com/api/scores', {
+        const apiUrl = 'api/scores.php';
+        fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ className, studentName, part, score })
+            body: JSON.stringify({
+                className: classSelected,
+                studentName: studentSelected,
+                part: examPart,
+                score: score
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            showSaveNotification(data.message || 'Điểm số đã được lưu.');
+        })
+        .catch(error => {
+            console.error('Error saving score:', error);
+            alert('Không thể lưu điểm số.');
         });
-        if (!response.ok) {
-            throw new Error('Lỗi khi lưu điểm số');
-        }
-        const result = await response.json();
-        showSaveNotification(result.message);
-    } catch (error) {
-        console.error('Error saving score:', error);
-        alert('Không thể lưu điểm số.');
     }
 }
+
+
+
+
 
 // Show notification div at top-right corner
 function showSaveNotification(message) {

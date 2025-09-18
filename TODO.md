@@ -1,0 +1,2 @@
+- [x] Update index.html to add distinct classes and emojis to buttons for categories
+- [x] Update style.css to add mobile media queries and specific styles for each button category

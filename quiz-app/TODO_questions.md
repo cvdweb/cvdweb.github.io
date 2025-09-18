@@ -1,0 +1,4 @@
+- [ ] Read all existing bai files for each grade
+- [ ] Create consolidated grade files (tin6.js, tin7.js, etc.) with bai keys
+- [ ] Update quiz-script.js to load from consolidated files
+- [ ] Test the loading logic

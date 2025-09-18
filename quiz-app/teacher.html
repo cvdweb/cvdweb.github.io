@@ -5,45 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giáo Viên - Tải Xuống Kết Quả</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
     <div class="container my-5">
         <h1 class="text-center mb-5 fw-bold">Trang Giáo Viên</h1>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
+        <div class="row">
+            <div class="col-12">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        <h2 class="card-title mb-0">Tải Xuống Kết Quả Kiểm Tra</h2>
-                    </div>
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h2 class="card-title mb-0">Danh Sách Học Sinh Đã Kiểm Tra</h2>
+                    <button type="button" class="btn btn-light" id="downloadBtn" onclick="downloadResults()">Tải Xuống Tất Cả Kết Quả</button>
+                </div>
                     <div class="card-body">
-                        <p>Nhập mã bài thi để tải xuống file Excel kết quả:</p>
-                        <div class="mb-3">
-                            <label for="examCode" class="form-label">Mã Lớp:</label>
-                            <input type="text" class="form-control" id="examCode" placeholder="Ví dụ: 7a1">
+                        <div id="loading" class="text-center mb-3" style="display: none;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p>🌟 Đang tổng hợp file Excel cho bạn... ✨</p>
                         </div>
-                        <button type="button" class="btn btn-primary w-100" onclick="downloadResults()">Tải Xuống Excel</button>
+                        <div id="summary" class="mb-3">
+                            <!-- Summary table will be inserted here -->
+                        </div>
+                        <table id="statsTable" class="table table-hover table-bordered text-center" style="width:100%; background-color: #f8f9fa;">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>📊 Thống Kê Học Sinh</th>
+                                    <th>Số Lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statsBody">
+                                <!-- Stats rows will be inserted here -->
+                            </tbody>
+                        </table>
+                        <table id="scoresTable" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Lớp</th>
+                                    <th>Tên Học Sinh</th>
+                                    <th>Điểm TX1</th>
+                                    <th>Điểm TX2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+
         <p class="text-center mt-4">Được tài trợ bởi <a href="https://psmcvn.com/" target="_blank">PSMCVN</a></p>
     </div>
 
     <script>
         async function downloadResults() {
-            const code = document.getElementById('examCode').value.trim();
-            if (!code) {
-                alert('Vui lòng nhập mã bài thi.');
-                return;
-            }
+            const code = 'all';
+
+            const downloadBtn = document.getElementById('downloadBtn');
+            const loadingDiv = document.getElementById('loading');
+
+            // Show loading
+            downloadBtn.disabled = true;
+            loadingDiv.style.display = 'block';
 
             try {
-                const response = await fetch(`https://psmcvn.com/api/excel/${code}`);
+                const apiUrl = `api/excel.php?code=${code}`;
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Lỗi khi tải file Excel');
+                    const errorText = await response.text();
+                    throw new Error(errorText || 'Lỗi khi tải file Excel');
                 }
 
                 const blob = await response.blob();
@@ -51,7 +84,7 @@
 
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `ket_qua_${code}.xls`;
+                a.download = `ket_qua_tat_ca.xls`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -61,16 +94,73 @@
             } catch (error) {
                 console.error('Error downloading results:', error);
                 alert('Không thể tải xuống file kết quả: ' + error.message);
+            } finally {
+                // Hide loading
+                downloadBtn.disabled = false;
+                loadingDiv.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        async function loadScoresTable() {
+            try {
+                const response = await fetch('api/get_scores.php');
+                if (!response.ok) {
+                    throw new Error('Không thể tải dữ liệu điểm số');
+                }
+                const result = await response.json();
+                const data = result.data;
+                const totalTested = result.totalTested;
+                const classCounts = result.classCounts;
+
+                // Display summary table
+                let statsBody = document.getElementById('statsBody');
+                statsBody.innerHTML = '';
+                let totalRow = document.createElement('tr');
+                totalRow.innerHTML = `<td><strong>🌟 Tổng số học sinh đã kiểm tra</strong></td><td><span class="badge bg-primary">${totalTested}</span></td>`;
+                statsBody.appendChild(totalRow);
+                for (const [className, count] of Object.entries(classCounts)) {
+                    let row = document.createElement('tr');
+                    row.innerHTML = `<td>📚 Lớp ${className}</td><td><span class="badge bg-success">${count}</span></td>`;
+                    statsBody.appendChild(row);
+                }
+                let tx1Row = document.createElement('tr');
+                tx1Row.innerHTML = `<td>📊 Số học sinh thi TX1</td><td><span class="badge bg-info">${result.tx1Count}</span></td>`;
+                statsBody.appendChild(tx1Row);
+                let tx2Row = document.createElement('tr');
+                tx2Row.innerHTML = `<td>📊 Số học sinh thi TX2</td><td><span class="badge bg-warning">${result.tx2Count}</span></td>`;
+                statsBody.appendChild(tx2Row);
+
+                // Initialize DataTable
+                $('#scoresTable').DataTable({
+                    data: data,
+                    columns: [
+                        { data: 'class' },
+                        { data: 'name' },
+                        { data: 'tx1', render: function(data) { return data !== null ? data : '-'; } },
+                        { data: 'tx2', render: function(data) { return data !== null ? data : '-'; } }
+                    ],
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/vi.json'
+                    },
+                    responsive: true,
+                    pageLength: 25,
+                    order: [[0, 'asc'], [1, 'asc']]
+                });
+            } catch (error) {
+                console.error('Error loading scores table:', error);
+                alert('Không thể tải danh sách điểm số: ' + error.message);
             }
         }
 
-        // Check URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const codeParam = urlParams.get('code');
-        if (codeParam) {
-            document.getElementById('examCode').value = codeParam;
-            downloadResults();
-        }
+        // Load table on page load
+        document.addEventListener('DOMContentLoaded', loadScoresTable);
     </script>
 </body>
 </html>
